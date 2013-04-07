@@ -31,6 +31,10 @@ define([
 			case 38: //up
 				this.model.set('move', move)
 				break;
+			case 37: //rotate left
+				break;
+			case 39: //rotate right
+				break;
 		}
 	}
   });
