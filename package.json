@@ -1,0 +1,22 @@
+{
+  "name": "playground",
+  "version": "0.0.0",
+  "description": "Just Playin",
+  "main": "main.js",
+  "dependencies": {},
+  "devDependencies": {
+    "socket.io": "~0.9.14",
+    "express": "~3.1.1"
+  },
+  "scripts": {
+    "test": "alert('test')"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/thatguynamedandy/playground.git"
+  },
+  "author": "Andy Polhill",
+  "license": "BSD",
+  "readmeFilename": "README.md",
+  "gitHead": "6a97590b1eef85e165c99121ff13e11f4c7efc68"
+}
