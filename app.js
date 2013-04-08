@@ -17,6 +17,7 @@ app.get('/', function (req, res) {
 
 var tank = {
 	move : false,
+	angle : 0,
 	position : {
 		left : 0,
 		top : 0
@@ -25,10 +26,14 @@ var tank = {
 
 io.sockets.on('connection', function (socket) {
 	
+	//TODO: this will have to be uber efficient eventually.
 	setInterval(function(){
 		if(tank.move) {
-			tank.position.left += 1;
-			tank.position.top += 1;		
+			var radians = tank.angle * (Math.PI/180),
+				cos = Math.cos(radians);
+				sin = Math.sin(radians);
+			tank.position.left += - (cos).toFixed(1);
+			tank.position.top += - (sin).toFixed(1);
 		}
 		socket.emit('frame', tank);		
 	},100)
@@ -37,5 +42,9 @@ io.sockets.on('connection', function (socket) {
 	
 	socket.on('move', function (move) {
 		tank.move = move;
+	});
+	
+	socket.on('angle', function (angle) {
+		tank.angle = angle;
 	});
 });

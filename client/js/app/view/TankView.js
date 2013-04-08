@@ -22,20 +22,52 @@ define([
 	},	
 	render: function() {
 		this.$tank.css(this.model.get('position'));
+		var rotateAttr = 'rotate(' + this.model.get('angle') + 'deg)';
+		this.$tank.css('-moz-transform', rotateAttr);
+		this.$tank.css('-webkit-transform', rotateAttr);		
 	},
 	control: function( evt ) {
 		
-		var move = (evt.type === 'keydown') ? true : false;
+		var isKeydown = (evt.type === 'keydown') ? true : false;
 
 		switch(evt.which) {
 			case 38: //up
-				this.model.set('move', move)
+				this.model.set('move', isKeydown);
 				break;
 			case 37: //rotate left
+				if(isKeydown){
+					if(!this.rotateTimeout) {
+						this.rotateTimeout = setInterval($.proxy(function() { 
+							this.rotate(-5)
+						}, this), 100);
+					}
+				} else {
+					clearInterval(this.rotateTimeout);
+					delete this.rotateTimeout;
+				}
 				break;
 			case 39: //rotate right
+				if(isKeydown){
+					if(!this.rotateTimeout) {
+						this.rotateTimeout = setInterval($.proxy(function() {
+							this.rotate(5)
+						}, this), 100);
+					}
+				} else {
+					clearInterval(this.rotateTimeout);
+					delete this.rotateTimeout;
+				}
 				break;
 		}
+	},
+	rotate: function( increment ) {
+
+		var angle = this.model.get('angle');
+		angle += increment;
+		if(angle > 360) {
+			angle = 0; //TODO: more accuracy
+		}
+		this.model.set('angle', angle);
 	}
   });
   

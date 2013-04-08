@@ -1,8 +1,7 @@
 .tank {
 	position:absolute;
-	width:20px;
-	height:20px;
-	border:solid 1px;
-	background-color:red;
+	width:32px;
+	height:32px;
+	background-image:url(/client/images/tank.jpg);
 	display:block;
 }
