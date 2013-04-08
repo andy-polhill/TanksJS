@@ -2,6 +2,8 @@
 
 var express = require('express'),
 	http = require('http'),
+	Backbone = require('backbone'),
+	TankServerModel = require('./TankServerModel'),
 	app = express(),
 	server = http.createServer(app),
 	io = require('socket.io').listen(server);
@@ -9,6 +11,8 @@ var express = require('express'),
 server.listen(8080);
 app.use(express.static(__dirname + '/'));
 //app.use('node', express.static(__dirname + '/node_modules'));
+
+var tankModel = new TankServerModel.create();
 
 console.log('Listening on port 8080');
 
