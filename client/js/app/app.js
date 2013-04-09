@@ -15,34 +15,3 @@ function($, _, Backbone, Router){
     initialize: initialize
   };
 });
-
-	
-/*
-var socket = io.connect('http://localhost');
-socket.on('frame', function (data) {
-	console.log(data);
-	socket.emit('my other event', { my: 'data' });
-});
-
-
-$("body").keydown(function(evt) {
-	switch(evt.which) {
-		
-		case 37:
-			//left
-			socket.emit('move', { x: -1 });
-			break;
-		case 38:
-			//up
-			socket.emit('move', { y: 1 });
-			break;
-		case 39:
-			//right
-			socket.emit('move', { x: 1 });
-			break;
-		case 37:
-			//down
-			socket.emit('move', { y: -1 });
-			break;
-	}
-});*/

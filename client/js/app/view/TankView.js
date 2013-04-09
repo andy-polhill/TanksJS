@@ -17,13 +17,13 @@ define([
 		this.$tank = $("<div class='tank' />");
 		this.$el.append(this.$tank);
 		this.model = new TankModel();
-		this.model.on("change:position", this.render, this);		
-
+		//TODO: find a better way to listen to specific events
+		this.model.on("change:top change:left change:angle", this.render, this);
 	},	
 	render: function() {
-		this.$tank.css("left", this.model.get('position').left);
-		this.$tank.css("top", this.model.get('position').top);
-		var rotateAttr = 'rotate(' + this.model.get('position').angle + 'deg)';
+		this.$tank.css("left", this.model.get('left'));
+		this.$tank.css("top", this.model.get('top'));
+		var rotateAttr = 'rotate(' + this.model.get('angle') + 'deg)';
 		this.$tank.css('-moz-transform', rotateAttr);
 		this.$tank.css('-webkit-transform', rotateAttr);		
 	},
