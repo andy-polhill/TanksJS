@@ -1,32 +1,30 @@
 // Filename: router.js
 define([
-  'jquery',
-  'underscore',
-  'backbone',
-  'view/TankView',
-  'model/TankModel'
-], function($, _, Backbone, TankView, TankModel){
+	'jquery',
+	'underscore',
+	'backbone',
+	'sockets.io'
+	'view/TankView',
+	'model/TankModel'
+], 
 
-  var AppRouter = Backbone.Router.extend({
-    routes: {
-      // Define some URL routes
-      '*path': 'play'
-    },
-    
-    play: function() {    
-		var tank = new TankView({
-			el: 'body'
-		});
-    }    
-  });
+function($, _, Backbone, socket, TankView, TankModel){
 
-  var initialize = function(){
+	 var AppRouter = Backbone.Router.extend({
+	 
+	 	initialize: function(opts) {
+	 		this.socket = opts.socket;	 	
+	 	}
+	 
+	    routes: {
+	      // Define some URL routes
+	      '*path': 'play'
+	    },
+	    
+	    play: function() {
+	    	var tankCollection = new TankCollection();
+	    }    
+	});
 
-    var app_router = new AppRouter;
-    Backbone.history.start();
-  };
-  
-  return {
-    initialize: initialize
-  };
+	return AppRouter
 });

@@ -1,8 +1,7 @@
 define([
 	'jquery',
 	'underscore',
-	'backbone',
-	'sockets.io'
+	'backbone'
 ], function($, _, Backbone){
 
 	var TankModel = Backbone.Model.extend({

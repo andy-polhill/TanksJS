@@ -18,8 +18,6 @@ app.use(express.static(__dirname + '/'));
 
 var tankCollection = new TankCollection();
 
-var tankModel = new TankServerModel.create();
-
 console.log('Listening on port 8080');
 
 app.get('/', function (req, res) {
@@ -27,14 +25,18 @@ app.get('/', function (req, res) {
 });
 
 io.sockets.on('connection', function(socket) {
-	
-	var tank = new TankModel({}, {
-		socket: socket,
-		frameRate: FRAME_RATE
-	});
+
+	tankCollection.add(
+		new TankModel({
+			id: socket.id
+		}, {
+			socket: socket,
+			frameRate: FRAME_RATE
+		}
+	));
 
 	var frameInterval = setInterval(function(){
-		socket.emit('frame', tank.toJSON());		
+		socket.emit('frame', tankCollection.toJSON());		
 	}, FRAME_RATE)
 
 });

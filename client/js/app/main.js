@@ -9,7 +9,12 @@ require.config({
 });
 
 
-require(['app'], function(App){
-  // The "app" dependency is passed in as "App"
-  App.initialize();
+require(['router'], function(AppRouter){
+
+	var socket = io.connect('http://localhost/');
+    var router = new AppRouter({
+    	'socket' : socket
+    });
+    Backbone.history.start();
+
 });
