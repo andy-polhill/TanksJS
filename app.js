@@ -9,6 +9,7 @@ var express = require('express'),
 	server = http.createServer(app),
 	io = require('socket.io').listen(server);
 
+
 var FRAME_RATE = 100;
 
 server.listen(8080);
@@ -16,6 +17,8 @@ app.use(express.static(__dirname + '/'));
 //app.use('node', express.static(__dirname + '/node_modules'));
 
 var tankCollection = new TankCollection();
+
+var tankModel = new TankServerModel.create();
 
 console.log('Listening on port 8080');
 
