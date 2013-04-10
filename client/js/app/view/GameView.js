@@ -15,7 +15,6 @@ define([
 	},
 	initialize: function(opts) {
 		this.socket = opts.socket;
-		console.log("game view el " + this.$el);
 		this.views = [];
 		this.collection.on('add', this.add, this);
 		this.collection.on('change', this.render, this);
@@ -32,13 +31,10 @@ define([
 	},	
 	render: function() {
 		_.each(this.views, function(view){
-			console.log('render view' + view);
 			view.render();
 		})
 	},
 	control: function( evt ) {
-	
-		console.log('control' + evt.which);
 		
 		var isKeydown = (evt.type === 'keydown') ? true : false;
 
@@ -50,18 +46,20 @@ define([
 				if(isKeydown) {
 					this.socket.emit('rotate', 'left');
 				} else {
-					this.socket.emit('rotate', 'null');
+					this.socket.emit('rotate', null);
 				}
 				break;
 			case 39: //rotate right
 				if(isKeydown) {
 					this.socket.emit('rotate', 'right');
 				} else {
-					this.socket.emit('rotate', 'null');
+					this.socket.emit('rotate', null);
 				}
 				break;
 			case 32: //spacebar
-				//this.fire()
+				if(!isKeydown) {
+					this.socket.emit('shoot', true);
+				}
 				break;
 		}
 	}

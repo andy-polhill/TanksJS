@@ -3,6 +3,7 @@
 var express = require('express'),
 	http = require('http'),
 	Backbone = require('backbone'),
+	_ = require('underscore'),
 	TankModel = require('./model/TankModel'),
 	TankCollection = require('./collection/TankCollection'),
 	app = express(),
@@ -10,15 +11,16 @@ var express = require('express'),
 	io = require('socket.io').listen(server);
 
 
-var FRAME_RATE = 100;
+var FRAME_RATE = 50;
 
 server.listen(8080);
 app.use(express.static(__dirname + '/'));
 //app.use('node', express.static(__dirname + '/node_modules'));
 
 var tankCollection = new TankCollection();
+var events = _.extend({}, Backbone.Events);
 
-console.log('Listening on port 8080');
+console.log('====TANKS STARTED=====');
 
 app.get('/', function (req, res) {
 	res.sendfile(__dirname + '/index.html');
@@ -28,28 +30,26 @@ io.sockets.on('connection', function(socket) {
 
 	tankCollection.add(
 		new TankModel({
-			id: socket.id
+			'id': socket.id
 		}, {
-			socket: socket,
-			frameRate: FRAME_RATE
+			'events': events
 		}
 	));
 
 	socket.on('move', function(move) {
-		tankCollection.get(socket.id).move(move);
+		tankCollection.get(socket.id).set('move', move);
 	});
 
 	socket.on('rotate', function(rotate) {
-		tankCollection.get(socket.id).rotate(rotate);
+		tankCollection.get(socket.id).set('rotate', rotate);
 	});
 
 	socket.on('disconnect', function() {
-		console.log('disconnect:' + socket.id);
-		console.log('remove: ' + tankCollection.get(socket.id));
 		tankCollection.remove(tankCollection.get(socket.id));
 	});
 
 	var frameInterval = setInterval(function(){
+		events.trigger("frame:advance");
 		socket.emit('frame', tankCollection.toJSON());		
 	}, FRAME_RATE)
 

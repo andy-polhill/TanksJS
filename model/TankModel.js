@@ -1,10 +1,15 @@
 var Backbone = require('backbone'),
+	_ = require('underscore'),
 	define = require('amdefine')(module);
 
 define(function(require) {
+
+	var ANGLE_INC = 5;
+
 	var TankModel = Backbone.Model.extend({
-		initialize : function(atts, opts) {			
-			this.frameRate = opts.frameRate;
+
+		initialize: function( atts, opts ) {
+			opts.events.on('frame:advance', this.frame, this);
 		},
 		defaults : {
 			'velocity' : 1.5,
@@ -12,77 +17,50 @@ define(function(require) {
 			'left' : 0,
 			'top' : 0
 		},
-		move: function(move) {
-
-			//TODO sort out this context nastiness
-			var self = this;
-
-			if(move && !this.moveInterval) {
-				console.log('move tank');
-				this.moveInterval = setInterval(function() {
-					self._move.apply(self, arguments)
-				}, this.frameRate);
-			} else if(!move && this.moveInterval) {
-				console.log('stop tank');
-				clearInterval(this.moveInterval);
-				delete this.moveInterval;
+		frame: function() {
+			if(this.get('move')) {
+				this._move();
+			}
+			if(_.isString(this.get('rotate'))) {
+				this._rotate();
 			}
 		},
 		_move: function() {
-
-			//TODO sort out this context nastiness
-			var self = this;
-
 			var radians = this.get('angle') * (Math.PI/180),
 				cos = Math.cos(radians);
 				sin = Math.sin(radians);
-				
 			this.set('left', (this.get('left') - (this.get('velocity') * cos)).toFixed(2));
 			this.set('top', (this.get('top') - (this.get('velocity') * sin)).toFixed(2));
 		},
-		rotate: function(rotate) {
-
-			//TODO sort out this context nastiness
-			var self = this;
-				
-			//TODO: refactor duplication
-			switch(rotate) {
-				case "left":
-					if(!this.rotateInterval) {
-						console.log('start left rotation');
-						this.rotateInterval = setInterval(function() {
-							self._rotate.apply(self, arguments)
-						}, this.frameRate, -5);
-					}
-					break;
-				case "right":
-					if(!this.rotateInterval) {
-						console.log('start right rotation');
-						this.rotateInterval = setInterval(function() {
-							self._rotate.apply(self, arguments)
-						}, this.frameRate, 5);
-					}			
-					break;
-				default:
-					console.log('end rotation');
-					clearInterval(this.rotateInterval);
-					delete this.rotateInterval;	
-			}
-		},
-		_rotate: function(inc) {
-			var angle = this.get('angle');
-			angle += inc;
-			
+		_rotate: function() {
 			//TODO: make this cleaner
+			var angle = this.get('angle'),
+				rotate = this.get('rotate'),
+				inc;
+				
+			switch(rotate) {
+				case "right":
+					inc = ANGLE_INC * 1
+					break;
+				case "left":
+					inc = ANGLE_INC * -1
+					break
+			}
+			
+			angle += inc;
+
 			if(angle > 360) {
 				angle = 0;
 			}
 			if(angle < 0) {
 				angle = 360;
 			}
-			console.log('set angle: ' + angle );
 			this.set('angle', angle);
+		},
+		shoot: function(shoot) {
+			console.log('fire');
 		}
+		
 	});
 	
 	return TankModel;
