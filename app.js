@@ -10,7 +10,7 @@ var express = require('express'),
 	io = require('socket.io').listen(server);
 
 
-var FRAME_RATE = 100;
+var FRAME_RATE = 50;
 
 server.listen(8080);
 app.use(express.static(__dirname + '/'));
@@ -34,6 +34,14 @@ io.sockets.on('connection', function(socket) {
 			frameRate: FRAME_RATE
 		}
 	));
+
+	socket.on('move', function(move) {
+		tankCollection.get(socket.id).move(move)
+	});
+
+	socket.on('rotate', function(rotate) {
+		tankCollection.get(socket.id).rotate(rotate)
+	});
 
 	var frameInterval = setInterval(function(){
 		socket.emit('frame', tankCollection.toJSON());		

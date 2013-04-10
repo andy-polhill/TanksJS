@@ -3,20 +3,8 @@ var Backbone = require('backbone'),
 
 define(function(require) {
 	var TankModel = Backbone.Model.extend({
-		initialize : function(atts, opts) {
-			
-			this.socket = opts.socket;
+		initialize : function(atts, opts) {			
 			this.frameRate = opts.frameRate;
-			
-			//TODO sort out this context nastiness
-			var self = this;
-
-			this.socket.on('move', function() {
-				self.move.apply(self, arguments)
-			});
-			this.socket.on('rotate', function() {
-				self.rotate.apply(self, arguments)
-			});			
 		},
 		defaults : {
 			'velocity' : 1.5,
@@ -34,7 +22,7 @@ define(function(require) {
 				this.moveInterval = setInterval(function() {
 					self._move.apply(self, arguments)
 				}, this.frameRate);
-			} else if(!move && !this.moveInterval) {
+			} else if(!move && this.moveInterval) {
 				console.log('stop tank');
 				clearInterval(this.moveInterval);
 				delete this.moveInterval;
@@ -92,6 +80,7 @@ define(function(require) {
 			if(angle < 0) {
 				angle = 360;
 			}
+			console.log('set angle: ' + angle );
 			this.set('angle', angle);
 		}
 	});
