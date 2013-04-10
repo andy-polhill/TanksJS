@@ -21,18 +21,16 @@ define([
 		this.collection.on('change', this.render, this);
 	},	
 	add: function(model) {
-		console.log('add');
 		_.each(this.collection.models, function(model) {
 			this.views.push(
 				new TankView({
 					'model': model,
-					'el': this.$el
+					'$parent': this.$el
 				})
 			);
 		}, this);
 	},	
 	render: function() {
-		console.log('render');
 		_.each(this.views, function(view){
 			console.log('render view' + view);
 			view.render();

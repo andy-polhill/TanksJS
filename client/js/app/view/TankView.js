@@ -13,18 +13,19 @@ define([
 		"keyup" : "control",
 		"keydown" : "control"
 	},
-	initialize: function() {
-		this.$tank = $("<div class='tank' />");
-		this.$el.append(this.$tank);
+	initialize: function( opts ) {
+		this.$el = $("<div class='tank' />");
+		opts.$parent.append(this.$el);
 		this.model.on("change", this.render, this);
-	},	
+		this.model.on('remove', this.remove, this);
+	},
 	render: function() {		
-		this.$tank.css("left", this.model.get('left'));
-		this.$tank.css("top", this.model.get('top'));
+		this.$el.css("left", this.model.get('left'));
+		this.$el.css("top", this.model.get('top'));
 		
 		var rotateAttr = 'rotate(' + this.model.get('angle') + 'deg)';
-		this.$tank.css('-moz-transform', rotateAttr);
-		this.$tank.css('-webkit-transform', rotateAttr);		
+		this.$el.css('-moz-transform', rotateAttr);
+		this.$el.css('-webkit-transform', rotateAttr);		
 	}
   });
   
