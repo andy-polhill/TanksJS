@@ -18,6 +18,7 @@ define([
 		opts.$parent.append(this.$el);
 		this.model.on("change", this.render, this);
 		this.model.on('remove', this.remove, this);
+		this.render();
 	},
 	render: function() {		
 		this.$el.css("left", this.model.get('left'));
