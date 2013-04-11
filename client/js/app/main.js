@@ -11,7 +11,7 @@ require.config({
 
 require(['io', 'router'], function(io, AppRouter){
 
-	var socket = io.connect('http://localhost/');
+	var socket = io.connect('/');
     
     var router = new AppRouter({
     	'socket' : socket
