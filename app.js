@@ -5,19 +5,19 @@ var express = require('express'),
 	Backbone = require('backbone'),
 	_ = require('underscore'),
 	TankModel = require('./model/TankModel'),
-	TankCollection = require('./collection/TankCollection'),
+	ElementCollection = require('./collection/ElementCollection'),
 	app = express(),
 	server = http.createServer(app),
 	io = require('socket.io').listen(server);
 
 
-var FRAME_RATE = 50;
+var FRAME_RATE = 30;
 
 server.listen(8080);
 app.use(express.static(__dirname + '/'));
 //app.use('node', express.static(__dirname + '/node_modules'));
 
-var tankCollection = new TankCollection();
+var elementCollection = new ElementCollection();
 var events = _.extend({}, Backbone.Events);
 
 console.log('====TANKS STARTED=====');
@@ -28,29 +28,34 @@ app.get('/', function (req, res) {
 
 io.sockets.on('connection', function(socket) {
 
-	tankCollection.add(
+	elementCollection.add(
 		new TankModel({
-			'id': socket.id
+			'id': socket.id,
+			'type': 'tank' 
 		}, {
 			'events': events
 		}
 	));
 
 	socket.on('move', function(move) {
-		tankCollection.get(socket.id).set('move', move);
+		elementCollection.get(socket.id).set('move', move);
 	});
 
 	socket.on('rotate', function(rotate) {
-		tankCollection.get(socket.id).set('rotate', rotate);
+		elementCollection.get(socket.id).set('rotate', rotate);
+	});
+
+	socket.on('shoot', function(shoot) {
+		elementCollection.get(socket.id).shoot();
 	});
 
 	socket.on('disconnect', function() {
-		tankCollection.remove(tankCollection.get(socket.id));
+		elementCollection.remove(elementCollection.get(socket.id));
 	});
 
 	var frameInterval = setInterval(function(){
 		events.trigger("frame:advance");
-		socket.emit('frame', tankCollection.toJSON());		
+		socket.emit('frame', elementCollection.toJSON());
 	}, FRAME_RATE)
 
 });

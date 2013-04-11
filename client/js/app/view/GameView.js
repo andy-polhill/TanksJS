@@ -3,9 +3,10 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-	'view/TankView'
+	'view/TankView',
+	'view/BulletView'
 ], function(
-	$, _, Backbone, TankView){
+	$, _, Backbone, TankView, BulletView){
 
   var GameView = Backbone.View.extend({
   
@@ -19,15 +20,25 @@ define([
 		this.collection.on('add', this.add, this);
 		this.collection.on('change', this.render, this);
 	},	
-	add: function(model) {
-		_.each(this.collection.models, function(model) {
-			this.views.push(
-				new TankView({
-					'model': model,
-					'$parent': this.$el
-				})
-			);
-		}, this);
+	add: function(model) {			
+		switch(model.get('type')) {
+			case "tank": 
+				this.views.push(
+					new TankView({
+						'model': model,
+						'$parent': this.$el.find('#game')
+					})
+				);
+			break;
+			case "bullet": 
+				this.views.push(
+					new BulletView({
+						'model': model,
+						'$parent': this.$el.find('#game')
+					})
+				);
+			break;
+		}
 	},	
 	render: function() {
 		_.each(this.views, function(view){
@@ -40,7 +51,7 @@ define([
 
 		switch(evt.which) {
 			case 38: //up
-					this.socket.emit('move', isKeydown);
+				this.socket.emit('move', isKeydown);
 				break;
 			case 37: //rotate left
 				if(isKeydown) {

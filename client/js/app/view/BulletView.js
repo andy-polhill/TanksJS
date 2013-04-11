@@ -1,0 +1,27 @@
+// Filename: router.js
+define([
+	'jquery',
+	'underscore',
+	'backbone',
+	'model/TankModel'
+], function(
+	$, _, Backbone, TankModel){
+
+	var BulletView = Backbone.View.extend({
+  
+		initialize: function( opts ) {
+			this.$el = $("<div class='bullet' />");
+			opts.$parent.append(this.$el);
+			this.model.on("change", this.render, this);
+			this.model.on('remove', this.remove, this);
+			this.render();
+		},
+		render: function() {		
+			this.$el.css("left", this.model.get('left'));
+			this.$el.css("top", this.model.get('top'));
+		}
+	});
+  
+  return BulletView;
+
+});

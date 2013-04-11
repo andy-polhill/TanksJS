@@ -4,8 +4,9 @@ define([
 	'backbone'
 ], function($, _, Backbone){
 
-	var TankModel = Backbone.Model.extend({});
+	var BulletModel = Backbone.Model.extend({
+	});
 
-	return TankModel;
+	return BulletModel;
 
 });

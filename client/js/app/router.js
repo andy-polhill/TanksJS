@@ -3,11 +3,11 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-	'collection/TankCollection',
+	'collection/ElementCollection',
 	'view/GameView'
 ], 
 
-function($, _, Backbone, TankCollection, GameView){
+function($, _, Backbone, ElementCollection, GameView){
 
 	 var AppRouter = Backbone.Router.extend({
 	 
@@ -22,14 +22,14 @@ function($, _, Backbone, TankCollection, GameView){
 	    
 	    play: function() {
 
-	    	this.tankCollection = new TankCollection(null, {
+	    	this.collection = new ElementCollection(null, {
 	    		'socket' : this.socket
 	    	});
 	    	
 	    	this.gameView = new GameView({
 	    		'el' : 'body',
 	    		'socket' : this.socket,
-	    		'collection' : this.tankCollection
+	    		'collection' : this.collection
 	    	});	    	
 	    }    
 	});

@@ -9,10 +9,6 @@ define([
 
   var TankView = Backbone.View.extend({
   
-	events: {
-		"keyup" : "control",
-		"keydown" : "control"
-	},
 	initialize: function( opts ) {
 		this.$el = $("<div class='tank' />");
 		opts.$parent.append(this.$el);

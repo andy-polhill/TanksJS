@@ -1,5 +1,6 @@
 var Backbone = require('backbone'),
 	_ = require('underscore'),
+	BulletModel = require('./BulletModel'),
 	define = require('amdefine')(module);
 
 define(function(require) {
@@ -9,13 +10,15 @@ define(function(require) {
 	var TankModel = Backbone.Model.extend({
 
 		initialize: function( atts, opts ) {
-			opts.events.on('frame:advance', this.frame, this);
+			this.events = opts.events;
+			this.events.on('frame:advance', this.frame, this);
 		},
 		defaults : {
-			'velocity' : 1.5,
-			'angle' : 0,
-			'left' : 0,
-			'top' : 0
+			'velocity': 1.5,
+			'angle': 0,
+			'left': 0,
+			'top': 0,
+			'bulletCount': 0
 		},
 		frame: function() {
 			if(this.get('move')) {
@@ -57,10 +60,24 @@ define(function(require) {
 			}
 			this.set('angle', angle);
 		},
-		shoot: function(shoot) {
-			console.log('fire');
+		shoot: function() {
+			console.log('fire:' + this.get('bulletCount'));
+			var count = this.get('bulletCount');
+			count++;
+
+			this.collection.add(
+				new BulletModel({
+					'angle': this.get('angle'),
+					'top': this.get('top'),
+					'left': this.get('left'),
+					'type': 'bullet',
+					'id': this.get('id') + ":" + count
+				}, {
+					'events': this.events
+				})
+			);			
+			this.set('bulletCount', count);
 		}
-		
 	});
 	
 	return TankModel;
