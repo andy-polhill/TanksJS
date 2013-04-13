@@ -5,8 +5,10 @@
   "main": "main.js",
   "dependencies": {},
   "devDependencies": {
+	"amdefine": ">=0.0.2",
     "socket.io": "~0.9.14",
-    "express": "~3.1.1"
+    "express": "~3.1.1",
+    "jasmine-node": "~1.6.0"
   },
   "scripts": {
     "test": "alert('test')"
