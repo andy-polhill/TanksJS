@@ -17,23 +17,30 @@ define(function(require) {
 			this.set('yv', this.get('velocity') * sin); //vertical (y) velocity
 		},
 		defaults : {
-			'velocity' : 4,
-			'angle' : 0,
-			'left' : 0,
-			'top' : 0
+			'velocity': 4,
+			'angle': 0,
+			'left': 0,
+			'top': 0,
+			'height': 3,
+			'width': 3
 		},
 		frame: function() {
 			var left = this.get('left') - this.get('xv');
 			var top = this.get('top') - this.get('yv');
-			this.set('left', (left).toFixed(2));
-			this.set('top', (top).toFixed(2));
+			this.set('left', parseFloat((left).toFixed(2)));
+			this.set('top', parseFloat((top).toFixed(2)));
 			
 			if(left > 600 || top > 400 || left < 0 || top < 0) {
 				this.unset('id');
 				this.destroy();
-			}
-			
+			}			
+		},
+		collide: function() {
+			console.log('*PHIZ*');
+			this.unset('id');
+			this.destroy();
 		}
+		
 	});
 	
 	return BulletModel;
