@@ -51,9 +51,9 @@ io.sockets.on('connection', function(socket) {
 	});
 
 	socket.on('shoot', function(shoot) {
-		//try {
+		try {
 			elementCollection.get(socket.id).shoot();
-		//} catch(e) {}
+		} catch(e) {}
 	});
 
 	socket.on('disconnect', function() {
@@ -61,7 +61,7 @@ io.sockets.on('connection', function(socket) {
 	});
 
 	var frameInterval = setInterval(function(){
-		events.trigger("frame:advance");		
+		events.trigger("frame:advance");
 		_.each(elementCollection.models, function(model, idx, collection) {
 			if(typeof model !== "undefined") { 	
 				CollisionDetection.detect(model, collection);

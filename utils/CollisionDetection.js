@@ -31,11 +31,6 @@ define(function(require) {
 					cBottom = y + cHalfHeight,
 					cid = candidate.get('id');
 
-				//console.log("candidate left %d right %d top %d bottom %d", cLeft, cRight, cTop, cBottom)
-				//console.log(!(left > cRight))
-				//console.log(!(cLeft > right))
-				//console.log(!(top > cBottom))
-				//console.log(!(cTop > bottom))
 				if(!(left > cRight || cLeft > right || top > cBottom || cTop > bottom || id === cid) && _.isFunction(model.collide)) {
 					model.collide.call(model, candidate);
 					candidate.collide.call(candidate, model);
