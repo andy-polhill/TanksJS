@@ -73,10 +73,12 @@ define(function(require) {
 			var angle = this.get('a'),
 				cos = (Math.cos(angle * Math.PI / 180)).toFixed(2),
 				sin = (Math.sin(angle * Math.PI / 180)).toFixed(2),
-				width = this.get('w') + 10,
-				height = this.get('h') + 10,
-				/* TODO: 9 is a magic number which stops bullet colliding with own tank when
-				at acute angles. If radial collision detection is implemented this can be removed */
+				width = this.get('w') + 13,
+				height = this.get('h') + 13,
+				/* TODO: The above is a magic number which stops bullet colliding with own tank when
+				at acute angles. the number also needs to take into account velocity of tank,
+				as it may only shoot itself when moving, need to calculate this properly
+				 */
 				top = parseFloat(this.get('y') - ((height / 2) * sin)),
 				left = parseFloat(this.get('x') - ((width / 2) * cos));
 			
@@ -106,9 +108,15 @@ define(function(require) {
 		collide: function(model) {
 			var type = model.get('type');
 			switch(type) {
-				case "bullet" :
+				case "bullet":
 					this.life(-1)
-					break;			
+					break;
+				case "tank":
+					//TODO:needs work
+					this.set('move', false);
+					this.set('x', this.previous('x'));
+					this.set('y', this.previous('y'));
+					break;		
 			}
 		}
 	});
