@@ -24,45 +24,49 @@ define(function(require) {
 			'bulletCount': 0
 		},
 		frame: function() {
-			if(this.get('move')) {
-				this._move();
-			}
-			if(_.isString(this.get('rotate'))) {
-				this._rotate();
-			}
-		},
-		_move: function() {
-			var radians = this.get('a') * (Math.PI/180),
-				cos = Math.cos(radians);
-				sin = Math.sin(radians);
-			this.set('x', parseFloat((this.get('x') - (this.get('v') * cos)).toFixed(2)));
-			this.set('y', parseFloat((this.get('y') - (this.get('v') * sin)).toFixed(2)));
-		},
-		_rotate: function() {
-			//TODO: make this cleaner
+
 			var angle = this.get('a'),
+				radians = angle * (Math.PI/180),
+				x = this.get('x'),
+				y = this.get('y'),
+				cos = Math.cos(radians),
+				sin = Math.sin(radians),
+
 				rotate = this.get('rotate'),
 				inc;
+
+			if(_.isString(rotate)) {
+
+				switch(rotate) {
+					case "right":
+						inc = ANGLE_INC * 1
+						break;
+					case "left":
+						inc = ANGLE_INC * -1
+						break
+				}
 				
-			switch(rotate) {
-				case "right":
-					inc = ANGLE_INC * 1
-					break;
-				case "left":
-					inc = ANGLE_INC * -1
-					break
+				angle += inc;
+	
+				if(angle > 360) {
+					angle = 0;
+				}
+				if(angle < 0) {
+					angle = 360;
+				}
+			}
+
+			if(this.get('move')) {
+			
+				x = parseFloat((this.get('x') - (this.get('v') * cos)).toFixed(2));
+				y = parseFloat((this.get('y') - (this.get('v') * sin)).toFixed(2));
 			}
 			
-			angle += inc;
-
-			if(angle > 360) {
-				angle = 0;
-			}
-			if(angle < 0) {
-				angle = 360;
-			}
-
-			this.set('a', angle);
+			this.set({
+				'x': x,
+				'y': y,
+				'a': angle
+			});
 		},
 		shoot: function() {
 			var count = this.get('bulletCount');
@@ -113,9 +117,11 @@ define(function(require) {
 					break;
 				case "tank":
 					//TODO:needs work
-					this.set('move', false);
-					this.set('x', this.previous('x'));
-					this.set('y', this.previous('y'));
+					//this.set('move', false);
+					this.set({
+						'x': this.previous('x'),
+						'y': this.previous('y')
+					});
 					break;		
 			}
 		}
