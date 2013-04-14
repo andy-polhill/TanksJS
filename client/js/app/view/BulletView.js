@@ -17,8 +17,8 @@ define([
 			this.render();
 		},
 		render: function() {		
-			this.$el.css("left", this.model.get('left'));
-			this.$el.css("top", this.model.get('top'));
+			this.$el.css("left", this.model.get('x'));
+			this.$el.css("top", this.model.get('y'));
 		}
 	});
   

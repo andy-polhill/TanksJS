@@ -14,12 +14,12 @@ define(function(require) {
 			this.events.on('frame:advance', this.frame, this);
 		},
 		defaults : {
-			'velocity': 1.5,
-			'angle': 180,
-			'left': 0,
-			'top': 0,
-			'width': 32,
-			'height': 32,
+			'v': 1.5, //velocity
+			'x': 0, //horizontal location
+			'y': 0, //vertical location
+			'w': 32, //width
+			'h': 32, //height
+			'a': 180,
 			'life': 5,
 			'bulletCount': 0
 		},
@@ -32,15 +32,15 @@ define(function(require) {
 			}
 		},
 		_move: function() {
-			var radians = this.get('angle') * (Math.PI/180),
+			var radians = this.get('a') * (Math.PI/180),
 				cos = Math.cos(radians);
 				sin = Math.sin(radians);
-			this.set('left', parseFloat((this.get('left') - (this.get('velocity') * cos)).toFixed(2)));
-			this.set('top', parseFloat((this.get('top') - (this.get('velocity') * sin)).toFixed(2)));
+			this.set('x', parseFloat((this.get('x') - (this.get('v') * cos)).toFixed(2)));
+			this.set('y', parseFloat((this.get('y') - (this.get('v') * sin)).toFixed(2)));
 		},
 		_rotate: function() {
 			//TODO: make this cleaner
-			var angle = this.get('angle'),
+			var angle = this.get('a'),
 				rotate = this.get('rotate'),
 				inc;
 				
@@ -62,7 +62,7 @@ define(function(require) {
 				angle = 360;
 			}
 
-			this.set('angle', angle);
+			this.set('a', angle);
 		},
 		shoot: function() {
 			var count = this.get('bulletCount');
@@ -70,21 +70,21 @@ define(function(require) {
 
 			var cos, sin;
 
-			var angle = this.get('angle'),
+			var angle = this.get('a'),
 				cos = (Math.cos(angle * Math.PI / 180)).toFixed(2),
 				sin = (Math.sin(angle * Math.PI / 180)).toFixed(2),
-				width = this.get('width') + 9,
-				height = this.get('height') + 9,
+				width = this.get('w') + 10,
+				height = this.get('h') + 10,
 				/* TODO: 9 is a magic number which stops bullet colliding with own tank when
 				at acute angles. If radial collision detection is implemented this can be removed */
-				top = parseFloat(this.get('top') - ((height / 2) * sin)),
-				left = parseFloat(this.get('left') - ((width / 2) * cos));
+				top = parseFloat(this.get('y') - ((height / 2) * sin)),
+				left = parseFloat(this.get('x') - ((width / 2) * cos));
 			
 			this.collection.add(
 				new BulletModel({
-					'angle': this.get('angle'),
-					'top': top,
-					'left': left,
+					'a': this.get('a'),
+					'y': top,
+					'x': left,
 					'type': 'bullet',
 					'id': this.get('id') + ":" + count
 				}, {
@@ -94,7 +94,6 @@ define(function(require) {
 			this.set('bulletCount', count);
 		},
 		life: function(operator) {
-			console.log("*HIT!*");
 			var life = this.get('life');
 			life += operator;
 			if(life < 0) {
@@ -105,9 +104,7 @@ define(function(require) {
 			this.set('life', life);		
 		},
 		collide: function(model) {
-
 			var type = model.get('type');
-			console.log('collsion with: ' + type);
 			switch(type) {
 				case "bullet" :
 					this.life(-1)

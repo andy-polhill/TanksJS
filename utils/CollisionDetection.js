@@ -9,26 +9,26 @@ define(function(require) {
 		//TODO: Implement radial collision detection!
 		detect : function(model, collection) {
 		
-			var originTop = model.get('top'),
-				originLeft = model.get('left'),
-				halfHeight = model.get('height') / 2,
-				halfWidth = model.get('width') / 2,
-				left = originLeft - halfWidth,
-				right = originLeft + halfWidth,
-				top = originTop - halfHeight,
-				bottom = originTop + halfHeight,
+			var y = model.get('y'),
+				x = model.get('x'),
+				halfHeight = model.get('h') / 2,
+				halfWidth = model.get('w') / 2,
+				left = x - halfWidth,
+				right = x + halfWidth,
+				top = y - halfHeight,
+				bottom = y + halfHeight,
 				id = model.get('id');
 		
 			_.each(collection, function(candidate) {
 
-				var cOriginTop = candidate.get('top'),
-					cOriginLeft = candidate.get('left'),
-					cHalfHeight = candidate.get('height') / 2,
-					cHalfWidth = candidate.get('width') / 2,
-					cLeft = cOriginLeft - cHalfWidth,
-					cRight = cOriginLeft + cHalfWidth,
-					cTop = cOriginTop - cHalfHeight,
-					cBottom = cOriginTop + cHalfHeight,
+				var y = candidate.get('y'),
+					x = candidate.get('x'),
+					cHalfHeight = candidate.get('h') / 2,
+					cHalfWidth = candidate.get('w') / 2,
+					cLeft = x - cHalfWidth,
+					cRight = x + cHalfWidth,
+					cTop = y - cHalfHeight,
+					cBottom = y + cHalfHeight,
 					cid = candidate.get('id');
 
 				//console.log("candidate left %d right %d top %d bottom %d", cLeft, cRight, cTop, cBottom)
