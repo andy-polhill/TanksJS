@@ -12,7 +12,7 @@ var express = require('express'),
 	io = require('socket.io').listen(server, { log: false });
 
 
-var FRAME_RATE = 100;
+var FRAME_RATE = 50;
 
 server.listen(8080);
 app.use(express.static(__dirname + '/'));

@@ -68,20 +68,17 @@ define(function(require) {
 			var count = this.get('bulletCount');
 			count++;
 
-			var cos = Math.cos(this.get('angle') * (Math.PI/180)),
-				sin = Math.sin((Math.PI/180) / this.get('angle')),
-				width = this.get('width'),
-				height = this.get('height'),
-				top = parseFloat(this.get('top') - ((height/2) * sin)),
-				left = parseFloat(this.get('left') - ((width/2) * cos));
+			var cos, sin;
 
-
-			console.log('cos:' + cos);
-			console.log('sin:' + sin);
-			console.log('m top:' + this.get('top'));
-			console.log('height :' + height);
-			console.log('top :' + top);
-			console.log('left :' + left);
+			var angle = this.get('angle'),
+				cos = (Math.cos(angle * Math.PI / 180)).toFixed(2),
+				sin = (Math.sin(angle * Math.PI / 180)).toFixed(2),
+				width = this.get('width') + 9,
+				height = this.get('height') + 9,
+				/* TODO: 9 is a magic number which stops bullet colliding with own tank when
+				at acute angles. If radial collision detection is implemented this can be removed */
+				top = parseFloat(this.get('top') - ((height / 2) * sin)),
+				left = parseFloat(this.get('left') - ((width / 2) * cos));
 			
 			this.collection.add(
 				new BulletModel({
@@ -108,7 +105,9 @@ define(function(require) {
 			this.set('life', life);		
 		},
 		collide: function(model) {
+
 			var type = model.get('type');
+			console.log('collsion with: ' + type);
 			switch(type) {
 				case "bullet" :
 					this.life(-1)
