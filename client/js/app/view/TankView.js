@@ -3,29 +3,37 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-	'model/TankModel'
+	'model/TankModel',
+	'text!template/TankTemplate.html'
 ], function(
-	$, _, Backbone, TankModel){
+	$, _, Backbone, TankModel, TankTemplate){
 
 	var TankView = Backbone.View.extend({
   
 		initialize: function( opts ) {
-			this.$el = $("<div class='tank' />");
+			var tmpl = _.template( this.template );
+			this.$el.html( tmpl() );
 			opts.$parent.append(this.$el);
-			this.model.on("change:life", this.pulse, this);
+			
+			this.$tank = this.$el.find('.tank');
+			this.$tankBody = this.$el.find('.tankBody');
+			
+			this.model.on("change:life", this.life, this);
 			this.model.on('remove', this.remove, this);
-			this.render();
+			this.render(); //correctly position
+			this.life(); //set life bar
 		},
+		template: TankTemplate,
 		render: function() {		
-			this.$el.css("left", this.model.get('x'));
-			this.$el.css("top", this.model.get('y'));
+			this.$tank.css("left", this.model.get('x'));
+			this.$tank.css("top", this.model.get('y'));
 			
 			var rotateAttr = 'rotate(' + this.model.get('a') + 'deg)';
-			this.$el.css('-moz-transform', rotateAttr);
-			this.$el.css('-webkit-transform', rotateAttr);		
+			this.$tankBody.css('-moz-transform', rotateAttr);
+			this.$tankBody.css('-webkit-transform', rotateAttr);		
 		},
-		pulse: function() {
-			
+		life: function() {
+			this.$tank.attr('data-life', this.model.get('life'));
 		}
 	});
   
