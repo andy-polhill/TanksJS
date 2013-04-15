@@ -5,17 +5,49 @@
 	border:solid 1px;	
 }
 
+/* TANK ============================================== */
+
 .tank {
 	position:absolute;
 	width:32px;
 	height:32px;
-	background-image:url(/client/images/tank.jpg);
 	display:block;
-	/*negative margin to put central point in the middle */
+/*negative margin to put central point in the middle */
 	margin-top:-16px; /* height / 2 */
 	margin-left:-16px; /* width / 2 */
 }
 
+.tankBody {	
+	background-image:url(/client/images/tank.jpg);
+	width:32px;
+	height:32px;
+}
+
+.lifeBar {
+    border: 1px solid #888;
+    display: block;
+    height: 3px;
+    left: -20px;
+    position: absolute;
+    top: -10px;
+    width: 30px;
+}
+
+.lifeBar div {
+    background-color: lightgreen;
+    display: block;
+    height: 100%;
+    position: absolute;
+}
+
+.tank[data-life='5'] .lifeBar div { width: 100%; }
+.tank[data-life='4'] .lifeBar div { width: 80%; }
+.tank[data-life='3'] .lifeBar div { width: 60%; }
+.tank[data-life='2'] .lifeBar div { width: 40%; }
+.tank[data-life='1'] .lifeBar div { width: 20%; }
+
+/* BULLET ============================================== */
+	
 .bullet {
 	position:absolute;
 	width:3px;
