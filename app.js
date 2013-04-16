@@ -59,7 +59,10 @@ io.sockets.on('connection', function(socket) {
 	elementCollection.add(
 		new TankModel({
 			'id': socket.id,
-			'type': 'tank' 
+			'type': 'tank',
+			'x': _.random(0, boundsModel.get('x')),
+			'y': _.random(0, boundsModel.get('y')),
+			'a': _.random(0, 360)
 		}, {
 			'events': events
 		}
