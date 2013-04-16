@@ -1,8 +1,10 @@
 #game {
-	width:600px;
-	height:400px;
+	width:640px;
+	height:480px;
 	position:relative;
-	border:solid 1px;	
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:50px;
 }
 
 /* TANK ============================================== */
@@ -12,7 +14,7 @@
 	width:32px;
 	height:32px;
 	display:block;
-/*negative margin to put central point in the middle */
+	/*negative margin to put axis in the middle */
 	margin-top:-16px; /* height / 2 */
 	margin-left:-16px; /* width / 2 */
 }
@@ -54,7 +56,7 @@
 	height:3px;
 	background-color:black;
 	display:block;
-	/*negative margin to put central point in the middle */
+	/*negative margin to put axis in the middle */
 	margin-top:-1.5px; /* height / 2 */
 	margin-left:-1.5px; /* width / 2 */
 }
