@@ -6,20 +6,22 @@ var express = require('express'),
 	_ = require('underscore'),
 	CollisionDetection = require('./utils/CollisionDetection'),
 	TankModel = require('./model/TankModel'),
+	BoundsModel = require('./model/BoundsModel'),
 	ElementCollection = require('./collection/ElementCollection'),
 	app = express(),
 	server = http.createServer(app),
 	io = require('socket.io').listen(server, { log: false });
 
 
-var FRAME_RATE = 50;
+var FRAME_RATE = 20;
+
+var elementCollection = new ElementCollection(),
+	boundsModel = new BoundsModel(),
+	events = _.extend({}, Backbone.Events);
 
 server.listen(8080);
 app.use(express.static(__dirname + '/'));
 //app.use('node', express.static(__dirname + '/node_modules'));
-
-var elementCollection = new ElementCollection();
-var events = _.extend({}, Backbone.Events);
 
 console.log('====TANKS STARTED=====');
 
@@ -67,6 +69,7 @@ io.sockets.on('connection', function(socket) {
 				CollisionDetection.detect(model, collection);
 			}
 		});		
+		CollisionDetection.detect(boundsModel, elementCollection.models, {invert:true});
 		socket.emit('frame', elementCollection.toJSON());
 	}, FRAME_RATE)
 
