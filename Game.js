@@ -8,7 +8,8 @@ var _ = require('underscore'),
 
 define(function(require) {
 		
-	var FRAME_RATE = 20;
+	var FRAME_RATE = 20,
+		MAX_SOCKETS = 4;
 		
 	return {
 	
@@ -28,7 +29,7 @@ define(function(require) {
 			CollisionDetection.detect(this.boundsModel, this.collection.models, {invert:true});
 			
 			//emit output to each socket
-			_.each(this.sockets, function(socket){
+			_.each(_.values(this.sockets), function(socket){
 				socket.emit('frame', this.collection.toJSON());	
 			}, this);
 			
@@ -39,44 +40,51 @@ define(function(require) {
 			//horrible context reference FIXME;
 			var self = this;
 
-			this.sockets.push(socket);
-		
-			//spawn tank in random location
-			//TODO: ensure the location is empty
-			this.collection.add(
-				new TankModel({
-					'id': socket.id,
-					'type': 'tank',
-					'x': _.random(0, this.boundsModel.get('x')),
-					'y': _.random(0, this.boundsModel.get('y')),
-					'a': _.random(0, 360)
-				}, {
-					'events': this.events
-				}
-			));
+			this.sockets[socket.id] = socket;
 
-			//set up user controls			
-			socket.on('move', function(move) {
-				try {
-					self.collection.get(socket.id).set('move', move);
-				} catch(e) {}
-			});
+			if(_.size(this.sockets) <= MAX_SOCKETS) {
 		
-			socket.on('rotate', function(rotate) {
-				try {
-					self.collection.get(socket.id).set('rotate', rotate);
-				} catch(e) {}
-			});
-		
-			socket.on('shoot', function(shoot) {
-				try {
-					self.collection.get(socket.id).shoot();
-				} catch(e) {}
-			});
-		
-			socket.on('disconnect', function() {
-				self.collection.remove(self.collection.get(socket.id));
-			});
+				//spawn tank in random location
+				//TODO: ensure the location is empty
+				this.collection.add(
+					new TankModel({
+						'id': socket.id,
+						'type': 'tank',
+						'x': _.random(0, this.boundsModel.get('x')),
+						'y': _.random(0, this.boundsModel.get('y')),
+						'a': _.random(0, 360)
+					}, {
+						'events': this.events
+					}
+				));
+	
+				//set up user controls			
+				socket.on('move', function(move) {
+					try {
+						self.collection.get(socket.id).set('move', move);
+					} catch(e) {}
+				});
+			
+				socket.on('rotate', function(rotate) {
+					try {
+						self.collection.get(socket.id).set('rotate', rotate);
+					} catch(e) {}
+				});
+			
+				socket.on('shoot', function(shoot) {
+					try {
+						self.collection.get(socket.id).shoot();
+					} catch(e) {}
+				});
+			
+				socket.on('disconnect', function() {
+					//remove tank
+					self.collection.remove(self.collection.get(socket.id));
+					
+					//remove socket to prevent emitting to ghost
+					delete self.sockets[socket.id];
+				});
+			}
 		},
 	
 		start: function(opts) {
@@ -95,8 +103,8 @@ define(function(require) {
 			//events object handles frame advance
 			this.events = _.extend({}, Backbone.Events);
 
-			//sockets array
-			this.sockets = [];
+			//sockets object
+			this.sockets = {};
 						
 			//when a new socket is opened call add socket
 			this.io.sockets.on('connection', function(){
@@ -110,6 +118,5 @@ define(function(require) {
 			
 			console.log('====**COMMENCE WAR**=====');
 		}
-	
 	}
 });
