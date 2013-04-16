@@ -6,7 +6,7 @@ define([
 	'model/TankModel',
 	'text!template/TankTemplate.html'
 ], function(
-	$, _, Backbone, TankModel, TankTemplate){
+	$, _, Backbone, TankModel, TankTemplate) {
 
 	var TankView = Backbone.View.extend({
   
@@ -20,6 +20,7 @@ define([
 			
 			this.model.on("change:life", this.life, this);
 			this.model.on('remove', this.remove, this);
+
 			this.render(); //correctly position
 			this.life(); //set life bar
 		},

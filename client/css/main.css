@@ -42,11 +42,16 @@
     position: absolute;
 }
 
-.tank[data-life='5'] .lifeBar div { width: 100%; }
-.tank[data-life='4'] .lifeBar div { width: 80%; }
-.tank[data-life='3'] .lifeBar div { width: 60%; }
-.tank[data-life='2'] .lifeBar div { width: 40%; }
-.tank[data-life='1'] .lifeBar div { width: 20%; }
+.tank[data-life='10'] .lifeBar div { width: 100%; }
+.tank[data-life='9'] .lifeBar div { width: 90%; }
+.tank[data-life='8'] .lifeBar div { width: 80%; }
+.tank[data-life='7'] .lifeBar div { width: 70%; }
+.tank[data-life='6'] .lifeBar div { width: 60%; }
+.tank[data-life='5'] .lifeBar div { width: 50%; }
+.tank[data-life='4'] .lifeBar div { width: 40%; }
+.tank[data-life='3'] .lifeBar div { width: 30%; }
+.tank[data-life='2'] .lifeBar div { width: 20%; }
+.tank[data-life='1'] .lifeBar div { width: 10%; }
 
 /* BULLET ============================================== */
 	

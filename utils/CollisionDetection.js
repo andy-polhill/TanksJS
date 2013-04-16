@@ -50,9 +50,8 @@ define(function(require) {
 						candidate.collide.call(candidate, model);
 					}
 				}
-			})
-		}		
+			});
+		}
 	}
-	
-	return CollisionDetection;
+
 });

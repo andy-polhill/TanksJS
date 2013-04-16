@@ -5,7 +5,7 @@ var Backbone = require('backbone'),
 
 define(function(require) {
 
-	var ANGLE_INC = 5;
+	var ANGLE_INC = 3;
 
 	var TankModel = Backbone.Model.extend({
 
@@ -20,7 +20,7 @@ define(function(require) {
 			'w': 32, //width
 			'h': 32, //height
 			'a': 180,
-			'life': 5,
+			'life': 10,
 			'bulletCount': 0
 		},
 		frame: function() {
@@ -36,7 +36,6 @@ define(function(require) {
 				inc;
 
 			if(_.isString(rotate)) {
-
 				switch(rotate) {
 					case "right":
 						inc = ANGLE_INC * 1
@@ -56,8 +55,7 @@ define(function(require) {
 				}
 			}
 
-			if(this.get('move')) {
-			
+			if(this.get('move')) {			
 				x = parseFloat((this.get('x') - (this.get('v') * cos)).toFixed(2));
 				y = parseFloat((this.get('y') - (this.get('v') * sin)).toFixed(2));
 			}
@@ -103,7 +101,6 @@ define(function(require) {
 			var life = this.get('life');
 			life += operator;
 			if(life < 0) {
-				console.log("*BAM!*");
 				this.unset('id');
 				this.destroy();
 			}
@@ -111,10 +108,9 @@ define(function(require) {
 		},
 		collide: function(model) {
 			var type = model.get('type');
-			console.log('collide with %d', type);
 			switch(type) {
 				case "bullet":
-					this.life(-1)
+					this.life(-1);
 					break;
 				default:
 					this.set({
