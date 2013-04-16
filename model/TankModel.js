@@ -111,16 +111,16 @@ define(function(require) {
 		},
 		collide: function(model) {
 			var type = model.get('type');
+			console.log('collide with %d', type);
 			switch(type) {
 				case "bullet":
 					this.life(-1)
 					break;
-				case "tank":
-					//TODO:needs work
-					//this.set('move', false);
+				default:
 					this.set({
 						'x': this.previous('x'),
-						'y': this.previous('y')
+						'y': this.previous('y'),
+						'move': false
 					});
 					break;		
 			}
