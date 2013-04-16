@@ -7,7 +7,9 @@ define(function(require) {
 		
 		//TODO: Optimise Optimise!!
 		//TODO: Implement radial collision detection!
-		detect : function(model, collection) {
+		detect : function(model, collection, opts) {
+		
+			var opts = (typeof opts === "undefined") ? {} : opts;
 		
 			var y = model.get('y'),
 				x = model.get('x'),
@@ -31,9 +33,22 @@ define(function(require) {
 					cBottom = y + cHalfHeight,
 					cid = candidate.get('id');
 
-				if(!(left > cRight || cLeft > right || top > cBottom || cTop > bottom || id === cid) && _.isFunction(model.collide)) {
-					model.collide.call(model, candidate);
-					candidate.collide.call(candidate, model);
+				/*console.log("left %d > cRight %d = ", left, cRight, (left > cRight));
+				console.log("cLeft %d > right %d = ", cLeft, right, (cLeft > right));
+				console.log("top %d > cBottom %d = ", top, cBottom, (top > cBottom));
+				console.log("cTop %d > bottom %d = ", cTop, bottom, (cTop > bottom));
+				console.log("id %d === cid %d", id, cid, (id === cid));
+				console.log(!(left > cRight || cLeft > right || top > cBottom || cTop > bottom || id === cid));*/
+
+				var outcome = !(left > cRight || cLeft > right || top > cBottom || cTop > bottom || id === cid);
+				
+				if((opts.invert === true && !outcome) || (opts.invert !== true && outcome)) {
+					if(_.isFunction(model.collide)) {
+						model.collide.call(model, candidate);
+					}
+					if(_.isFunction(candidate.collide)) {
+						candidate.collide.call(candidate, model);
+					}
 				}
 			})
 		}		
