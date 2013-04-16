@@ -8,15 +8,12 @@ define(function(require) {
 
 		defaults: {
 			'id': '1',
-			'x': 0, //horizontal
-			'y': 0, //vertical
-			'h': -400, //height
-			'w': -600, //width
+			'x': 320, //horizontal center
+			'y': 240, //vertical center
+			'w': 640, //width
+			'h': 480, //height
 			'type': 'bounds'
-		},
-		
-		collide: function(){}
-		
+		}		
 	});
 	
 	return BoundsModel;
