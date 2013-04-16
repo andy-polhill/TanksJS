@@ -14,7 +14,8 @@ define(function(require) {
 			this.events.on('frame:advance', this.frame, this);
 		},
 		defaults : {
-			'v': 1.5, //velocity
+			'fv': 1.5, //forward velocity
+			'rv': 0.5, //reverse velocity
 			'x': 0, //horizontal location
 			'y': 0, //vertical location
 			'w': 32, //width
@@ -25,10 +26,13 @@ define(function(require) {
 		},
 		frame: function() {
 
+			//TODO This function needs rationalising.
 			var angle = this.get('a'),
 				radians = angle * (Math.PI/180),
 				x = this.get('x'),
 				y = this.get('y'),
+				fv = this.get('fv'),
+				rv = this.get('rv'),
 				cos = Math.cos(radians),
 				sin = Math.sin(radians),
 
@@ -55,10 +59,19 @@ define(function(require) {
 				}
 			}
 
-			if(this.get('move')) {			
-				x = parseFloat((this.get('x') - (this.get('v') * cos)).toFixed(2));
-				y = parseFloat((this.get('y') - (this.get('v') * sin)).toFixed(2));
-			}
+			var move = this.get('move');
+			switch(move) {
+				case "1":
+					//forwards
+					x = parseFloat((x - (fv * cos)).toFixed(2));
+					y = parseFloat((y - (fv * sin)).toFixed(2));
+					break;
+				case "-1":
+					//backwards
+					x = parseFloat((x + (rv * cos)).toFixed(2));
+					y = parseFloat((y + (rv * sin)).toFixed(2));
+					break;
+			} 
 			
 			this.set({
 				'x': x,
