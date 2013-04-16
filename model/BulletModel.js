@@ -29,14 +29,8 @@ define(function(require) {
 			var top = this.get('y') - this.get('yv');
 			this.set('x', parseFloat((left).toFixed(2)));
 			this.set('y', parseFloat((top).toFixed(2)));
-			
-			if(left > 600 || top > 400 || left < 0 || top < 0) {
-				this.unset('id');
-				this.destroy();
-			}			
 		},
 		collide: function() {
-			console.log('*PHIZ*');
 			this.unset('id');
 			this.destroy();
 		}
