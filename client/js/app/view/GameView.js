@@ -47,8 +47,6 @@ define([
 	},
 	control: function( evt ) {
 		
-		evt.preventDefault();
-		
 		var isKeydown = (evt.type === 'keydown') ? true : false;
 
 		switch(evt.which) {
@@ -58,32 +56,37 @@ define([
 				} else { 
 					this.socket.emit('move', null);
 				}
+				evt.preventDefault();
 				break;
 			case 40: //down
 				if(isKeydown) {
-					this.socket.emit('move', "-1");
+					this.socket.emit('move', '-1');
 				} else {
 					this.socket.emit('move', null);
 				}
+				evt.preventDefault();
 				break;
 			case 37: //rotate left
 				if(isKeydown) {
-					this.socket.emit('rotate', 'left');
+					this.socket.emit('rotate', '-1');
 				} else {
 					this.socket.emit('rotate', null);
 				}
+				evt.preventDefault();
 				break;
 			case 39: //rotate right
 				if(isKeydown) {
-					this.socket.emit('rotate', 'right');
+					this.socket.emit('rotate', '1');
 				} else {
 					this.socket.emit('rotate', null);
 				}
+				evt.preventDefault();
 				break;
 			case 32: //spacebar
 				if(!isKeydown) {
 					this.socket.emit('shoot', true);
 				}
+				evt.preventDefault();
 				break;
 		}
 	}

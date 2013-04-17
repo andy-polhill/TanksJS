@@ -12,6 +12,7 @@ define(function(require) {
 		initialize: function( atts, opts ) {
 			this.events = opts.events;
 			this.events.on('frame:advance', this.frame, this);
+			this.on('change:life', this.isDead, this);
 		},
 		defaults : {
 			'fv': 1.5, //forward velocity
@@ -28,37 +29,23 @@ define(function(require) {
 			//TODO This function needs rationalising.
 			var angle = this.get('a'),
 				radians = angle * (Math.PI/180),
+				move = this.get('move'),
 				x = this.get('x'),
 				y = this.get('y'),
 				fv = this.get('fv'),
 				rv = this.get('rv'),
 				cos = Math.cos(radians),
 				sin = Math.sin(radians),
-
 				rotate = this.get('rotate'),
 				inc;
 
 			if(_.isString(rotate)) {
-				switch(rotate) {
-					case "right":
-						inc = ANGLE_INC * 1
-						break;
-					case "left":
-						inc = ANGLE_INC * -1
-						break
-				}
-				
-				angle += inc;
+				angle += ANGLE_INC * rotate
 	
-				if(angle > 360) {
-					angle = 0;
-				}
-				if(angle < 0) {
-					angle = 360;
-				}
+				if(angle > 360) angle = 0;
+				if(angle < 0) angle = 360;
 			}
 
-			var move = this.get('move');
 			switch(move) {
 				case "1":
 					//forwards
@@ -72,6 +59,7 @@ define(function(require) {
 					break;
 			} 
 			
+			//set all the props at once to ensure previous atts is useful
 			this.set({
 				'x': x,
 				'y': y,
@@ -104,22 +92,23 @@ define(function(require) {
 				})
 			);
 		},
-		life: function(operator) {
-			var life = this.get('life');
-			life += operator;
-			if(life < 0) {
+		isDead: function() {
+			if(this.get('life') < 0) {
 				this.unset('id');
 				this.destroy();
+				return true;
 			}
-			this.set('life', life);		
+			return false;
 		},
 		collide: function(model) {
 			var type = model.get('type');
 			switch(type) {
 				case "bullet":
-					this.life(-1);
+					//loose a life
+					this.set('life', this.get('life') - 1 )
 					break;
 				default:
+					//you can't move here, revert to previous position
 					this.set({
 						'x': this.previous('x'),
 						'y': this.previous('y'),
@@ -128,8 +117,6 @@ define(function(require) {
 					break;		
 			}
 		},
-		
-		//randomly position the tank
 		randomPosition: function(maxX, maxY) {
 			this.set({
 				'x': _.random(0, maxX),
