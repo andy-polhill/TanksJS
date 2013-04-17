@@ -1,17 +1,19 @@
 {
   "name": "playground",
-  "version": "0.0.0",
+  "version": "0.0.0-3",
   "description": "Just Playin",
   "main": "main.js",
-  "dependencies": {},
-  "devDependencies": {
-	"amdefine": ">=0.0.2",
+  "dependencies": {
+    "amdefine": ">=0.0.2",
     "socket.io": "~0.9.14",
     "express": "~3.1.1",
-    "jasmine-node": "~1.6.0"
+    "jasmine-node": "~1.6.0",
+    "underscore": "~1.4.4",
+    "backbone": "~1.0.0"
   },
   "scripts": {
-    "test": "alert('test')"
+    "test": "alert('test')",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -20,5 +22,9 @@
   "author": "Andy Polhill",
   "license": "BSD",
   "readmeFilename": "README.md",
-  "gitHead": "6a97590b1eef85e165c99121ff13e11f4c7efc68"
+  "gitHead": "6a97590b1eef85e165c99121ff13e11f4c7efc68",
+  "subdomain": "thatguynamedandy",
+  "engines": {
+    "node": "0.8.x"
+  }
 }
