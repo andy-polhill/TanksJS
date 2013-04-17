@@ -36,8 +36,11 @@ describe("Collision Detection", function() {
 			spyOn(tank2, "collide");
 
 			//collide should be called as the tanks overlap
-			CollisionDetection.detect(tank2, [tank1]);
+			var result = CollisionDetection.detect(tank2, [tank1], {
+				'callback': 'collide'
+			});
 			
+			expect(result).toBeTruthy();
 			expect(tank1.collide).toHaveBeenCalled();
 			expect(tank2.collide).toHaveBeenCalled();
 		});
@@ -72,8 +75,11 @@ describe("Collision Detection", function() {
 			spyOn(tank2, "collide");
 
 			//collide should be called as the tanks overlap
-			CollisionDetection.detect(tank2, [tank1]);
+			var result = CollisionDetection.detect(tank2, [tank1], {
+				'callback': 'collide'
+			});
 			
+			expect(result).toBeFalsy();
 			expect(tank1.collide).not.toHaveBeenCalled();
 			expect(tank2.collide).not.toHaveBeenCalled();
 		});
@@ -103,8 +109,12 @@ describe("Collision Detection", function() {
 			});
 			
 			//collide should not be called as the tank is inside the bounds
-			CollisionDetection.detect(boundsModel, [tankModel], {invert:true});
-			
+			var result = CollisionDetection.detect(boundsModel, [tankModel], {
+				'invert': true,
+				'callback': 'collide'				
+			});
+
+			expect(result).toBeFalsy();			
 			expect(tankModel.collide).not.toHaveBeenCalled();			
 		});
 
@@ -133,8 +143,12 @@ describe("Collision Detection", function() {
 			});			
 			
 			//collide should not be called as the tank is inside the bounds
-			CollisionDetection.detect(boundsModel, [tankModel], {invert:true});
-			
+			var result = CollisionDetection.detect(boundsModel, [tankModel], {
+				'invert': true,
+				'callback': 'collide'				
+			});
+
+			expect(result).toBeTruthy();				
 			expect(tankModel.collide).toHaveBeenCalled();			
 		});
     });    
