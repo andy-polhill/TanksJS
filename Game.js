@@ -9,88 +9,97 @@ var _ = require('underscore'),
 define(function(require) {
 		
 	var FRAME_RATE = 20,
-		MAX_SOCKETS = 4;
+		MAX_PLAYERS = 4;
 		
 	return {
-	
+		
 		frame: function(){
 	
 			//trigger frame advance
-			this.events.trigger("frame:advance");
+			this.events.trigger('frame:advance');
 			
 			//look for collisions between objects
 			_.each(this.collection.models, function(model, idx, collection) {
-				if(typeof model !== "undefined") { 	
-					CollisionDetection.detect(model, collection);
+				if(typeof model !== 'undefined') { 	
+					CollisionDetection.detect(model, collection, {
+						'callback': 'collide'
+					});
 				}
 			});		
 			
 			//look for collision with bounds
-			CollisionDetection.detect(this.boundsModel, this.collection.models, {invert:true});
+			CollisionDetection.detect(this.boundsModel, this.collection.models, {
+				'invert': true,
+				'callback': 'collide'
+			});
 			
 			//emit output to each socket
 			_.each(_.values(this.sockets), function(socket){
 				socket.emit('frame', this.collection.toJSON());	
 			}, this);
+		},
+		
+		move: function(socket, move) {
+			try {
+				this.collection.get(socket.id).set('move', move);
+			} catch(e) {}
+		},
+
+		rotate: function(socket, rotate) {
+			try {
+				this.collection.get(socket.id).set('rotate', rotate);
+			} catch(e) {}
+		},
+	
+		shoot: function(socket) {
+			try {
+				this.collection.get(socket.id).shoot();
+			} catch(e) {}
+		},	
+
+		disconnect: function(socket) {
+			//remove tank
+			this.collection.remove(this.collection.get(socket.id));
 			
+			//remove socket to prevent emitting to ghost
+			delete this.sockets[socket.id];
 		},
 	
 		addSocket: function(socket) {
 
-			//horrible context reference FIXME;
-			var self = this;
-
+			//create a reference to the socket
 			this.sockets[socket.id] = socket;
 
-			if(_.size(this.sockets) <= MAX_SOCKETS) {
+			//create a new tank if the max players hasn't been exceeded
+			if(_.size(this.sockets) <= MAX_PLAYERS) {
+		
+				var maxX = this.boundsModel.get('x'),
+					maxY = this.boundsModel.get('y');
 		
 				//spawn tank in random location
-				//TODO: ensure the location is empty
-				this.collection.add(
-					new TankModel({
-						'id': socket.id,
-						'type': 'tank',
-						'x': _.random(0, this.boundsModel.get('x')),
-						'y': _.random(0, this.boundsModel.get('y')),
-						'a': _.random(0, 360)
-					}, {
-						'events': this.events
-					}
-				));
+				var tank = new TankModel({
+					'id': socket.id
+				}, {
+					'events': this.events
+				}).randomPosition(maxX, maxY);
+				
+				//reposition the tank if the proposed location is in conflict
+				while(CollisionDetection.detect(tank, this.collection.models) === true) {
+					tank.randomPosition(maxX, maxY);
+				}
+				
+				//add it to the collection
+				this.collection.add(tank);
 	
 				//set up user controls			
-				socket.on('move', function(move) {
-					try {
-						self.collection.get(socket.id).set('move', move);
-					} catch(e) {}
-				});
-			
-				socket.on('rotate', function(rotate) {
-					try {
-						self.collection.get(socket.id).set('rotate', rotate);
-					} catch(e) {}
-				});
-			
-				socket.on('shoot', function(shoot) {
-					try {
-						self.collection.get(socket.id).shoot();
-					} catch(e) {}
-				});
-			
-				socket.on('disconnect', function() {
-					//remove tank
-					self.collection.remove(self.collection.get(socket.id));
-					
-					//remove socket to prevent emitting to ghost
-					delete self.sockets[socket.id];
-				});
+				socket.on('move', _.bind(this.move, this, socket));
+				socket.on('rotate', _.bind(this.rotate, this, socket));
+				socket.on('shoot', _.bind(this.shoot, this, socket));
+				socket.on('disconnect', _.bind(this.disconnect, this, socket));
 			}
 		},
 	
 		start: function(opts) {
-			
-			//horrid context hack FIXME;
-			var self = this;
 			
 			this.io = opts.io;
 			
@@ -107,14 +116,10 @@ define(function(require) {
 			this.sockets = {};
 						
 			//when a new socket is opened call add socket
-			this.io.sockets.on('connection', function(){
-				self.addSocket.apply(self, arguments);
-			});
+			this.io.sockets.on('connection', _.bind(this.addSocket, this));
 			
 			//start game interval
-			frameInterval = setInterval(function(){
-				self.frame.apply(self);
-			}, FRAME_RATE);
+			frameInterval = setInterval(_.bind(this.frame, this), FRAME_RATE);
 			
 			console.log('====**COMMENCE WAR**=====');
 		}
