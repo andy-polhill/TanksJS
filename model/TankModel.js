@@ -15,14 +15,13 @@ define(function(require) {
 		},
 		defaults : {
 			'fv': 1.5, //forward velocity
-			'rv': 0.5, //reverse velocity
+			'rv': 0.8, //reverse velocity
 			'x': 0, //horizontal location
 			'y': 0, //vertical location
 			'w': 32, //width
 			'h': 32, //height
-			'a': 180,
 			'life': 10,
-			'bulletCount': 0
+			'type': 'tank'
 		},
 		frame: function() {
 
@@ -80,9 +79,6 @@ define(function(require) {
 			});
 		},
 		shoot: function() {
-			var count = this.get('bulletCount');
-			count++;
-
 			var cos, sin;
 
 			var angle = this.get('a'),
@@ -99,16 +95,14 @@ define(function(require) {
 			
 			this.collection.add(
 				new BulletModel({
-					'a': this.get('a'),
+					'a': angle,
 					'y': top,
 					'x': left,
-					'type': 'bullet',
-					'id': this.get('id') + ":" + count
+					'id': _.uniqueId()
 				}, {
 					'events': this.events
 				})
-			);			
-			this.set('bulletCount', count);
+			);
 		},
 		life: function(operator) {
 			var life = this.get('life');
@@ -133,6 +127,18 @@ define(function(require) {
 					});
 					break;		
 			}
+		},
+		
+		//randomly position the tank
+		randomPosition: function(maxX, maxY) {
+			this.set({
+				'x': _.random(0, maxX),
+				'y': _.random(0, maxY),
+				'a': _.random(0, 360)
+			}, {
+				'silent': true
+			});
+			return this;
 		}
 	});
 	

@@ -7,7 +7,7 @@ define(function(require) {
 	var BoundsModel = Backbone.Model.extend({
 
 		defaults: {
-			'id': '1',
+			'id': _.uniqueId(),
 			'x': 320, //horizontal center
 			'y': 240, //vertical center
 			'w': 640, //width
