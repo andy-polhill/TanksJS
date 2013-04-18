@@ -30,14 +30,13 @@ define(function(require) {
 			var angle = this.get('a'),
 				radians = angle * (Math.PI/180),
 				move = this.get('move'),
+				rotate = this.get('rotate'),
 				x = this.get('x'),
 				y = this.get('y'),
 				fv = this.get('fv'),
 				rv = this.get('rv'),
 				cos = Math.cos(radians),
-				sin = Math.sin(radians),
-				rotate = this.get('rotate'),
-				inc;
+				sin = Math.sin(radians);
 
 			if(_.isString(rotate)) {
 				angle += ANGLE_INC * rotate
@@ -74,6 +73,7 @@ define(function(require) {
 				sin = (Math.sin(angle * Math.PI / 180)).toFixed(2),
 				width = this.get('w') + 13,
 				height = this.get('h') + 13,
+				
 				/* TODO: The above is a magic number which stops bullet colliding with own tank when
 				at acute angles. the number also needs to take into account velocity of tank,
 				as it may only shoot itself when moving, need to calculate this properly
@@ -111,8 +111,7 @@ define(function(require) {
 					//you can't move here, revert to previous position
 					this.set({
 						'x': this.previous('x'),
-						'y': this.previous('y'),
-						'move': false
+						'y': this.previous('y')
 					});
 					break;		
 			}
