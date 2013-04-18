@@ -1,6 +1,7 @@
 var _ = require('underscore'),
 	Backbone = require('backbone'),
 	CollisionDetection = require('./utils/CollisionDetection'),
+	BarrierModel = require('./model/BarrierModel'),
 	TankModel = require('./model/TankModel'),
 	BoundsModel = require('./model/BoundsModel'),
 	ElementCollection = require('./collection/ElementCollection'),
@@ -9,7 +10,8 @@ var _ = require('underscore'),
 define(function(require) {
 		
 	var FRAME_RATE = 20,
-		MAX_PLAYERS = 4;
+		MAX_PLAYERS = 4,
+		BARRIERS = 7;
 		
 	return {
 		
@@ -17,7 +19,7 @@ define(function(require) {
 	
 			//trigger frame advance
 			this.events.trigger('frame:advance');
-			
+
 			//look for collisions between objects
 			_.each(this.collection.models, function(model, idx, collection) {
 				if(typeof model !== 'undefined') { 	
@@ -35,7 +37,7 @@ define(function(require) {
 			
 			//emit output to each socket
 			_.each(_.values(this.sockets), function(socket){
-				socket.emit('frame', this.collection.toJSON());	
+				socket.emit('frame', this.collection.toJSON());
 			}, this);
 		},
 		
@@ -65,6 +67,20 @@ define(function(require) {
 			delete this.sockets[socket.id];
 		},
 	
+		addBarriers: function() {
+			
+			//add barriers in a random location
+			for(var i=0; i < BARRIERS; i++) {				
+				var barrier = new BarrierModel({
+					'id' : _.uniqueId()
+				});
+				
+				//put the barrier in an empty location
+				CollisionDetection.position(barrier, this.collection.models, this.boundsModel);
+				this.collection.add(barrier);
+			}
+		},
+	
 		addSocket: function(socket) {
 
 			//create a reference to the socket
@@ -73,20 +89,15 @@ define(function(require) {
 			//create a new tank if the max players hasn't been exceeded
 			if(_.size(this.sockets) <= MAX_PLAYERS) {
 		
-				var maxX = this.boundsModel.get('x'),
-					maxY = this.boundsModel.get('y');
-		
 				//spawn tank in random location
 				var tank = new TankModel({
-					'id': socket.id
+					'id': socket.id,
+					'a': _.random(0, 360)
 				}, {
 					'events': this.events
-				}).randomPosition(maxX, maxY);
+				});
 				
-				//reposition the tank if the proposed location is in conflict
-				while(CollisionDetection.detect(tank, this.collection.models) === true) {
-					tank.randomPosition(maxX, maxY);
-				}
+				CollisionDetection.position(tank, this.collection.models, this.boundsModel);
 				
 				//add it to the collection
 				this.collection.add(tank);
@@ -114,7 +125,10 @@ define(function(require) {
 
 			//sockets object
 			this.sockets = {};
-						
+
+			//add barriers
+			this.addBarriers();
+
 			//when a new socket is opened call add socket
 			this.io.sockets.on('connection', _.bind(this.addSocket, this));
 			
