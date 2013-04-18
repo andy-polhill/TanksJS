@@ -13,14 +13,6 @@ define([
 		},
 		frame: function(data) {
 			this.set(data);
-		},
-		model : function(atts, opts) {
-			switch(atts.type) {
-				case 'bullet':
-					return new BulletModel(atts);
-				case 'tank':
-					return new TankModel(atts);
-			}
 		}
 	});
 
