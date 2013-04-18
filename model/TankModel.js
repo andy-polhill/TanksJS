@@ -115,16 +115,6 @@ define(function(require) {
 					});
 					break;		
 			}
-		},
-		randomPosition: function(maxX, maxY) {
-			this.set({
-				'x': _.random(0, maxX),
-				'y': _.random(0, maxY),
-				'a': _.random(0, 360)
-			}, {
-				'silent': true
-			});
-			return this;
 		}
 	});
 	
