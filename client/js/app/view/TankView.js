@@ -3,10 +3,9 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-	'model/TankModel',
 	'text!template/TankTemplate.html'
 ], function(
-	$, _, Backbone, TankModel, TankTemplate) {
+	$, _, Backbone, TankTemplate) {
 
 	var TankView = Backbone.View.extend({
   

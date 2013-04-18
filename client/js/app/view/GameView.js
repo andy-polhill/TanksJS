@@ -4,9 +4,10 @@ define([
 	'underscore',
 	'backbone',
 	'view/TankView',
+	'view/BarrierView',
 	'view/BulletView'
 ], function(
-	$, _, Backbone, TankView, BulletView){
+	$, _, Backbone, TankView, BarrierView, BulletView){
 
   var GameView = Backbone.View.extend({
   
@@ -33,6 +34,14 @@ define([
 			case "bullet": 
 				this.views.push(
 					new BulletView({
+						'model': model,
+						'$parent': this.$el.find('#game')
+					})
+				);
+			break;
+			case "barrier": 
+				this.views.push(
+					new BarrierView({
 						'model': model,
 						'$parent': this.$el.find('#game')
 					})

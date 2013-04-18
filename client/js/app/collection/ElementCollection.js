@@ -1,10 +1,8 @@
 define([
 	'jquery',
 	'underscore',
-	'backbone',
-	'model/BulletModel',
-	'model/TankModel'
-], function($, _, Backbone, BulletModel, TankModel){
+	'backbone'
+], function($, _, Backbone){
 
 	var ElementCollection = Backbone.Collection.extend({
 		initialize : function(atts, opts) {

@@ -11,6 +11,8 @@ define(function(require) {
 					return new BulletModel(atts, opts);
 				case 'tank':
 					return new TankModel(atts, opts);
+				case 'barrier':
+					return new BarrierModel(atts, opts);
 			}
 		}
 	});

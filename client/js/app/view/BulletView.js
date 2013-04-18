@@ -2,10 +2,9 @@
 define([
 	'jquery',
 	'underscore',
-	'backbone',
-	'model/TankModel'
+	'backbone'
 ], function(
-	$, _, Backbone, TankModel){
+	$, _, Backbone){
 
 	var BulletView = Backbone.View.extend({
   
