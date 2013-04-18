@@ -1,19 +1,42 @@
-This is my development playground, currently I'm experimenting with sockets.io and Backbone. 
+<pre>
+                                                     _..----.._                                   
+                                                    ]_.--._____[                                  
+                                                  ___|'--'__..|--._                               
+                              __               """    ;            :                              
+                            ()_ """"---...__.'""!":  /    ___       :                             
+                               """---...__\]..__] | /    [ 0 ]      :                             
+                                          """!--./ /      """        :                            
+                                   __  ...._____;""'.__________..--..:_                           
+                                  /  !"''''''!''''''''''|''''/' ' ' ' \"--..__  __..              
+                                 /  /.--.    |          |  .'          \' ' '.""--.{'.            
+             _...__            >=7 //.-.:    |          |.'             \ ._.__  ' '""'.          
+          .-' /    """"----..../ "">==7-.....:______    |                \| |  "";.;-"> \         
+          """";           __.."   .--"/"""""----...."""""----.....H_______\_!....'----""""]       
+        _..---|._ __..--""       _!.-=_.            """""""""""""""                   ;"""        
+       /   .-";-.'--...___     ." .-""; ';""-""-...^..__...-v.^___,  ,__v.__..--^"--""-v.^v,      
+      ;   ;   |'.         """-/ ./;  ;   ;\P.        ;   ;        """"____;  ;.--""""// '""<,     
+      ;   ;   | 1            ;  ;  '.: .'  ;<   ___.-'._.'------""""""____'..'.--""";;'  o ';     
+      '.   \__:/__           ;  ;--""()_   ;'  /___ .-" ____---""""""" __.._ __._   '>.,  ,/;     
+        \   \    /"""<--...__;  '_.-'/; ""; ;.'.'  "-..'    "-.      /"/    `__. '.   "---";      
+         '.  'v ; ;     ;;    \  \ .'  \ ; ////    _.-" "-._   ;    : ;   .-'__ '. ;   .^".'      
+           '.  '; '.   .'/     '. `-.__.' /;;;   .o__.---.__o. ;    : ;   '"";;""' ;v^" .^        
+             '-. '-.___.'<__v.^,v'.  '-.-' ;|:   '    :      ` ;v^v^'.'.    .;'.__/_..-'          
+                '-...__.___...---""'-.   '-'.;\     'WW\     .'_____..>."^"-""""""""    fsc       
+                                      '--..__ '"._..'  '"-;;"""                                   
+                                             """---'""""""                                        
+</pre>
 
-The plan being to make some form of tanks game and determine whether Backbone is suitable for this kind of work.
+https://thatguynamedandy.eu01.aws.af.cm/
 
-I will be looking at hosting a version of this somewhere if and when it becomes more functional.
+This is still very much in the alpha development phase, so expect downtime and lots of change.
 
 TODO
 ====
-* Bounds detection
-* Decrease gun rate
-* Placement of new players
-* Limit to number of players
+* Styling
+* Gun overheat
 * kill count
+* Defence Blocks
 * Queueing system
 * Load testing and improvements
-* Styling and formatting into spaceships
-* Replenishing Logo built out of blocks
-* Upgrade ship on kill
+* Upgrade tank on kill
 * Power ups
