@@ -11,17 +11,10 @@ define([
   
 		initialize: function( opts ) {
 			var tmpl = _.template( this.template );
-			this.$el.html( tmpl() );
+			this.$el.html( tmpl( this.model.toJSON() ) );
 			opts.$parent.append(this.$el);
-			this.$barrier = this.$el.find('.barrier');
-
-			this.render(); //correctly position
 		},
 		template: BarrierTemplate,
-		render: function() {
-			this.$barrier.css("left", this.model.get('x'));
-			this.$barrier.css("top", this.model.get('y'));
-		}
 	});
   
 	return BarrierView;

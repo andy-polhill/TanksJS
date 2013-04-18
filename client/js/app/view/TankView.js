@@ -24,7 +24,9 @@ define([
 			this.life(); //set life bar
 		},
 		template: TankTemplate,
-		render: function() {		
+		render: function() {
+		
+			//instead of doing a full render, keep it minimal
 			this.$tank.css("left", this.model.get('x'));
 			this.$tank.css("top", this.model.get('y'));
 			
