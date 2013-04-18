@@ -6,10 +6,6 @@ define(function(require) {
 
 	var BarrierModel = Backbone.Model.extend({
 
-		initialize: function() {
-			console.log("Barrier");
-		},
-
 		defaults: {
 			'x': 0, //horizontal
 			'y': 0, //vertical
