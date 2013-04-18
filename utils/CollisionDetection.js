@@ -5,6 +5,22 @@ define(function(require) {
 		
 	return {
 		
+		position: function(model, models, bounds) {
+
+			var maxX = bounds.get('w'),
+				maxY = bounds.get('h');
+
+			//keep relocating something until you find an empty place
+			while(this.detect(model, models) === true) {
+				model.set({
+					'x': _.random(0, maxX),
+					'y': _.random(0, maxY),
+				}, {
+					'silent': true
+				});
+			}
+		},
+		
 		//TODO: Optimise Optimise!!
 		//TODO: Implement radial collision detection!
 		detect : function(model, collection, opts) {
