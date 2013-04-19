@@ -20,7 +20,7 @@
 }
 
 .tankBody {	
-	background-image:url(/client/images/tank.jpg);
+	background-image:url(/images/tank.jpg);
 	width:32px;
 	height:32px;
 }

@@ -1,13 +1,19 @@
-var _ = require('underscore'),
-	Backbone = require('backbone'),
-	CollisionDetection = require('./utils/CollisionDetection'),
-	BarrierModel = require('./model/BarrierModel'),
-	TankModel = require('./model/TankModel'),
-	BoundsModel = require('./model/BoundsModel'),
-	ElementCollection = require('./collection/ElementCollection'),
-	define = require('amdefine')(module);
-
-define(function(require) {
+define([
+	'underscore',
+	'backbone',
+	'utils/CollisionDetection',
+	'model/BarrierModel',
+	'model/TankModel',
+	'model/BoundsModel',
+	'collection/ElementCollection'
+], function(
+	_,
+	Backbone,
+	CollisionDetection,
+	BarrierModel,
+	TankModel,
+	BoundsModel,
+	ElementCollection ) {
 		
 	var FRAME_RATE = 20,
 		MAX_PLAYERS = 4,

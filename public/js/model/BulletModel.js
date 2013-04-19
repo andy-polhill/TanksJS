@@ -1,8 +1,9 @@
-var Backbone = require('backbone'),
-	_ = require('underscore'),
-	define = require('amdefine')(module);
-
-define(function(require) {
+define([
+	'underscore',
+	'backbone'
+], function(
+	_, 
+	Backbone) {
 
 	var BulletModel = Backbone.Model.extend({
 

@@ -1,9 +1,16 @@
-var Backbone = require('backbone'),
-	BulletModel = require('../model/BulletModel'),
-	TankModel = require('../model/TankModel'),
-	define = require('amdefine')(module);
-
-define(function(require) {
+define([
+	'underscore',
+	'backbone',
+	'model/BulletModel',
+	'model/TankModel',
+	'model/BarrierModel'
+], function(
+	_, 
+	Backbone,
+	BulletModel,
+	TankModel,
+	BarrierModel) {
+	
 	var ElementCollection = Backbone.Collection.extend({
 		model : function(atts, opts) {
 			switch(opts.type) {

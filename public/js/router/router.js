@@ -3,11 +3,11 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-	'collection/ElementCollection',
+	'collection/ClientCollection',
 	'view/GameView'
 ], 
 
-function($, _, Backbone, ElementCollection, GameView){
+function($, _, Backbone, ClientCollection, GameView){
 
 	 var AppRouter = Backbone.Router.extend({
 	 
@@ -22,7 +22,7 @@ function($, _, Backbone, ElementCollection, GameView){
 	    
 	    play: function() {
 
-	    	this.collection = new ElementCollection(null, {
+	    	this.collection = new ClientCollection(null, {
 	    		'socket' : this.socket
 	    	});
 	    	

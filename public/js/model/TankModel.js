@@ -1,9 +1,11 @@
-var Backbone = require('backbone'),
-	_ = require('underscore'),
-	BulletModel = require('./BulletModel'),
-	define = require('amdefine')(module);
-
-define(function(require) {
+define([
+	'underscore',
+	'backbone',
+	'model/BulletModel'
+], function(
+	_, 
+	Backbone,
+	BulletModel) {
 
 	var ANGLE_INC = 3;
 

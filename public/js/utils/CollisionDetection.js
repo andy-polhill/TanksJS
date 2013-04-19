@@ -1,7 +1,4 @@
-var _ = require('underscore'),
-	define = require('amdefine')(module);
-
-define(function(require) {
+define(['underscore'], function( _ ) {
 		
 	return {
 		

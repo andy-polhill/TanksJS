@@ -9,7 +9,8 @@
     "express": "~3.1.1",
     "jasmine-node": "~1.6.0",
     "underscore": "~1.4.4",
-    "backbone": "~1.0.0"
+    "backbone": "~1.0.0",
+    "requirejs": "~2.1.5"
   },
   "scripts": {
     "test": "alert('test')",
