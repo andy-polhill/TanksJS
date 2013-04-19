@@ -15,9 +15,13 @@ define([
 			this.model.on('remove', this.remove, this);
 			this.render();
 		},
-		render: function() {		
-			this.$el.css("left", this.model.get('x'));
-			this.$el.css("top", this.model.get('y'));
+		render: function() {
+			//set all props at same time.
+			//will this reduce repaint?		
+			this.$el.css({
+				"left": this.model.get('x'),
+				"top": this.model.get('y')
+			});
 		}
 	});
   
