@@ -5,7 +5,7 @@ var express = require('express'),
 	server = http.createServer(app),
 	io = require('socket.io').listen(server, { log: false });
 
-server.listen(8081);
+server.listen(8080);
 
 app.use(express.static(__dirname + '/'));
 
