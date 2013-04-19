@@ -14,4 +14,4 @@ app.get('/', function (req, res) {
 });
 
 //Start the game, pass socket as a reference
-Game.start({'io': io});
+Game.start({'io': io});	

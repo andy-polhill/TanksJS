@@ -22,7 +22,6 @@ define([
 		},
 		template: TankTemplate,
 		render: function() {
-		
 			var rotateAttr = 'rotate(' + this.model.get('a') + 'deg)';
 
 			this.el.style.cssText = 
