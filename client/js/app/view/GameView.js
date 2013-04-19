@@ -1,4 +1,3 @@
-// Filename: router.js
 define([
 	'jquery',
 	'underscore',
@@ -18,35 +17,32 @@ define([
 	initialize: function(opts) {
 		this.socket = opts.socket;
 		this.views = [];
+		this.$bounds = this.$el.find("#game");
 		this.collection.on('add', this.add, this);
 		this.collection.on('change', this.render, this);
 	},	
-	add: function(model) {			
+	add: function(model) {	
+		var view;
 		switch(model.get('type')) {
 			case "tank": 
-				this.views.push(
-					new TankView({
-						'model': model,
-						'$parent': this.$el.find('#game')
-					})
-				);
+				view = new TankView({
+					'model': model
+				});
 			break;
 			case "bullet": 
-				this.views.push(
-					new BulletView({
-						'model': model,
-						'$parent': this.$el.find('#game')
-					})
-				);
+				view = new BulletView({
+					'model': model
+				});
 			break;
 			case "barrier": 
-				this.views.push(
-					new BarrierView({
-						'model': model,
-						'$parent': this.$el.find('#game')
-					})
-				);
+				view = new BarrierView({
+					'model': model,
+				})
 			break;
+		}
+		if(view) {
+			this.$bounds.append(view.$el);
+			this.views.push(view);		
 		}
 	},	
 	render: function() {

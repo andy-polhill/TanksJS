@@ -1,4 +1,3 @@
-// Filename: router.js
 define([
 	'jquery',
 	'underscore',
@@ -8,14 +7,12 @@ define([
 	$, _, Backbone, TankTemplate) {
 
 	var TankView = Backbone.View.extend({
-  
+  		className: "tank",
 		initialize: function( opts ) {
 			var tmpl = _.template( this.template );
 			this.$el.html( tmpl() );
-			opts.$parent.append(this.$el);
-			
-			this.$tank = this.$el.find('.tank');
-			this.$tankBody = this.$el.find('.tankBody');
+
+			this.$tank = this.$el.find('.tankBody');
 			
 			this.model.on('change:life', this.life, this);
 			this.model.on('remove', this.remove, this);
@@ -24,19 +21,19 @@ define([
 			this.life(); //set life bar
 		},
 		template: TankTemplate,
-		render: function() {		
+		render: function() {
 			var rotateAttr = 'rotate(' + this.model.get('a') + 'deg)';
-			this.$tank.css({
+			this.$el.css({
 				'left': this.model.get('x'),
 				'top': this.model.get('y'),
 			});
-			this.$tankBody.css({
+			this.$tank.css({
 				'-moz-transform': rotateAttr,
 				'-webkit-transform': rotateAttr
 			});
 		},
 		life: function() {
-			this.$tank.attr('data-life', this.model.get('life'));
+			this.$el.attr('data-life', this.model.get('life'));
 		}
 	});
   
