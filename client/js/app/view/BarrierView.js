@@ -11,8 +11,9 @@ define([
 			this.render(); //correctly position
 		},
 		render: function() {
-			this.$el.css("left", this.model.get('x'));
-			this.$el.css("top", this.model.get('y'));
+			this.el.style.cssText = 
+				"top: " + this.model.get('y') +
+				"px; left: " + this.model.get('x') + 'px;';
 		}
 	});
   

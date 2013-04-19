@@ -14,10 +14,9 @@ define([
 		},
 		render: function() {
 			//set all props at same time.
-			this.$el.css({
-				"left": this.model.get('x'),
-				"top": this.model.get('y')
-			});
+			this.el.style.cssText = 
+				"top: " + this.model.get('y') +
+				"px; left: " + this.model.get('x') + 'px;';
 		}
 	});
   
