@@ -2,7 +2,9 @@ https://thatguynamedandy.eu01.aws.af.cm/
 
 This is still very much in the alpha development phase, so expect downtime and lots of change.
 
-Socket connection takes a few seconds so please be patient
+Currently hosted on appfog, however sockets reverts to short polling, I'm not sure that sockets is fully implemented on appfog yet.
+
+[![Build Status](https://travis-ci.org/thatguynamedandy/playground.png)](https://travis-ci.org/thatguynamedandy/playground)
 
 jasmine-node --runWithRequireJs --requireJsSetup ./spec/require-setup.js spec/
 
