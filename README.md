@@ -6,8 +6,6 @@ Currently hosted on appfog, however sockets reverts to short polling, I'm not su
 
 [![Build Status](https://travis-ci.org/thatguynamedandy/playground.png)](https://travis-ci.org/thatguynamedandy/playground)
 
-jasmine-node --runWithRequireJs --requireJsSetup ./spec/require-setup.js spec/
-
 TODO
 ====
 * Styling

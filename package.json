@@ -7,7 +7,6 @@
     "amdefine": ">=0.0.2",
     "socket.io": "~0.9.14",
     "express": "~3.1.1",
-    "jasmine-node": "~1.6.0",
     "underscore": "~1.4.4",
     "backbone": "~1.0.0",
     "requirejs": "~2.1.5"
