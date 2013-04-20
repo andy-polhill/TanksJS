@@ -11,7 +11,7 @@ define([
 	TankModel,
 	BarrierModel) {
 	
-	var ElementCollection = Backbone.Collection.extend({
+	var ServerCollection = Backbone.Collection.extend({
 		model : function(atts, opts) {
 			switch(opts.type) {
 				case 'bullet':
@@ -24,5 +24,5 @@ define([
 		}
 	});
 	
-	return ElementCollection;
+	return ServerCollection;
 });

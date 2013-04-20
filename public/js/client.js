@@ -1,12 +1,12 @@
 require.config({
 	baseUrl: "/js",
 	paths: {
-		jquery: "/lib/jquery",
+		jquery: "lib/jquery",
 		underscore: "lib/underscore",
 		backbone: "lib/backbone",
 		text: "lib/text",
 		io : "/socket.io/socket.io",
-		template: "../template"
+		template: "../../template"
 	}
 });
 

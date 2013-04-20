@@ -5,7 +5,7 @@ define([
 	'model/BarrierModel',
 	'model/TankModel',
 	'model/BoundsModel',
-	'collection/ElementCollection'
+	'collection/ServerCollection'
 ], function(
 	_,
 	Backbone,
@@ -13,7 +13,7 @@ define([
 	BarrierModel,
 	TankModel,
 	BoundsModel,
-	ElementCollection ) {
+	ServerCollection ) {
 		
 	var FRAME_RATE = 20,
 		MAX_PLAYERS = 4,
@@ -121,7 +121,7 @@ define([
 			this.io = opts.io;
 			
 			//master collection of all game elements
-			this.collection = new ElementCollection();
+			this.collection = new ServerCollection();
 
 			//bounds model determines game edges
 			this.boundsModel = new BoundsModel();
