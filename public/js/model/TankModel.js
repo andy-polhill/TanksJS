@@ -14,7 +14,7 @@ define([
 		initialize: function( atts, opts ) {
 			this.events = opts.events;
 			this.events.on('frame:advance', this.frame, this);
-			this.on('change:life', this.isDead, this);
+			this.events.on('kill:' + this.get('id'), this.registerKill, this);
 		},
 		defaults : {
 			'fv': 1.5, //forward velocity
@@ -23,6 +23,7 @@ define([
 			'y': 0, //vertical location
 			'w': 32, //width
 			'h': 32, //height
+			'kill': 0,
 			'life': 10,
 			'type': 'tank'
 		},
@@ -88,37 +89,42 @@ define([
 					'a': angle,
 					'y': top,
 					'x': left,
+					'tank': this.get('id'),
 					'id': _.uniqueId()
 				}, {
 					'events': this.events
 				})
 			);
 		},
-		isDead: function() {
-			if(this.get('life') < 0) {
-				this.unset('id');
-				this.destroy();
-				return true;
-			}
-			return false;
-		},
 		collide: function(model) {
 			var type = model.get('type');
 			switch(type) {
 				case "bullet":
 					//loose a life
-					this.set('life', this.get('life') - 1 )
-					break;
+					var life = this.get('life') - 1
+					if(life < 0) {
+						this.unset('id');
+						this.destroy();
+						//trigger kill event globally
+						this.events.trigger('kill:' + model.get('tank'));
+					} else {
+						this.set('life', life);
+					}
+				break;
 				default:
 					//you can't move here, revert to previous position
 					this.set({
 						'x': this.previous('x'),
 						'y': this.previous('y')
 					});
-					break;		
+				break;		
 			}
+		},
+		registerKill: function() {
+			//you done a kill
+			this.set('kill', this.get('kill') + 1);
 		}
 	});
-	
+
 	return TankModel;
 });
