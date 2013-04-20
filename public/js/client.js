@@ -1,7 +1,7 @@
 require.config({
 	baseUrl: "/js",
 	paths: {
-		jquery: "//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery",
+		jquery: "/lib/jquery",
 		underscore: "lib/underscore",
 		backbone: "lib/backbone",
 		text: "lib/text",

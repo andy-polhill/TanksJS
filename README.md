@@ -4,6 +4,8 @@ This is still very much in the alpha development phase, so expect downtime and l
 
 Socket connection takes a few seconds so please be patient
 
+jasmine-node --runWithRequireJs --requireJsSetup ./spec/require-setup.js spec/
+
 TODO
 ====
 * Styling
