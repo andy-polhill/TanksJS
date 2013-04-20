@@ -13,8 +13,8 @@
     "requirejs": "~2.1.5"
   },
   "scripts": {
-    "test": "alert('test')",
-    "start": "node app.js"
+    "test": "grunt jasmine",
+    "start": "node public/server.js"
   },
   "repository": {
     "type": "git",
