@@ -39,9 +39,9 @@ define([
 			//change to life property
 			this.$el.attr('data-life', this.model.get('life'));
 		},
-		kill: function(model, kills) {
+		kill: function() {
 			//this tank done a kill
-			this.$kills.html(kills);
+			this.$kills.html(this.model.get('kill'));
 		}
 	});
   
