@@ -16,7 +16,7 @@ app.use(express.static(__dirname));
 
 app.get('/', function (req, res) {
 	res.sendfile(__dirname + 'index.html');
-});
+});	
 
 requirejs(["Game"], function(Game) {
 	//Start the game, pass socket as a reference

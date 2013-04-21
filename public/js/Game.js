@@ -21,6 +21,12 @@ define([
 		
 	return {
 		
+		remove: function(model, collection, id){
+			_.each(_.values(this.sockets), function(socket){
+				socket.emit('remove', model.get('id'));
+			}, this);		
+		},
+		
 		frame: function(){
 	
 			//trigger frame advance
@@ -43,9 +49,9 @@ define([
 
 			//get any changes since last frame
 			var JSON = this.collection.changes();
-			console.log(JSON);
 			//only output if there have been some changes
-			if(!_.isEmpty(JSON)) {				
+
+			if(!_.isEmpty(JSON)) {
 				//emit output to each socket
 				_.each(_.values(this.sockets), function(socket){
 					socket.emit('frame', JSON);
@@ -146,6 +152,8 @@ define([
 
 			//when a new socket is opened call add socket
 			this.io.sockets.on('connection', _.bind(this.addSocket, this));
+			
+			this.collection.on('remove', this.remove, this);
 			
 			//start game interval
 			frameInterval = setInterval(_.bind(this.frame, this), FRAME_RATE);

@@ -24,15 +24,14 @@ define([
 		},
 		changes: function() {
 			var JSON = [];
+			//to speed things up a bit we should only publish changes
 			_.each(this.models, function(model) {
 				if(model.isNew()) {
+					//if its a new model publish the whole thing
 					JSON.push(model.toJSON());
-				} else {
-					var obj = {id: model.get('id')};
-					if(model.hasChanged()) {
-						console.log('changed');
-						_.extend(obj, model.changedAttributes());
-					}
+				} else if(model.hasChanged()) {
+					var obj = {'id':model.get('id')};
+					_.extend(obj, model.changedAttributes());
 					JSON.push(obj);
 				}
 			});
