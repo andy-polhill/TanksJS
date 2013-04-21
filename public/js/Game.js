@@ -17,7 +17,7 @@ define([
 		
 	var FRAME_RATE = 20,
 		MAX_PLAYERS = 4,
-		BARRIERS = 7;
+		BARRIERS = 10;
 		
 	return {
 		
@@ -40,11 +40,17 @@ define([
 				'invert': true,
 				'callback': 'collide'
 			});
-			
-			//emit output to each socket
-			_.each(_.values(this.sockets), function(socket){
-				socket.emit('frame', this.collection.toJSON());
-			}, this);
+
+			//get any changes since last frame
+			var JSON = this.collection.changes();
+			console.log(JSON);
+			//only output if there have been some changes
+			if(!_.isEmpty(JSON)) {				
+				//emit output to each socket
+				_.each(_.values(this.sockets), function(socket){
+					socket.emit('frame', JSON);
+				}, this);
+			}
 		},
 		
 		move: function(socket, move) {
@@ -114,6 +120,9 @@ define([
 				socket.on('shoot', _.bind(this.shoot, this, socket));
 				socket.on('disconnect', _.bind(this.disconnect, this, socket));
 			}
+			
+			//emit the full collection, after that changes only
+			socket.emit('frame', this.collection.toJSON());
 		},
 	
 		start: function(opts) {

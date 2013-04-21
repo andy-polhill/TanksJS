@@ -9,13 +9,12 @@ define(['underscore'], function( _ ) {
 
 			//keep relocating something until you find an empty place
 			while(this.detect(model, models) === true) {
-				model.set({
-					'x': _.random(0, maxX),
-					'y': _.random(0, maxY),
-				}, {
-					'silent': true
-				});
-			}
+				
+				//FIXME using the 'set' method seems to locks hasChanged at true
+				//use underlying attributes for the time being.
+				model.attributes['x'] = _.random(0, maxX);
+				model.attributes['y'] = _.random(0, maxY);
+			};
 		},
 		
 		//TODO: Optimise Optimise!!
@@ -24,7 +23,7 @@ define(['underscore'], function( _ ) {
 		
 			var opts = (typeof opts === "undefined") ? {} : opts,
 				hasIntersect = false;
-			
+
 			var y = model.get('y'),
 				x = model.get('x'),
 				halfHeight = model.get('h') / 2,
@@ -34,7 +33,7 @@ define(['underscore'], function( _ ) {
 				top = y - halfHeight,
 				bottom = y + halfHeight,
 				id = model.get('id');
-		
+
 			_.each(collection, function(candidate) {
 
 				var cid = candidate.get('id');
@@ -53,6 +52,7 @@ define(['underscore'], function( _ ) {
 				var outcome = !(left > cRight || cLeft > right || top > cBottom || cTop > bottom);
 				
 				if((opts.invert === true && !outcome) || (opts.invert !== true && outcome)) {
+
 					if(!hasIntersect) {
 						hasIntersect = true;
 					}				
@@ -64,7 +64,7 @@ define(['underscore'], function( _ ) {
 					}
 				}
 			});
-			
+
 			return hasIntersect
 		}
 	}

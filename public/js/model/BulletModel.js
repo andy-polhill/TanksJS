@@ -7,8 +7,7 @@ define([
 
 	var BulletModel = Backbone.Model.extend({
 
-		initialize: function( atts, opts ) {
-			
+		initialize: function( atts, opts ) {			
 			//listen to global frame advance
 			opts.events.on('frame:advance', this.frame, this);
 
@@ -31,19 +30,27 @@ define([
 			'type': 'bullet'
 		},
 		frame: function() {
-		
 			//calculate the new location
 			var left = this.get('x') - this.get('xv');
 			var top = this.get('y') - this.get('yv');
 			
 			//set it on the model
-			this.set('x', parseFloat((left).toFixed(2)));
-			this.set('y', parseFloat((top).toFixed(2)));
+			this.set({
+				'x': parseFloat((left).toFixed(0)),
+				'y': parseFloat((top).toFixed(0))
+			});
+		},
+		sync:function(){},
+		isNew: function() {
+			if(typeof this._isNew === "undefined") {
+				this._isNew = false;
+				return true;
+			} else {
+				return false;
+			}
 		},
 		collide: function() {
-		
 			//bullet detonates no matter what it hits
-			this.unset('id');
 			this.destroy();
 		}
 		

@@ -13,6 +13,18 @@ define([
 			'h': 50, //height
 			'w': 50, //width
 			'type': 'barrier'
+		},
+		initialize:function() {
+			console.log("init");
+		},
+		sync:function(){},
+		isNew: function() {
+			if(typeof this._isNew === "undefined") {
+				this._isNew = false;
+				return true;
+			} else {
+				return false;
+			}
 		}
 	});
 	

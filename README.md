@@ -11,10 +11,8 @@ TODO
 * Styling
 * Socket Wait screen
 * Gun overheat
-* kill count
-* Defence Blocks
 * Queueing system
 * Load testing and improvements
 * Upgrade tank on kill
 * Power ups
-* Build Tool - Grunt
+* Optimise Build

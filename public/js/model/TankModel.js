@@ -7,7 +7,7 @@ define([
 	Backbone,
 	BulletModel) {
 
-	var ANGLE_INC = 3;
+	var ANGLE_INC = 2;
 
 	var TankModel = Backbone.Model.extend({
 
@@ -28,7 +28,6 @@ define([
 			'type': 'tank'
 		},
 		frame: function() {
-
 			//TODO This function needs rationalising.
 			var angle = this.get('a'),
 				radians = angle * (Math.PI/180),
@@ -48,6 +47,7 @@ define([
 				if(angle < 0) angle = 360;
 			}
 
+			//TODO: No need for decimal places, yet removing them causes quirks
 			switch(move) {
 				case "1":
 					//forwards
@@ -67,6 +67,15 @@ define([
 				'y': y,
 				'a': angle
 			});
+		},
+		sync:function(){},
+		isNew: function() {
+			if(typeof this._isNew === "undefined") {
+				this._isNew = false;
+				return true;
+			} else {
+				return false;
+			}
 		},
 		shoot: function() {
 			var cos, sin;
@@ -103,7 +112,6 @@ define([
 					//loose a life
 					var life = this.get('life') - 1
 					if(life < 0) {
-						this.unset('id');
 						this.destroy();
 						//trigger kill event globally
 						this.events.trigger('kill:' + model.get('tank'));

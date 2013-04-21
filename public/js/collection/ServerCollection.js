@@ -21,6 +21,22 @@ define([
 				case 'barrier':
 					return new BarrierModel(atts, opts);
 			}
+		},
+		changes: function() {
+			var JSON = [];
+			_.each(this.models, function(model) {
+				if(model.isNew()) {
+					JSON.push(model.toJSON());
+				} else {
+					var obj = {id: model.get('id')};
+					if(model.hasChanged()) {
+						console.log('changed');
+						_.extend(obj, model.changedAttributes());
+					}
+					JSON.push(obj);
+				}
+			});
+			return JSON;
 		}
 	});
 	
