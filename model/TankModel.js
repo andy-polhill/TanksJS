@@ -86,6 +86,7 @@ define(function(require) {
 					'a': angle,
 					'y': top,
 					'x': left,
+					'tank': this.get('id'),
 					'id': _.uniqueId()
 				}, {
 					'events': this.events
@@ -105,7 +106,8 @@ define(function(require) {
 			switch(type) {
 				case "bullet":
 					//loose a life
-					this.set('life', this.get('life') - 1 )
+					this.set('life', this.get('life') - 1 );
+					//TODO record the kill
 					break;
 				default:
 					//you can't move here, revert to previous position
