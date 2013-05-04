@@ -7,13 +7,13 @@
     "amdefine": ">=0.0.2",
     "socket.io": "~0.9.14",
     "express": "~3.1.1",
-    "jasmine-node": "~1.6.0",
     "underscore": "~1.4.4",
-    "backbone": "~1.0.0"
+    "backbone": "~1.0.0",
+    "requirejs": "~2.1.5"
   },
   "scripts": {
-    "test": "alert('test')",
-    "start": "node app.js"
+    "test": "grunt jasmine",
+    "start": "node public/server.js"
   },
   "repository": {
     "type": "git",
@@ -26,5 +26,11 @@
   "subdomain": "thatguynamedandy",
   "engines": {
     "node": "0.8.x"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jasmine": "~0.4.2",
+    "grunt-template-jasmine-requirejs": "~0.1.1",
+    "grunt-cli": "~0.1.7"
   }
 }
