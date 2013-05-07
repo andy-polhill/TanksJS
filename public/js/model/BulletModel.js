@@ -11,6 +11,9 @@ define([
 			//listen to global frame advance
 			opts.events.on('frame:advance', this.frame, this);
 
+			this.set('ox', atts.x); //origin x
+			this.set('oy', atts.y); //origin y
+			
 			//calculate horizontal and vertical velocity
 			//these will remane the same for the Bullet.
 			var radians = this.get('a') * (Math.PI / 180),
@@ -27,18 +30,26 @@ define([
 			'y': 0, //vertical
 			'h': 3, //height
 			'w': 3, //width
-			'type': 'bullet'
+			'type': 'bullet',
+			'r': 300 //range
 		},
 		frame: function() {
 			//calculate the new location
-			var left = this.get('x') - this.get('xv');
-			var top = this.get('y') - this.get('yv');
+			var left = this.get('x') - this.get('xv'),
+				top = this.get('y') - this.get('yv'),			
+				hd = left - this.get('ox'), //horizontal distance
+				vd = top - this.get('oy'), //vertical distance
+				distance = Math.sqrt((hd * hd) + (vd * vd)); //distance travelled
 			
-			//set it on the model
-			this.set({
-				'x': parseFloat((left).toFixed(0)),
-				'y': parseFloat((top).toFixed(0))
-			});
+			if(distance < this.get('r')) {
+				//set it on the model
+				this.set({
+					'x': parseFloat((left).toFixed(0)),
+					'y': parseFloat((top).toFixed(0))
+				});
+			} else {
+				this.collide();
+			}
 		},
 		sync:function(){},
 		//TODO: tidy this method up, it is widely re-used
@@ -52,6 +63,7 @@ define([
 		},
 		collide: function() {
 			//bullet detonates no matter what it hits
+			//TODO Models aren't destoying correctly, probably to do with the isNew impl
 			this.destroy();
 		}
 		
