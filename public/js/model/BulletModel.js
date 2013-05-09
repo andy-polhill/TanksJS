@@ -12,8 +12,7 @@ define([
 			console.log(this.collection);
 				
 			//listen to global frame advance
-			this.events = opts.events;
-			this.events.on('frame:advance', this.frame, this);
+			this.collection.on('frame:advance', this.frame, this);
 
 			this.set('ox', atts.x); //origin x
 			this.set('oy', atts.y); //origin y
@@ -38,9 +37,6 @@ define([
 			'r': 300 //range
 		},
 		frame: function() {
-
-			console.log('frame');
-			
 			//calculate the new location
 			var left = this.get('x') - this.get('xv'),
 				top = this.get('y') - this.get('yv'),			
@@ -59,7 +55,7 @@ define([
 			}
 		},
 		collide: function() {
-			this.events.off('frame:advance', this.frame, this);
+			this.collection.off('frame:advance', this.frame, this);
 			this.destroy();
 		}
 	});

@@ -30,7 +30,7 @@ define([
 		frame: function(){
 	
 			//trigger frame advance
-			this.events.trigger('frame:advance');
+			this.collection.trigger('frame:advance');
 
 			//look for collisions between objects
 			_.each(this.collection.models, function(model, idx, collection) {
@@ -112,7 +112,7 @@ define([
 					'id': socket.id,
 					'a': _.random(0, 360)
 				}, {
-					'events': this.events
+					'collection': this.collection
 				});
 				
 				CollisionDetection.position(tank, this.collection.models, this.boundsModel);
@@ -151,9 +151,6 @@ define([
 
 			//bounds model determines game edges
 			this.boundsModel = new BoundsModel();
-		
-			//events object handles frame advance
-			this.events = _.extend({}, Backbone.Events);
 
 			//sockets object
 			this.sockets = {};

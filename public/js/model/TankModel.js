@@ -11,10 +11,9 @@ define([
 
 	var TankModel = Backbone.Model.extend({
 
-		initialize: function( atts, opts ) {
-			this.events = opts.events;
-			this.events.on('frame:advance', this.frame, this);
-			this.events.on('kill:' + this.get('id'), this.registerKill, this);
+		initialize: function( atts ) {
+			this.collection.on('frame:advance', this.frame, this);
+			this.collection.on('kill:' + this.get('id'), this.registerKill, this);
 		},
 		defaults : {
 			'fv': 1.5, //forward velocity
@@ -92,7 +91,7 @@ define([
 					'tank': this.get('id'),
 					'id': _.uniqueId()
 				}, {
-					'events': this.events
+					'collection': this.collection
 				})
 			);
 		},
@@ -103,9 +102,9 @@ define([
 					//loose a life
 					var life = this.get('life') - 1
 					if(life < 0) {
-						this.destroy();
 						//trigger kill event globally
-						this.events.trigger('kill:' + model.get('tank'));
+						this.collection.trigger('kill:' + model.get('tank'));
+						this.destroy();
 					} else {
 						this.set('life', life);
 					}
