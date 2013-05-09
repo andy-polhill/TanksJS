@@ -27,9 +27,11 @@ define([
 			//to speed things up a bit we should only publish changes
 			_.each(this.models, function(model) {
 				if(model.isNew()) {
+					model._isNew = false;
 					//if its a new model publish the whole thing
 					JSON.push(model.toJSON());
 				} else if(model.hasChanged()) {
+					//create delta changes for object
 					var obj = {'id':model.get('id')};
 					_.extend(obj, model.changedAttributes());
 					JSON.push(obj);
