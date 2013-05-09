@@ -103,6 +103,7 @@ define([
 					var life = this.get('life') - 1
 					if(life < 0) {
 						//trigger kill event globally
+						this.collection.off('frame:advance', this.frame, this);
 						this.collection.trigger('kill:' + model.get('tank'));
 						this.destroy();
 					} else {
