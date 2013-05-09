@@ -25,7 +25,7 @@ define([
 					'w':10,
 					'h':10
 				}, {
-					events: {on:function(){}}
+					collection: {on:function(){}}
 				});
 	
 				spyOn(tank1, "collide");
@@ -38,7 +38,7 @@ define([
 					'w':10,
 					'h':10
 				}, {
-					events: {on:function(){}}
+					collection: {on:function(){}}
 				});
 	
 				spyOn(tank2, "collide");
@@ -64,7 +64,7 @@ define([
 					'w':10,
 					'h':10
 				}, {
-					events: {on:function(){}}
+					collection: {on:function(){}}
 				});
 	
 				spyOn(tank1, "collide");
@@ -77,7 +77,7 @@ define([
 					'w':10,
 					'h':10
 				}, {
-					events: {on:function(){}}
+					collection: {on:function(){}}
 				});
 	
 				spyOn(tank2, "collide");
@@ -113,7 +113,7 @@ define([
 					'w':10,
 					'h':10
 				}, {
-					events: {on:function(){}}
+					collection: {on:function(){}}
 				});
 				
 				//collide should not be called as the tank is inside the bounds
@@ -147,7 +147,7 @@ define([
 					'w':10,
 					'h':10
 				}, {
-					events: {on:function(){}}
+					collection: {on:function(){}}
 				});			
 				
 				//collide should not be called as the tank is inside the bounds

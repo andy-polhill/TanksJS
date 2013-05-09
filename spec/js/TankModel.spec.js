@@ -11,7 +11,7 @@ define([
 		
 	    it('should instantiate without throwing an error', function() {
 			expect(function(){
-				var tankModel = new TankModel({}, {events:{on:function(){}}});		
+				var tankModel = new TankModel({}, {collection:{on:function(){}}});		
 			}).not.toThrow();
 	    }); 
 	});
