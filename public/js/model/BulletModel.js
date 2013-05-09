@@ -7,9 +7,13 @@ define([
 
 	var BulletModel = Backbone.Model.extend({
 
-		initialize: function( atts, opts ) {			
+		initialize: function( atts, opts ) {	
+		
+			console.log(this.collection);
+				
 			//listen to global frame advance
-			opts.events.on('frame:advance', this.frame, this);
+			this.events = opts.events;
+			this.events.on('frame:advance', this.frame, this);
 
 			this.set('ox', atts.x); //origin x
 			this.set('oy', atts.y); //origin y
@@ -34,6 +38,9 @@ define([
 			'r': 300 //range
 		},
 		frame: function() {
+
+			console.log('frame');
+			
 			//calculate the new location
 			var left = this.get('x') - this.get('xv'),
 				top = this.get('y') - this.get('yv'),			
@@ -51,22 +58,10 @@ define([
 				this.collide();
 			}
 		},
-		sync:function(){},
-		//TODO: tidy this method up, it is widely re-used
-		isNew: function() {
-			if(typeof this._isNew === "undefined") {
-				this._isNew = false;
-				return true;
-			} else {
-				return false;
-			}
-		},
 		collide: function() {
-			//bullet detonates no matter what it hits
-			//TODO Models aren't destoying correctly, probably to do with the isNew impl
+			this.events.off('frame:advance', this.frame, this);
 			this.destroy();
 		}
-		
 	});
 	
 	return BulletModel;

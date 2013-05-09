@@ -132,6 +132,17 @@ define([
 		},
 	
 		start: function(opts) {
+
+			//some Backbone overrides to make it fit a bit nicer
+			Backbone.Model.prototype.isNew = function() {
+				if(typeof this._isNew === "undefined") {
+					this._isNew = true;
+				}
+				return this._isNew;
+			};
+
+			//some Backbone overrides to make it fit a bit nicer
+			Backbone.Model.prototype.sync = function() { /*no op*/ };
 			
 			this.io = opts.io;
 			

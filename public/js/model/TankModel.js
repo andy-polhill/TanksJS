@@ -68,16 +68,6 @@ define([
 				'a': angle
 			});
 		},
-		sync:function(){},
-		//TODO: tidy this method up, it is widely re-used
-		isNew: function() {
-			if(typeof this._isNew === "undefined") {
-				this._isNew = false;
-				return true;
-			} else {
-				return false;
-			}
-		},
 		shoot: function() {
 			var cos, sin;
 

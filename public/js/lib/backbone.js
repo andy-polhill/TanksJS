@@ -499,6 +499,9 @@
     // Optimistically removes the model from its collection, if it has one.
     // If `wait: true` is passed, waits for the server to respond before removal.
     destroy: function(options) {
+    
+    	console.log('destroy');
+    
       options = options ? _.clone(options) : {};
       var model = this;
       var success = options.success;
