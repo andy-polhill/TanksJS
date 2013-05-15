@@ -1,15 +1,14 @@
 define([
 	'underscore',
-	'backbone'
+	'backbone',
+	'model/ExplosionModel'
 ], function(
 	_, 
-	Backbone) {
+	Backbone, ExplosionModel) {
 
 	var BulletModel = Backbone.Model.extend({
 
 		initialize: function( atts, opts ) {	
-		
-			console.log(this.collection);
 				
 			//listen to global frame advance
 			this.collection.on('frame:advance', this.frame, this);
@@ -27,7 +26,7 @@ define([
 			this.set('yv', this.get('v') * sin); //vertical (y) velocity
 		},
 		defaults : {
-			'v': 4, //velocity
+			'v': 5, //velocity
 			'a': 0, //angle
 			'x': 0, //horizontal
 			'y': 0, //vertical
@@ -54,9 +53,32 @@ define([
 				this.collide();
 			}
 		},
-		collide: function() {
+		collide: function(model) {
+			
+			var type = "unknown";
+
+			if(typeof model !== "undefined") {
+				type = model.get('type');
+			}
+
+			//TODO Don't explode when bullet goes off screen or hits another explosion
+			//This is a bit scrappy
+			if(!type.match(/bounds|explosion/g)) {
+
+				this.collection.add(
+					new ExplosionModel({
+						'y': this.get('y'),
+						'x': this.get('x'),
+						'id': _.uniqueId()
+					}, {
+						'collection': this.collection
+					})
+				);
+			}
+
 			this.collection.off('frame:advance', this.frame, this);
 			this.destroy();
+
 		}
 	});
 	

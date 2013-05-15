@@ -53,14 +53,19 @@ define(['underscore'], function( _ ) {
 				
 				if((opts.invert === true && !outcome) || (opts.invert !== true && outcome)) {
 
+					/*	I have an outstanding issue here, if the candidate is destroyed in the first callback,
+						it may cause issues in the second. The way round it is probably to defer the deletion
+						until the next frame. The temp quick fix I have attempted is a simple try catch.										
+					*/
+
 					if(!hasIntersect) {
 						hasIntersect = true;
 					}				
-					if(_.isFunction(model[opts.callback])) {
-						model[opts.callback].call(model, candidate);
-					}
 					if(_.isFunction(candidate[opts.callback])) {
 						candidate[opts.callback].call(candidate, model);
+					}
+					if(_.isFunction(model[opts.callback])) {
+						model[opts.callback].call(model, candidate);
 					}
 				}
 			});
@@ -69,11 +74,3 @@ define(['underscore'], function( _ ) {
 		}
 	}
 });
-
-
-/*console.log("left %d > cRight %d = ", left, cRight, (left > cRight));
-console.log("cLeft %d > right %d = ", cLeft, right, (cLeft > right));
-console.log("top %d > cBottom %d = ", top, cBottom, (top > cBottom));
-console.log("cTop %d > bottom %d = ", cTop, bottom, (cTop > bottom));
-console.log("id %d === cid %d", id, cid, (id === cid));
-console.log(!(left > cRight || cLeft > right || top > cBottom || cTop > bottom || id === cid));*/

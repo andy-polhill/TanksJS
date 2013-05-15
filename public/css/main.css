@@ -22,9 +22,9 @@
 }
 
 .tankBody {	
-	background-image:url(/images/tank.jpg);
-	width:32px;
-	height:32px;
+	background-image:url(/images/tank_01.png);
+	width:34px;
+	height:33px;
 }
 
 .kills {	
@@ -75,6 +75,28 @@
 	margin-top:-1.5px; /* height / 2 */
 	margin-left:-1.5px; /* width / 2 */
 }
+
+/* EXPLOSION ============================================== */
+
+.explosion {
+	position:absolute;
+	background-image:url(/images/explosions.png);
+	margin-top:-13px;
+	margin-left:-13px;
+	width:26px;
+	height:26px;
+}
+
+.explosion[data-frame='20'] { background-position:20px 0;}
+.explosion[data-frame='18'] { background-position:-29px 0;}
+.explosion[data-frame='16'] { background-position:-57px 0;}
+.explosion[data-frame='14'] { background-position:-83px 0;}
+.explosion[data-frame='12'] { background-position:-117px 0;}
+.explosion[data-frame='10'] { background-position:-151px 0;}
+.explosion[data-frame='8'] { background-position:-185px 0;}
+.explosion[data-frame='6'] { background-position:-218px 0;}
+.explosion[data-frame='4'] { background-position:-214px 0;}
+.explosion[data-frame='2'] { background-position:-236px 0;}
 
 /* BARRIER ============================================== */
 

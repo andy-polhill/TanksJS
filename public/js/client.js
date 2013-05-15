@@ -12,6 +12,7 @@ require.config({
 
 require(['io', 'router/router'], function(io, AppRouter){
 
+	//var socket = io.connect();
 	var socket = io.connect('/', {'force new connection':true});
     
     var router = new AppRouter({

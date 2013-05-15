@@ -1,27 +1,30 @@
 define([
 	'underscore',
 	'backbone',
-	'model/BulletModel'
+	'model/BulletModel',
+	'model/ExplosionModel'
 ], function(
 	_, 
 	Backbone,
-	BulletModel) {
+	BulletModel, ExplosionModel) {
 
 	var ANGLE_INC = 2;
 
 	var TankModel = Backbone.Model.extend({
+
+		//TODO:width and height are duplicated in CSS.
 
 		initialize: function( atts ) {
 			this.collection.on('frame:advance', this.frame, this);
 			this.collection.on('kill:' + this.get('id'), this.registerKill, this);
 		},
 		defaults : {
-			'fv': 1.5, //forward velocity
-			'rv': 0.8, //reverse velocity
+			'fv': 1.2, //forward velocity
+			'rv': 0.6, //reverse velocity
 			'x': 0, //horizontal location
 			'y': 0, //vertical location
-			'w': 32, //width
-			'h': 32, //height
+			'w': 34, //width
+			'h': 33, //height
 			'kill': 0,
 			'life': 10,
 			'type': 'tank'
@@ -68,13 +71,14 @@ define([
 			});
 		},
 		shoot: function() {
+		
 			var cos, sin;
 
 			var angle = this.get('a'),
 				cos = (Math.cos(angle * Math.PI / 180)).toFixed(2),
 				sin = (Math.sin(angle * Math.PI / 180)).toFixed(2),
-				width = this.get('w') + 13,
-				height = this.get('h') + 13,
+				width = this.get('w') + 15,
+				height = this.get('h') + 15,
 				
 				/* TODO: The above is a magic number which stops bullet colliding with own tank when
 				at acute angles. the number also needs to take into account velocity of tank,
@@ -82,6 +86,8 @@ define([
 				 */
 				top = parseFloat(this.get('y') - ((height / 2) * sin)),
 				left = parseFloat(this.get('x') - ((width / 2) * cos));
+
+			console.log(this.collection.size());
 			
 			this.collection.add(
 				new BulletModel({
@@ -101,14 +107,28 @@ define([
 				case "bullet":
 					//loose a life
 					var life = this.get('life') - 1
+					console.log('bullet life:' + life);
+
 					if(life < 0) {
 						//trigger kill event globally
+						this.collection.add(
+							new ExplosionModel({
+								'y': this.get('y'),
+								'x': this.get('x'),
+								'id': _.uniqueId()
+							}, {
+								'collection': this.collection
+							})
+						);
 						this.collection.off('frame:advance', this.frame, this);
 						this.collection.trigger('kill:' + model.get('tank'));
 						this.destroy();
 					} else {
 						this.set('life', life);
 					}
+				break;
+				case "explosion":
+					//TODO: All models are dependent on each other, which isn't too pretty
 				break;
 				default:
 					//you can't move here, revert to previous position

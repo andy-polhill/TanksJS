@@ -4,14 +4,16 @@ define([
 	'backbone',
 	'view/TankView',
 	'view/BarrierView',
-	'view/BulletView'
+	'view/BulletView',
+	'view/ExplosionView'
 ], function(
-	$, _, Backbone, TankView, BarrierView, BulletView){
+	$, _, Backbone, TankView, BarrierView, BulletView, ExplosionView){
 
 	var ELEMENTS = {
 		'bullet' : BulletView,
 		'tank' : TankView,
-		'barrier' : BarrierView
+		'barrier' : BarrierView,
+		'explosion' : ExplosionView
 	};
 
 	var GameView = Backbone.View.extend({

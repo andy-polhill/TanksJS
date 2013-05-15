@@ -15,7 +15,7 @@ define([
 	BoundsModel,
 	ServerCollection ) {
 		
-	var FRAME_RATE = 20,
+	var FRAME_RATE = 30,
 		MAX_PLAYERS = 4,
 		BARRIERS = 10;
 		
@@ -29,33 +29,40 @@ define([
 		
 		frame: function(){
 	
-			//trigger frame advance
-			this.collection.trigger('frame:advance');
-
-			//look for collisions between objects
-			_.each(this.collection.models, function(model, idx, collection) {
-				if(typeof model !== 'undefined') { 	
-					CollisionDetection.detect(model, collection, {
-						'callback': 'collide'
-					});
+			try {
+	
+				//trigger frame advance
+				this.collection.trigger('frame:advance');
+	
+				//look for collisions between objects
+				_.each(this.collection.models, function(model, idx, collection) {
+					if(typeof model !== 'undefined') { 	
+						CollisionDetection.detect(model, collection, {
+							'callback': 'collide'
+						});
+					}
+				});		
+				
+				//look for collision with bounds
+				CollisionDetection.detect(this.boundsModel, this.collection.models, {
+					'invert': true,
+					'callback': 'collide'
+				});
+	
+				//get any changes since last frame
+				var JSON = this.collection.changes();
+				//only output if there have been some changes
+	
+				if(!_.isEmpty(JSON)) {
+					//emit output to each socket
+					_.each(_.values(this.sockets), function(socket){
+						socket.emit('frame', JSON);
+					}, this);
 				}
-			});		
-			
-			//look for collision with bounds
-			CollisionDetection.detect(this.boundsModel, this.collection.models, {
-				'invert': true,
-				'callback': 'collide'
-			});
-
-			//get any changes since last frame
-			var JSON = this.collection.changes();
-			//only output if there have been some changes
-
-			if(!_.isEmpty(JSON)) {
-				//emit output to each socket
-				_.each(_.values(this.sockets), function(socket){
-					socket.emit('frame', JSON);
-				}, this);
+				
+			} catch(e) {
+				//TODO: I would rather not have this as I would hope for no bugs!
+				console.error(e);
 			}
 		},
 		
@@ -91,6 +98,8 @@ define([
 			for(var i=0; i < BARRIERS; i++) {				
 				var barrier = new BarrierModel({
 					'id' : _.uniqueId()
+				}, {
+					'collection' : this.collection
 				});
 				
 				//put the barrier in an empty location

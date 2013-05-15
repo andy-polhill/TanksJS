@@ -10,6 +10,10 @@ requirejs.config({
     nodeRequire: require
 });
 
+//use these transports for appfog deployment.
+//otherwise there is a long wait for failed socket request.
+//io.set('transports', ['flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
+
 server.listen(8080);
 
 app.use(express.static(__dirname));
