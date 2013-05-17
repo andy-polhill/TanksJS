@@ -7,8 +7,10 @@ define([
 	_, 
 	Backbone, BulletModel, ExplosionModel) {
 
-	var ANIMATION_RATE = 2;
-
+	var ANIMATION_RATE = 2,
+		HEAT_DROP = 10,
+		HEAT_PENALTY = 40;
+		
 	var TankModel = Backbone.Model.extend({
 
 		//TODO:width and height are duplicated in CSS.
@@ -28,24 +30,31 @@ define([
 			'ff': 0, //flare frame
 			'tf': 0, //tank frame
 			'kill': 0,
-			'life': 10,
+			'life': 100,
+			'heat': 30, //heat
+			'maxHeat': 30,
 			'type': 'tank'
 		},
 		frame: function() {
 			//TODO This function needs rationalising.
+			
+			//Get all of the properties that we use more than once
 			var angle = this.get('a'),
 				radians = angle * (Math.PI/180),
 				move = this.get('move'),
 				rotate = this.get('rotate'),
-				ff = this.get('ff'),
-				tf = this.get('tf'),
+				heat = this.get('heat'),
+				maxHeat = this.get('maxHeat'),
+				flareFrame = this.get('ff'),
+				tankFrame = this.get('tf'),
 				x = this.get('x'),
 				y = this.get('y'),
-				fv = this.get('fv'),
-				rv = this.get('rv'),
+				forwardVelocty = this.get('fv'),
+				reverseVelocity = this.get('rv'),
 				cos = Math.cos(radians),
 				sin = Math.sin(radians);
 
+			//Increment the angle if we are rotating
 			if(_.isString(rotate)) {
 				angle += this.get('tc') * rotate
 				if(angle > 360) angle = 0;
@@ -53,23 +62,28 @@ define([
 			}
 
 			//set the flare frame, used for rendering flare
-			if(ff > 0) {
-				ff = ff - 1;
+			if(flareFrame > 0) {
+				flareFrame = flareFrame - 1;
 			}
 
-			//TODO: No need for decimal places, yet removing them causes quirks
+			//Lower the heat sink after each shot
+			if(heat < maxHeat) { //Where 30 is max heat
+				heat++;
+			}
+
+			//Recalculate the position if the tank is moving
 			switch(move) {
 				case "1":
 					//forwards
-					x = parseFloat((x + (fv * sin)).toFixed(0));
-					y = parseFloat((y - (fv * cos)).toFixed(0));
-					tf = (tf > 0) ? 0 : 1;
+					x = parseFloat((x + (forwardVelocty * sin)).toFixed(0));
+					y = parseFloat((y - (forwardVelocty * cos)).toFixed(0));
+					tankFrame = (tankFrame > 0) ? 0 : 1;
 					break;
 				case "-1":
 					//backwards
-					x = parseFloat((x - (rv * sin)).toFixed(0));
-					y = parseFloat((y + (rv * cos)).toFixed(0));
-					tf = (tf > 0) ? 0 : 1;
+					x = parseFloat((x - (reverseVelocity * sin)).toFixed(0));
+					y = parseFloat((y + (reverseVelocity * cos)).toFixed(0));
+					tankFrame = (tankFrame > 0) ? 0 : 1;
 					break;
 			} 
 			
@@ -78,46 +92,56 @@ define([
 				'x': x,
 				'y': y,
 				'a': angle,
-				'ff': ff,
-				'tf': tf
+				'ff': flareFrame,
+				'tf': tankFrame,
+				'heat': heat
 			});
 		},
 		shoot: function() {
-		
-			var angle = this.get('a'),
-				cos = Math.cos(angle * Math.PI / 180),
-				sin = Math.sin(angle * Math.PI / 180),
-				width = this.get('w') / 2,
-				height = this.get('h') / 2,				
-				top = parseFloat(((this.get('y') + height) - ((height + 2) * cos)).toFixed(0)),
-				left = parseFloat(((this.get('x') + width) + ((width + 2) * sin)).toFixed(0));
 
-				/* TODO: The above contains a magic number which stops bullet colliding with own tank when
-				at acute angles. the number also needs to take into account velocity of tank,
-				as it may shoot itself when moving, need to calculate this properly
-				 */
-
-			//set frame to start flare animation			
-			this.set('ff', 6);			
+			var heat = this.get('heat');
 			
-			this.collection.add(
-				new BulletModel({
-					'a': angle,
-					'y': top,
-					'x': left,
-					'tank': this.get('id'),
-					'id': _.uniqueId()
-				}, {
-					'collection': this.collection
-				})
-			);
+			if(heat < 0) {
+				//you have overheated
+				this.set({
+					'heat': heat - HEAT_DROP
+				});
+				
+			} else {
+		
+				var angle = this.get('a'),
+					cos = Math.cos(angle * Math.PI / 180),
+					sin = Math.sin(angle * Math.PI / 180),				
+					width = this.get('w') / 2,
+					height = this.get('h') / 2,				
+					top = parseFloat(((this.get('y') + height) - ((height + 2) * cos)).toFixed(0)),
+					left = parseFloat(((this.get('x') + width) + ((width + 2) * sin)).toFixed(0));
+	
+				//set frame to start flare animation			
+				this.set({
+					'ff': 6,
+					'heat': heat - HEAT_DROP
+				});
+				
+				this.collection.add(
+					new BulletModel({
+						'a': angle,
+						'y': top,
+						'x': left,
+						'tank': this.get('id'),
+						'id': _.uniqueId()
+					}, {
+						'collection': this.collection
+					})
+				);
+			}
 		},
 		collide: function(model) {
 			var type = model.get('type');
 			switch(type) {
 				case "bullet":
-					//loose a life
-					var life = this.get('life') - 1;
+					//life = life - damage
+					var life = this.get('life') - model.get('d');
 
 					if(life < 0) {
 						//trigger kill event globally

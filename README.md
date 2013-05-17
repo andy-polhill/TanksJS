@@ -11,6 +11,7 @@ Also it probably won't work on IE, one day I will look at that. Generally it isn
 TODO
 ====
 * Load Testing and Performance Improvements
+* Rationalising, Rationalising and more Rationalising 
 * Power Ups
 * Come up with a way to slow fire rate
 * Styling
@@ -24,10 +25,10 @@ TODO
 
 BUGS
 ====
-* Decimal places on pixel coordinates - done 16/05/13
-* Deadzone near game borders
-* Life blocks should be more granular (e.g. percentile)
 * Collision Detection thrown errors
 * Ghost tanks
 * Element widths in both css and model data
-
+* Only publish relevant properties to the client
+* Decimal places on pixel coordinates - done 16/05
+* Deadzone near game borders -  done 17/05
+* Life blocks should be more granular - done 17/05

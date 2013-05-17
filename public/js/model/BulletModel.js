@@ -33,6 +33,7 @@ define([
 			'y': 0, //vertical
 			'h': 3, //height
 			'w': 3, //width
+			'd': 5, //damage
 			'type': 'bullet',
 			'r': 300 //range
 		},

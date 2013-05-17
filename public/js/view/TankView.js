@@ -10,13 +10,16 @@ define([
 		className: "tank",
 		initialize: function( opts ) {
 			var tmpl = _.template( this.template );
-			this.$el.html( tmpl() );
+			this.$el.html( tmpl( this.model.toJSON() ) );
 
 			this.tank = this.$el.find('.tankBody').get(0);
+			this.lifeBar = this.$el.find('.lifeBar div').get(0);
+			this.heatBar = this.$el.find('.heatBar div').get(0);
 			this.$kills = this.$el.find('.kills span');
 			
 			this.model.on('change:life', this.life, this);
 			this.model.on('change:kill', this.kill, this);
+			this.model.on('change:heat', this.heat, this);
 			this.model.on('remove', this.remove, this);
 
 			this.render(); //correctly position
@@ -42,7 +45,13 @@ define([
 		},
 		life: function() {
 			//change to life property
-			this.$el.attr('data-life', this.model.get('life'));
+			this.lifeBar.style.cssText = "width:" + this.model.get('life') / 3 + "px;"
+		},
+		heat: function() {
+			//change to life property
+			var heat = this.model.get('heat'),
+				width = ( heat > 0) ? heat : 0; 
+			this.heatBar.style.cssText = "width:" + width + "px;"
 		},
 		kill: function() {
 			//this tank done a kill
