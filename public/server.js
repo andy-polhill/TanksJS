@@ -12,7 +12,7 @@ requirejs.config({
 
 //use these transports for appfog deployment.
 //otherwise there is a long wait for failed socket request.
-//io.set('transports', ['flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
+//io.set('transports', ['htmlfile', 'xhr-polling', 'jsonp-polling']);
 
 server.listen(8080);
 
@@ -26,5 +26,3 @@ requirejs(["Game"], function(Game) {
 	//Start the game, pass socket as a reference
 	Game.start({'io': io});	
 });
-
-

@@ -27,6 +27,11 @@ define([
 		render: function() {
 			var rotateAttr = 'rotate(' + this.model.get('a') + 'deg)';
 
+			this.$el.attr({
+				'data-flare-frame': this.model.get('ff'),
+				'data-track-frame': this.model.get('tf')
+			});
+
 			this.el.style.cssText = 
 				"top: " + this.model.get('y') +
 				"px; left: " + this.model.get('x') + 'px;';

@@ -5,10 +5,9 @@ define([
 	'model/ExplosionModel'
 ], function(
 	_, 
-	Backbone,
-	BulletModel, ExplosionModel) {
+	Backbone, BulletModel, ExplosionModel) {
 
-	var ANGLE_INC = 2;
+	var ANIMATION_RATE = 2;
 
 	var TankModel = Backbone.Model.extend({
 
@@ -19,12 +18,15 @@ define([
 			this.collection.on('kill:' + this.get('id'), this.registerKill, this);
 		},
 		defaults : {
-			'fv': 1.2, //forward velocity
-			'rv': 0.6, //reverse velocity
+			'fv': 2.4, //forward velocity
+			'rv': 1.2, //reverse velocity
 			'x': 0, //horizontal location
 			'y': 0, //vertical location
+			'tc' : 3, //turning circle
 			'w': 34, //width
 			'h': 33, //height
+			'ff': 0, //flare frame
+			'tf': 0, //tank frame
 			'kill': 0,
 			'life': 10,
 			'type': 'tank'
@@ -35,6 +37,8 @@ define([
 				radians = angle * (Math.PI/180),
 				move = this.get('move'),
 				rotate = this.get('rotate'),
+				ff = this.get('ff'),
+				tf = this.get('tf'),
 				x = this.get('x'),
 				y = this.get('y'),
 				fv = this.get('fv'),
@@ -43,23 +47,29 @@ define([
 				sin = Math.sin(radians);
 
 			if(_.isString(rotate)) {
-				angle += ANGLE_INC * rotate
-	
+				angle += this.get('tc') * rotate
 				if(angle > 360) angle = 0;
 				if(angle < 0) angle = 360;
+			}
+
+			//set the flare frame, used for rendering flare
+			if(ff > 0) {
+				ff = ff - 1;
 			}
 
 			//TODO: No need for decimal places, yet removing them causes quirks
 			switch(move) {
 				case "1":
 					//forwards
-					x = parseFloat((x - (fv * cos)).toFixed(2));
-					y = parseFloat((y - (fv * sin)).toFixed(2));
+					x = parseFloat((x + (fv * sin)).toFixed(0));
+					y = parseFloat((y - (fv * cos)).toFixed(0));
+					tf = (tf > 0) ? 0 : 1;
 					break;
 				case "-1":
 					//backwards
-					x = parseFloat((x + (rv * cos)).toFixed(2));
-					y = parseFloat((y + (rv * sin)).toFixed(2));
+					x = parseFloat((x - (rv * sin)).toFixed(0));
+					y = parseFloat((y + (rv * cos)).toFixed(0));
+					tf = (tf > 0) ? 0 : 1;
 					break;
 			} 
 			
@@ -67,27 +77,28 @@ define([
 			this.set({
 				'x': x,
 				'y': y,
-				'a': angle
+				'a': angle,
+				'ff': ff,
+				'tf': tf
 			});
 		},
 		shoot: function() {
 		
-			var cos, sin;
-
 			var angle = this.get('a'),
-				cos = (Math.cos(angle * Math.PI / 180)).toFixed(2),
-				sin = (Math.sin(angle * Math.PI / 180)).toFixed(2),
-				width = this.get('w') + 15,
-				height = this.get('h') + 15,
-				
-				/* TODO: The above is a magic number which stops bullet colliding with own tank when
-				at acute angles. the number also needs to take into account velocity of tank,
-				as it may only shoot itself when moving, need to calculate this properly
-				 */
-				top = parseFloat(this.get('y') - ((height / 2) * sin)),
-				left = parseFloat(this.get('x') - ((width / 2) * cos));
+				cos = Math.cos(angle * Math.PI / 180),
+				sin = Math.sin(angle * Math.PI / 180),
+				width = this.get('w') / 2,
+				height = this.get('h') / 2,				
+				top = parseFloat(((this.get('y') + height) - ((height + 2) * cos)).toFixed(0)),
+				left = parseFloat(((this.get('x') + width) + ((width + 2) * sin)).toFixed(0));
 
-			console.log(this.collection.size());
+				/* TODO: The above contains a magic number which stops bullet colliding with own tank when
+				at acute angles. the number also needs to take into account velocity of tank,
+				as it may shoot itself when moving, need to calculate this properly
+				 */
+
+			//set frame to start flare animation			
+			this.set('ff', 6);			
 			
 			this.collection.add(
 				new BulletModel({
@@ -106,8 +117,7 @@ define([
 			switch(type) {
 				case "bullet":
 					//loose a life
-					var life = this.get('life') - 1
-					console.log('bullet life:' + life);
+					var life = this.get('life') - 1;
 
 					if(life < 0) {
 						//trigger kill event globally
@@ -127,8 +137,7 @@ define([
 						this.set('life', life);
 					}
 				break;
-				case "explosion":
-					//TODO: All models are dependent on each other, which isn't too pretty
+				case "explosion": //Do nothing
 				break;
 				default:
 					//you can't move here, revert to previous position

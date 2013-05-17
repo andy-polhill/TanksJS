@@ -11,20 +11,47 @@
 
 .tank {
 	position:absolute;
-	width:32px;
-	height:32px;
+	width:34px;
+	height:34px;
 	display:block;
 	font-family: courier;
-	font-size: 10px;	
-	/*negative margin to put axis in the middle */
-	margin-top:-16px; /* height / 2 */
-	margin-left:-16px; /* width / 2 */
+	font-size: 10px;
 }
 
+.flare {
+	display:none;
+}
+	
+.flare {
+	background-image:url(/images/flare.png);
+	display:block;
+    width: 6px;
+	height: 7px;
+    position: absolute;
+    top: -8px;
+    left: 14px;
+    background-position:0 0;
+    display:block;
+}
+
+.tank[data-flare-frame='5'] .flare { background-position:-64px 0; }
+.tank[data-flare-frame='4'] .flare { background-position:-46px 0; }
+.tank[data-flare-frame='3'] .flare { background-position:-30px 0; }
+.tank[data-flare-frame='2'] .flare { background-position:-15px 0; }
+.tank[data-flare-frame='1'] .flare { background-position:-1px 0; }
+.tank[data-flare-frame='0'] .flare { display:none; }
+
 .tankBody {	
-	background-image:url(/images/tank_01.png);
 	width:34px;
 	height:33px;
+}
+
+.tank[data-track-frame='0'] .tankBody {
+	background-image:url(/images/tank_01.png);
+}
+
+.tank[data-track-frame='1'] .tankBody {
+	background-image:url(/images/tank_02.png);
 }
 
 .kills {	
@@ -71,9 +98,6 @@
 	height:3px;
 	background-color:black;
 	display:block;
-	/*negative margin to put axis in the middle */
-	margin-top:-1.5px; /* height / 2 */
-	margin-left:-1.5px; /* width / 2 */
 }
 
 /* EXPLOSION ============================================== */
@@ -107,8 +131,5 @@
 	border:solid 1px #777;	
 	background-color:#ccc;
 	display:block;
-	/*negative margin to put axis in the middle */
-	margin-top:-25px; /* height / 2 */
-	margin-left:-25px; /* width / 2 */
 }
 

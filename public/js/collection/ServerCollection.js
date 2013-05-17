@@ -32,6 +32,8 @@ define([
 				if(model.isNew()) {
 					model._isNew = false;
 					//if its a new model publish the whole thing
+					//TODO: Currently we send stuff to the front end which isn't required
+					//look to extend toJSON() and make some atts 'private' (i.e. server only)
 					JSON.push(model.toJSON());
 				} else if(model.hasChanged()) {
 					//create delta changes for object
@@ -40,6 +42,9 @@ define([
 					JSON.push(obj);
 				}
 			});
+			
+			console.log(JSON);
+			
 			return JSON;
 		}
 	});

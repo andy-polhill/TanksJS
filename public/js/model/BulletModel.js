@@ -12,21 +12,22 @@ define([
 				
 			//listen to global frame advance
 			this.collection.on('frame:advance', this.frame, this);
-
-			this.set('ox', atts.x); //origin x
-			this.set('oy', atts.y); //origin y
 			
 			//calculate horizontal and vertical velocity
 			//these will remane the same for the Bullet.
 			var radians = this.get('a') * (Math.PI / 180),
-				cos = Math.cos(radians),
-				sin = Math.sin(radians);
+				xv = this.get('v') * Math.sin(radians),
+				yv = this.get('v') * Math.cos(radians);
 
-			this.set('xv', this.get('v') * cos); //horizontal (x) velocity
-			this.set('yv', this.get('v') * sin); //vertical (y) velocity
+			this.set({
+				'ox': atts.x, //origin x
+				'oy': atts.y, //origin y
+				'xv': parseFloat(xv.toFixed(0)), //horizontal (x) velocity
+				'yv': parseFloat(yv.toFixed(0)) //vertical (y) velocity
+			}); 
 		},
 		defaults : {
-			'v': 5, //velocity
+			'v': 10, //velocity
 			'a': 0, //angle
 			'x': 0, //horizontal
 			'y': 0, //vertical
@@ -37,7 +38,7 @@ define([
 		},
 		frame: function() {
 			//calculate the new location
-			var left = this.get('x') - this.get('xv'),
+			var left = this.get('x') + this.get('xv'),
 				top = this.get('y') - this.get('yv'),			
 				hd = left - this.get('ox'), //horizontal distance
 				vd = top - this.get('oy'), //vertical distance

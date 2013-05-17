@@ -9,8 +9,8 @@ define([
 
 		defaults: {
 			'id': _.uniqueId(),
-			'x': 320, //horizontal center
-			'y': 240, //vertical center
+			'x': 0, //horizontal center
+			'y': 0, //vertical center
 			'w': 640, //width
 			'h': 480, //height
 			'type': 'bounds'

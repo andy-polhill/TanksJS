@@ -10,12 +10,24 @@ Also it probably won't work on IE, one day I will look at that. Generally it isn
 
 TODO
 ====
-* IE Support (I suppose)
+* Load Testing and Performance Improvements
+* Power Ups
+* Come up with a way to slow fire rate
 * Styling
-* Socket Wait screen
-* Gun overheat
 * Queueing system
-* Load testing and improvements
-* Upgrade tank on kill
-* Power ups
+* IE Support (I suppose)
+* Mobile(?) / Tablet support
+* Different Tanks
+	* Different power weapons 
+* Different Rooms
 * Optimise Build
+
+BUGS
+====
+* Decimal places on pixel coordinates - done 16/05/13
+* Deadzone near game borders
+* Life blocks should be more granular (e.g. percentile)
+* Collision Detection thrown errors
+* Ghost tanks
+* Element widths in both css and model data
+

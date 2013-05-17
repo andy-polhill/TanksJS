@@ -15,7 +15,7 @@ define([
 	BoundsModel,
 	ServerCollection ) {
 		
-	var FRAME_RATE = 30,
+	var FRAME_RATE = 60,
 		MAX_PLAYERS = 4,
 		BARRIERS = 10;
 		
@@ -125,6 +125,8 @@ define([
 				});
 				
 				CollisionDetection.position(tank, this.collection.models, this.boundsModel);
+				
+				console.log(tank.get('fv'));
 				
 				//add it to the collection
 				this.collection.add(tank);
