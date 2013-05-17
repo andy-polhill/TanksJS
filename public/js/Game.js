@@ -4,6 +4,7 @@ define([
 	'utils/CollisionDetection',
 	'model/BarrierModel',
 	'model/TankModel',
+	'model/LifeModel',
 	'model/BoundsModel',
 	'collection/ServerCollection'
 ], function(
@@ -12,12 +13,14 @@ define([
 	CollisionDetection,
 	BarrierModel,
 	TankModel,
+	LifeModel,
 	BoundsModel,
 	ServerCollection ) {
 		
-	var FRAME_RATE = 60,
-		MAX_PLAYERS = 4,
-		BARRIERS = 10;
+	var FRAME_RATE = 60, //frame rate in milliseconds
+		MAX_PLAYERS = 4, //max number of allowed tanks
+		BARRIERS = 10, //number of randomly place barriers
+		LIFE_TOKEN = 600; //the higher the less frequent
 		
 	return {
 		
@@ -30,6 +33,11 @@ define([
 		frame: function(){
 	
 			try {
+
+				//determine wether to randomly drop a health power up
+				if(_.random(0, LIFE_TOKEN) == LIFE_TOKEN) {
+					this.addLife();
+				}
 	
 				//trigger frame advance
 				this.collection.trigger('frame:advance');
@@ -90,6 +98,19 @@ define([
 			
 			//remove socket to prevent emitting to ghost
 			delete this.sockets[socket.id];
+		},
+		
+		addLife: function() {
+		
+			var life = new LifeModel({
+				'id' : _.uniqueId()
+			}, {
+				'collection' : this.collection
+			});
+		
+			//put the life in an empty location
+			CollisionDetection.position(life, this.collection.models, this.boundsModel);
+			this.collection.add(life);		
 		},
 	
 		addBarriers: function() {

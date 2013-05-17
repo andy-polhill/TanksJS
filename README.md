@@ -12,8 +12,6 @@ TODO
 ====
 * Load Testing and Performance Improvements
 * Rationalising, Rationalising and more Rationalising 
-* Power Ups
-* Come up with a way to slow fire rate
 * Styling
 * Queueing system
 * IE Support (I suppose)
@@ -22,11 +20,14 @@ TODO
 	* Different power weapons 
 * Different Rooms
 * Optimise Build
+* Come up with a way to slow fire rate - done 17/05
+* Power Ups - done 17/05
 
 BUGS
 ====
+
 * Collision Detection thrown errors
-* Ghost tanks
+* Ghost tanks (close connections on restart)
 * Element widths in both css and model data
 * Only publish relevant properties to the client
 * Decimal places on pixel coordinates - done 16/05

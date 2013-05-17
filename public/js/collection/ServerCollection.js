@@ -3,14 +3,16 @@ define([
 	'backbone',
 	'model/BulletModel',
 	'model/TankModel',
-	'model/BarrierModel'
+	'model/BarrierModel',
+	'model/LifeModel'
 ], function(
 	_, 
 	Backbone,
 	BulletModel,
 	TankModel,
 	BarrierModel,
-	ExplosionModel) {
+	ExplosionModel,
+	LifeModel) {
 	
 	var ServerCollection = Backbone.Collection.extend({
 		model : function(atts, opts) {
@@ -23,6 +25,8 @@ define([
 					return new BarrierModel(atts, opts);
 				case 'explosion':
 					return new ExplosionModel(atts, opts);
+				case 'life':
+					return new LifeModel(atts, opts);
 			}
 		},
 		changes: function() {
@@ -43,7 +47,7 @@ define([
 				}
 			});
 			
-			console.log(JSON);
+			//console.log(JSON);
 			
 			return JSON;
 		}

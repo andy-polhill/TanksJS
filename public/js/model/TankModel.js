@@ -30,6 +30,7 @@ define([
 			'ff': 0, //flare frame
 			'tf': 0, //tank frame
 			'kill': 0,
+			'maxLife': 100,
 			'life': 100,
 			'heat': 30, //heat
 			'maxHeat': 30,
@@ -114,8 +115,8 @@ define([
 					sin = Math.sin(angle * Math.PI / 180),				
 					width = this.get('w') / 2,
 					height = this.get('h') / 2,				
-					top = parseFloat(((this.get('y') + height) - ((height + 2) * cos)).toFixed(0)),
-					left = parseFloat(((this.get('x') + width) + ((width + 2) * sin)).toFixed(0));
+					top = parseFloat(((this.get('y') + height) - ((height + 4) * cos)).toFixed(0)),
+					left = parseFloat(((this.get('x') + width) + ((width + 4) * sin)).toFixed(0));
 	
 				//set frame to start flare animation			
 				this.set({
@@ -162,6 +163,14 @@ define([
 					}
 				break;
 				case "explosion": //Do nothing
+				break;
+				case "life":
+					console.log('tank life collide');
+					var life = this.get('life') + model.get('life'),
+						maxLife = this.get('maxLife');
+						
+					life = (life > this.get('maxLife')) ? maxLife : life;
+					this.set('life', life);					
 				break;
 				default:
 					//you can't move here, revert to previous position

@@ -52,6 +52,7 @@ define([
 					'y': parseFloat((top).toFixed(0))
 				});
 			} else {
+				//if we are out of range trigger collide to destroy bullet
 				this.collide();
 			}
 		},

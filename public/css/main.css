@@ -98,8 +98,6 @@
     width: 100%;
 }
 
-
-
 /* BULLET ============================================== */
 	
 .bullet {
@@ -107,6 +105,16 @@
 	width:3px;
 	height:3px;
 	background-color:black;
+	display:block;
+}
+
+/* LIFE ============================================== */
+	
+.life {
+	background-image:url(/images/heart.png);
+	position:absolute;
+	width:16px;
+	height:16px;
 	display:block;
 }
 
