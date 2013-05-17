@@ -5,7 +5,6 @@ module.exports = function(grunt) {
 		pkg: grunt.file.readJSON('package.json'),
 		jasmine: {
 			default : {
-				//src: 'public/js',
 				options: {
 					specs: ['spec/js/**/*.js'],
 					template: require('grunt-template-jasmine-requirejs'),
