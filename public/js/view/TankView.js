@@ -11,6 +11,7 @@ define([
 		initialize: function( opts ) {
 			var tmpl = _.template( this.template );
 			this.$el.html( tmpl( this.model.toJSON() ) );
+			this.$el.addClass( this.model.get('variant') );
 
 			this.tank = this.$el.find('.tankBody').get(0);
 			this.lifeBar = this.$el.find('.lifeBar div').get(0);

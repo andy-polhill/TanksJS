@@ -2,6 +2,7 @@ define([
 	'underscore',
 	'backbone',
 	'utils/CollisionDetection',
+	'utils/TankFactory',
 	'model/BarrierModel',
 	'model/TankModel',
 	'model/LifeModel',
@@ -11,6 +12,7 @@ define([
 	_,
 	Backbone,
 	CollisionDetection,
+	TankFactory,
 	BarrierModel,
 	TankModel,
 	LifeModel,
@@ -89,7 +91,9 @@ define([
 		shoot: function(socket) {
 			try {
 				this.collection.get(socket.id).shoot();
-			} catch(e) {}
+			} catch(e) {
+				console.log(e);
+			}
 		},	
 
 		disconnect: function(socket) {
@@ -129,16 +133,13 @@ define([
 			}
 		},
 	
-		addSocket: function(socket) {
-
-			//create a reference to the socket
-			this.sockets[socket.id] = socket;
+		addTank: function(socket, variant) {
 
 			//create a new tank if the max players hasn't been exceeded
 			if(_.size(this.sockets) <= MAX_PLAYERS) {
 		
 				//spawn tank in random location
-				var tank = new TankModel({
+				var tank = TankFactory.create(variant, {
 					'id': socket.id,
 					'a': _.random(0, 360)
 				}, {
@@ -158,9 +159,17 @@ define([
 				socket.on('shoot', _.bind(this.shoot, this, socket));
 				socket.on('disconnect', _.bind(this.disconnect, this, socket));
 			}
+		},
+	
+		addSocket: function(socket) {
+
+			//create a reference to the socket
+			this.sockets[socket.id] = socket;
 			
 			//emit the full collection, after that changes only
 			socket.emit('frame', this.collection.toJSON());
+
+			socket.on('new:tank', _.bind(this.addTank, this, socket))
 		},
 	
 		start: function(opts) {

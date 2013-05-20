@@ -10,14 +10,16 @@ require.config({
 	}
 });
 
-require(['io', 'router/router'], function(io, AppRouter){
+require(['router/router'], function(AppRouter){
+   
+    var router = new AppRouter();
 
-	//var socket = io.connect();
-	var socket = io.connect('/', {'force new connection':true});
-    
-    var router = new AppRouter({
-    	'socket' : socket
-    });
+	//globally scoped event aggregator
+	Vents = _.extend({}, Backbone.Events);
+	
+	Vents.bind("select:tank", function( args ){
+		router.navigate("play/" + args.variant, {trigger: true});
+	});
     
     Backbone.history.start();
 });
