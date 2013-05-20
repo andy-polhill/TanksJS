@@ -47,7 +47,7 @@ define([
 				}
 			});
 			
-			//console.log(JSON);
+			console.log(JSON);
 			
 			return JSON;
 		}

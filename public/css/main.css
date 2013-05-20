@@ -1,11 +1,58 @@
-#game {
+/* GENERAL ============================================== */
+
+body {
+	font-family: arial, helvetica;
+	font-size: 12px;
+}
+
+#wrapper {
 	width:640px;
 	height:480px;
 	position:relative;
 	margin-left:auto;
 	margin-right:auto;
 	margin-top:50px;
+	border: solid 1px #666;	
 }
+
+#game {
+	display:block;
+	height:100%;
+	width:100%;
+}
+
+/* TANK SELECTION ============================================== */
+
+#tankSelection {
+	padding: 10px;
+}
+
+.tankOption {
+	width: 155px;
+	float:left;
+}
+
+.tankPreview {
+	width: 100px;
+	height:80px;
+	border:solid 1px;
+	position:relative;
+	
+}
+
+.tankPreview .tank {
+	position:absolute;
+	left:40px;
+	top:30px;
+	-moz-transform: rotate(40deg);
+	-webkit-transform: rotate(40deg);
+}
+
+dt {
+	float:left;
+	width:80px;
+}
+
 
 /* TANK ============================================== */
 
@@ -40,19 +87,6 @@
 .tank[data-flare-frame='2'] .flare { background-position:-15px 0; }
 .tank[data-flare-frame='1'] .flare { background-position:-1px 0; }
 .tank[data-flare-frame='0'] .flare { display:none; }
-
-.tankBody {	
-	width:34px;
-	height:33px;
-}
-
-.tank[data-track-frame='0'] .tankBody {
-	background-image:url(/images/tank_01.png);
-}
-
-.tank[data-track-frame='1'] .tankBody {
-	background-image:url(/images/tank_02.png);
-}
 
 .kills {	
     display: block;
@@ -98,12 +132,82 @@
     width: 100%;
 }
 
+/* == LARGE TANK ============================================== */
+
+.large-tank .tankBody {	
+	width:34px;
+	height:33px;
+}
+
+.large-tank[data-track-frame='0'] .tankBody {
+	background-image:url(/images/large_tank_01.png);
+}
+
+.large-tank[data-track-frame='1'] .tankBody {
+	background-image:url(/images/large_tank_02.png);
+}
+
+/* == MEDIUM TANK ============================================== */
+
+.medium-tank .tankBody {	
+	width:23px;
+	height:30px;
+}
+
+.medium-tank .flare {
+    left: 7px;
+}
+
+.medium-tank[data-track-frame='0'] .tankBody {
+	background-image:url(/images/medium_tank_01.png);
+}
+
+.medium-tank[data-track-frame='1'] .tankBody {
+	background-image:url(/images/medium_tank_02.png);
+}
+
+/* == SMALL TANK ============================================== */
+
+.small-tank .tankBody {	
+	width:25px;
+	height:24px;
+}
+
+.small-tank .flare {
+    left: 9px;
+}
+
+.small-tank[data-track-frame='0'] .tankBody {
+	background-image:url(/images/small_tank_01.png);
+}
+
+.small-tank[data-track-frame='1'] .tankBody {
+	background-image:url(/images/small_tank_02.png);
+}
+
+/* == SPECIAL TANK ============================================== */
+
+.special-tank .tankBody {	
+	width:29px;
+	height:31px;
+}
+
+.special-tank .flare {
+	display:none
+}
+
+.special-tank[data-track-frame='0'] .tankBody {
+	background-image:url(/images/special_tank_01.png);
+}
+
+.special-tank[data-track-frame='1'] .tankBody {
+	background-image:url(/images/special_tank_02.png);
+}
+
 /* BULLET ============================================== */
 	
 .bullet {
 	position:absolute;
-	width:3px;
-	height:3px;
 	background-color:black;
 	display:block;
 }

@@ -4,33 +4,54 @@ define([
 	'underscore',
 	'backbone',
 	'collection/ClientCollection',
-	'view/GameView'
+	'view/GameView',
+	'view/TanksListView'
 ], 
 
-function($, _, Backbone, ClientCollection, GameView){
+function($, _, Backbone, ClientCollection, GameView, TanksListView){
 
 	 var AppRouter = Backbone.Router.extend({
 	 
-	 	initialize: function(opts) {
-	 		this.socket = opts.socket;	 	
-	 	},
-	 
 	    routes: {
-	      // Define some URL routes
-	      '*path': 'play'
+	      'play/:variant': 'play',
+	      '*path': 'tanks' //default
 	    },
 	    
-	    play: function() {
-
-	    	this.collection = new ClientCollection(null, {
-	    		'socket' : this.socket
+	    tanks: function() {
+	    
+	    	var tanks = new Backbone.Collection([], {
+	    		url: '/tanks'
 	    	});
-	    	
-	    	this.gameView = new GameView({
-	    		'el' : 'body',
-	    		'socket' : this.socket,
-	    		'collection' : this.collection
-	    	});	    	
+	    
+	    	new TanksListView({
+	    		'el': '#wrapper',
+	    		'collection': tanks
+	    	});
+
+	    	tanks.fetch();
+	    },
+	    
+	    play: function( variant ) {
+
+			//TODO clean this up
+			require(["io"], function(io) {
+				
+				this.socket = io.connect('/', {
+					'force new connection': true
+				});
+				
+				this.socket.emit('new:tank', variant);
+				
+			    var collection = new ClientCollection(null, {
+			    	'socket' : this.socket
+			    });
+			    	
+		    	new GameView({
+		    		'el' : 'body',
+		    		'socket' : this.socket,
+		    		'collection' : collection
+		    	});
+	    	})
 	    }    
 	});
 

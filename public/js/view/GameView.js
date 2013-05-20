@@ -6,9 +6,10 @@ define([
 	'view/BarrierView',
 	'view/BulletView',
 	'view/ExplosionView',
-	'view/LifeView'
+	'view/LifeView',
+	'text!template/GameTemplate.html'
 ], function(
-	$, _, Backbone, TankView, BarrierView, BulletView, ExplosionView, LifeView){
+	$, _, Backbone, TankView, BarrierView, BulletView, ExplosionView, LifeView, GameTemplate){
 
 	var ELEMENTS = {
 		'bullet' : BulletView,
@@ -24,13 +25,16 @@ define([
 			"keyup" : "control",
 			"keydown" : "control"
 		},
+		template: GameTemplate,
 		initialize: function(opts) {
 			this.socket = opts.socket;
 			this.views = [];
+			
+			this.$el.find('#wrapper').html( _.template( this.template ) );
 			this.$bounds = this.$el.find("#game");
 			this.collection.on('add', this.add, this);
 			this.collection.on('change', this.render, this);
-		},	
+		},			
 		add: function(model) {	
 			var view = new ELEMENTS[model.get('type')]({
 				'model': model
