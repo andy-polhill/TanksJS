@@ -34,7 +34,16 @@ define([
 			'life': 100,
 			'heat': 30, //heat
 			'maxHeat': 30,
-			'type': 'tank'
+			'type': 'tank',
+			'variant': 'large-tank',
+			'weapon': {
+				'v': 10, //velocity
+				'h': 3, //height
+				'w': 3, //width
+				'd': 8, //damage
+				'type': 'bullet',
+				'r': 350 //range
+			}
 		},
 		frame: function() {
 			//TODO This function needs rationalising.
@@ -125,13 +134,14 @@ define([
 				});
 				
 				this.collection.add(
-					new BulletModel({
-						'a': angle,
-						'y': top,
-						'x': left,
-						'tank': this.get('id'),
-						'id': _.uniqueId()
-					}, {
+					new BulletModel(
+						_.extend(this.get('weapon'), {
+							'a': angle,
+							'y': top,
+							'x': left,
+							'tank': this.get('id'),
+							'id': _.uniqueId()
+					}), {
 						'collection': this.collection
 					})
 				);

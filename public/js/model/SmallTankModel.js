@@ -9,8 +9,24 @@ define([
 
 	var SmallTankModel = TankModel.extend({
 		defaults : {
-			'fv': 1.8, //forward velocity
-			'rv': 1, //reverse velocity
+			'w': 25,
+			'h': 24,
+			'tc' : 4, //turning circle
+			'fv': 3.4, //forward velocity
+			'rv': 1.6, //reverse velocity
+			'variant': 'small-tank',
+			'maxLife': 80,
+			'life': 80,
+			'heat': 50, //heat
+			'maxHeat': 50,
+			'weapon': {
+				'v': 10, //velocity
+				'h': 2, //height
+				'w': 2, //width
+				'd': 4, //damage
+				'type': 'bullet',
+				'r': 250 //range
+			}
 		}
 	});
 
