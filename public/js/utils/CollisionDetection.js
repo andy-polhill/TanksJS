@@ -4,8 +4,8 @@ define(['underscore'], function( _ ) {
 		
 		position: function(model, models, bounds) {
 
-			var maxX = bounds.get('w'),
-				maxY = bounds.get('h');
+			var maxX = bounds.get('w') - model.attributes['w'],
+				maxY = bounds.get('h') - model.attributes['h'];
 
 			//keep relocating something until you find an empty place
 			while(this.detect(model, models) === true) {
