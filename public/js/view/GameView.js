@@ -48,8 +48,6 @@ define([
 				
 		addView: function(model) {	
 
-			console.log("add view: " + model.get('type'));
-
 			//create the relevant view, passing the model data
 			var view = new ELEMENTS[model.get('type')]({
 				'model': model
