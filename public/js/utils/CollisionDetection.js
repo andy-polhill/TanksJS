@@ -4,8 +4,8 @@ define(['underscore'], function( _ ) {
 		
 		position: function(model, models, bounds) {
 
-			var maxX = bounds.get('w') - model.attributes['w'],
-				maxY = bounds.get('h') - model.attributes['h'];
+			var maxX = bounds.get('w') - model.attributes['w']
+			,	maxY = bounds.get('h') - model.attributes['h'];
 
 			//keep relocating something until you find an empty place
 			while(this.detect(model, models) === true) {
@@ -18,8 +18,40 @@ define(['underscore'], function( _ ) {
 		},
 		
 		//TODO: Optimise Optimise!!
-		//TODO: Implement radial collision detection!
-		//TODO: For invert on bounds detection we need complete overlap
+		detect2 : function(model, collection, opts) {
+		
+			var opts = (typeof opts === "undefined") ? {} : opts
+			,	hasIntersect = false
+			,	top = model.get('y')
+			,	left = model.get('x')
+			,	bottom = top + model.get('h')
+			,	right = left + model.get('w')
+			,	id = model.get('id');
+
+			_.each(collection, function(candidate) {
+				
+				if(id === candidate.get('id')) return; //don't compare the same object with itself
+				
+				var cLeft = candidate.get('x');
+				if(!(left > cLeft)) {
+					if(!(cLeft + candidate.get('w') > right)) {
+						var cTop = candidate.get('h');
+						if(!(top > cTop)) {
+							if(!(cTop + candidate.get('h') > bottom)) {
+								candidate.collide.call(candidate, model);
+								model.collide.call(model, candidate);
+								if(!hasIntersect) {
+									hasIntersect = true;
+								}
+							}						
+						}				
+					}
+				}						
+			});
+
+			return hasIntersect
+		},
+		
 		detect : function(model, collection, opts) {
 		
 			var opts = (typeof opts === "undefined") ? {} : opts,
@@ -42,10 +74,18 @@ define(['underscore'], function( _ ) {
 					cBottom = cTop + candidate.get('h'),
 					cRight = cLeft + candidate.get('w');
 				
+				/*console.log("--start--")
+				console.log((left > cRight))
+				console.log((cLeft > right))
+				console.log((top > cBottom))
+				console.log((cTop > bottom))*/
+				
 				if(
 					(opts.invert === true && (left > cLeft || cRight > right || top > cTop || cBottom > bottom)) || 
 					(opts.invert !== true && !(left > cRight || cLeft > right || top > cBottom || cTop > bottom))
 				) {
+
+					//console.log("intersect");
 
 					/*	I have an outstanding issue here, if the candidate is destroyed in the first callback,
 						it may cause issues in the second. The way round it is probably to defer the deletion

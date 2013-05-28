@@ -3,9 +3,7 @@ define([
 	'backbone',
 	'model/TankModel'
 ], function(
-	_, 
-	Backbone,
-	TankModel) {
+	_, Backbone, TankModel) {
 
 	var MediumTankModel = TankModel.extend({
 		defaults : {
@@ -22,7 +20,7 @@ define([
 				'v': 10, //velocity
 				'h': 3, //height
 				'w': 3, //width
-				'd': 6, //damage
+				'd': 5, //damage
 				'type': 'bullet',
 				'r': 300 //range
 			}

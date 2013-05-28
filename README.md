@@ -10,19 +10,16 @@ Also it probably won't work on IE, one day I will look at that. Generally it isn
 
 TODO
 ====
+* Explosions really slow things down
+* Collision Detection thrown errors
+* Element widths in both css and model data
+* Bullet location on special tank
+* Only publish relevant properties to the client - performance
+* Co-ordinates decimal place, performance issue
 * Load Testing and Performance Improvements
 * Rationalising, Rationalising and more Rationalising 
 * Styling
-* Queueing system
+* Configurable Levels
 * IE Support (I suppose)
 * Mobile(?) / Tablet support
-* Different Rooms
 * Optimise Build
-
-BUGS
-====
-* Re-routing creates clone
-* Collision Detection thrown errors
-* Ghost tanks (close connections on restart)
-* Element widths in both css and model data
-* Only publish relevant properties to the client

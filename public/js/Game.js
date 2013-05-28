@@ -3,34 +3,20 @@ define([
 	'backbone',
 	'utils/CollisionDetection',
 	'utils/TankFactory',
+	'utils/QueueUtils',
 	'model/BarrierModel',
 	'model/TankModel',
 	'model/LifeModel',
 	'model/BoundsModel',
 	'collection/ServerCollection'
 ], function(
-	_,
-	Backbone,
-	CollisionDetection,
-	TankFactory,
-	BarrierModel,
-	TankModel,
-	LifeModel,
-	BoundsModel,
-	ServerCollection ) {
+	_, Backbone, CollisionDetection, TankFactory, QueueUtils, BarrierModel, TankModel, LifeModel, BoundsModel, ServerCollection ) {
 		
-	var FRAME_RATE = 60, //frame rate in milliseconds
-		MAX_PLAYERS = 4, //max number of allowed tanks
-		BARRIERS = 10, //number of randomly place barriers
-		LIFE_TOKEN = 600; //the higher the less frequent
+	var FRAME_RATE = 60 //frame rate in milliseconds
+	,	BARRIERS = 10 //number of randomly place barriers
+	,	LIFE_TOKEN = 600; //the higher the less frequent
 		
 	return {
-		
-		remove: function(model, collection, id){
-			_.each(_.values(this.sockets), function(socket){
-				socket.emit('remove', model.get('id'));
-			}, this);		
-		},
 		
 		frame: function(){
 	
@@ -61,13 +47,11 @@ define([
 	
 				//get any changes since last frame
 				var JSON = this.collection.changes();
+				
 				//only output if there have been some changes
-	
 				if(!_.isEmpty(JSON)) {
-					//emit output to each socket
-					_.each(_.values(this.sockets), function(socket){
-						socket.emit('frame', JSON);
-					}, this);
+					//emit output to room
+					this.io.sockets.in('tanks').emit('frame', JSON);
 				}
 				
 			} catch(e) {
@@ -75,33 +59,9 @@ define([
 				console.error(e);
 			}
 		},
-		
-		move: function(socket, move) {
-			try {
-				this.collection.get(socket.id).set('move', move);
-			} catch(e) {}
-		},
 
-		rotate: function(socket, rotate) {
-			try {
-				this.collection.get(socket.id).set('rotate', rotate);
-			} catch(e) {}
-		},
-	
-		shoot: function(socket) {
-			try {
-				this.collection.get(socket.id).shoot();
-			} catch(e) {
-				console.log(e);
-			}
-		},	
-
-		disconnect: function(socket) {
-			//remove tank
-			this.collection.remove(this.collection.get(socket.id));
-			
-			//remove socket to prevent emitting to ghost
-			delete this.sockets[socket.id];
+		remove: function(model, collection, id){
+			this.io.sockets.in('tanks').emit('remove', model.get('id'));
 		},
 		
 		addLife: function() {
@@ -132,46 +92,139 @@ define([
 				this.collection.add(barrier);
 			}
 		},
+
+		move: function(socket, move) {
+			socket.get('tank', function(err, tank){
+				tank.set('move', move);
+			});
+		},
+
+		rotate: function(socket, rotate) {
+			socket.get('tank', function(err, tank){
+				tank.set('rotate', rotate);
+			});
+		},
+	
+		shoot: function(socket) {
+			console.log('shoot');
+			socket.get('tank', function(err, tank){
+				tank.shoot();
+			});
+		},
+	
+		removeTank: function(socket) {
+
+			console.log('remove tank');
+
+			//you loose, time to leave the game room
+			socket.leave('tanks');
+
+			//remove the tank if there is one
+			this.collection.remove(this.collection.get(socket.id));
+
+			socket.removeAllListeners('tank:move');
+			socket.removeAllListeners('tank:rotate');
+			socket.removeAllListeners('tank:shoot');
+			//push this dude to the back of the queue
+			debugger;
+			
+			console.log(this.io.sockets.manager.rooms[""]);
+			
+			//this.io.sockets.manager.rooms[""] = QueueUtils.pushToLast(this.io.sockets.manager.rooms[""], socket.id);
+
+			//let everyone know about the queue change
+			QueueUtils.updateQueue(this.io.sockets.clients());
+
+			//let them know they have lost!
+			socket.emit('game:over');
+		},
 	
 		addTank: function(socket, variant) {
 
-			//create a new tank if the max players hasn't been exceeded
-			if(_.size(this.sockets) <= MAX_PLAYERS) {
+			if(QueueUtils.queueHasSpace(this.io.sockets.clients(), socket)) {
+
+				console.log('add tank');
+				
+				//remove any existing tanks for this user
+				//TODO: this is copied and pasted from remove tank
+				if(this.collection.get(socket.id) != null) {
+					console.log('remove existing tank');
+
+					this.collection.remove(this.collection.get(socket.id));
 		
+					socket.removeAllListeners('tank:move');
+					socket.removeAllListeners('tank:rotate');
+					socket.removeAllListeners('tank:shoot');
+				}
+			
+				//join the game room, there are enough spaces
+				socket.join('tanks');
+						
 				//spawn tank in random location
 				var tank = TankFactory.create(variant, {
 					'id': socket.id,
 					'a': _.random(0, 360)
 				}, {
 					'collection': this.collection
-				});
+				}, socket);
+
+				//set the tank as a property on the socket
+				socket.set('tank', tank);
 				
+				//set up user controls
+				socket.on('tank:move', _.bind(this.move, this, socket));
+				socket.on('tank:rotate', _.bind(this.rotate, this, socket));
+				socket.on('tank:shoot', _.bind(this.shoot, this, socket));
+				
+				//make sure the location is empty
 				CollisionDetection.position(tank, this.collection.models, this.boundsModel);
-				
-				console.log(tank.get('fv'));
+								
+				//remove any existing tanks with the same id
+				this.collection.remove(this.collection.get(socket.id));
+
+				//we need to do a few things when the tank is removed				
+				tank.on('destroy', function() {
+					this.removeTank(socket);
+				}, this);
 				
 				//add it to the collection
 				this.collection.add(tank);
-	
-				//set up user controls			
-				socket.on('move', _.bind(this.move, this, socket));
-				socket.on('rotate', _.bind(this.rotate, this, socket));
-				socket.on('shoot', _.bind(this.shoot, this, socket));
-				socket.on('disconnect', _.bind(this.disconnect, this, socket));
+
+				console.log(this.collection.toJSON())
+					
+				//emit the full collection first time round, after that changes only
+				socket.emit('frame', this.collection.toJSON());
 			}
 		},
-	
-		addSocket: function(socket) {
 
-			//create a reference to the socket
-			this.sockets[socket.id] = socket;
-			
-			//emit the full collection, after that changes only
-			socket.emit('frame', this.collection.toJSON());
+		disconnect: function(socket) {
 
-			socket.on('new:tank', _.bind(this.addTank, this, socket))
+			console.log('disconnect');
+		
+			//remove the tank if there is one
+			this.collection.remove(this.collection.get(socket.id));
+
+			//let everyone know about the queue change
+			//however defer it until socket has actually been disconnected.
+			_.defer(function(sockets) {
+				QueueUtils.updateQueue(sockets.clients())
+			}, this.io.sockets);
 		},
-	
+
+		connect: function(socket) {
+
+			console.log('connect');
+		
+			//two actions can occur at this stage, adding a tank
+			socket.on('tank:add', _.bind(this.addTank, this, socket));
+			
+			//or leaving and closing socket
+			socket.on('disconnect', _.bind(this.disconnect, this, socket));
+
+			//let everyone know about the queue change
+			QueueUtils.updateQueue(this.io.sockets.clients());
+		},
+				
 		start: function(opts) {
 
 			//some Backbone overrides to make it fit a bit nicer
@@ -190,19 +243,17 @@ define([
 			//master collection of all game elements
 			this.collection = new ServerCollection();
 
+			//emit remove event when an item is removed from the collection
+			this.collection.on('remove', this.remove, this);
+
 			//bounds model determines game edges
 			this.boundsModel = new BoundsModel();
-
-			//sockets object
-			this.sockets = {};
 
 			//add barriers
 			this.addBarriers();
 
 			//when a new socket is opened call add socket
-			this.io.sockets.on('connection', _.bind(this.addSocket, this));
-			
-			this.collection.on('remove', this.remove, this);
+			this.io.sockets.on('connection', _.bind(this.connect, this));
 			
 			//start game interval
 			frameInterval = setInterval(_.bind(this.frame, this), FRAME_RATE);

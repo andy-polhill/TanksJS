@@ -1,11 +1,11 @@
 define([
 	'underscore',
-	'backbone'
+	'backbone',
+	'model/ElementModel'
 ], function(
-	_, 
-	Backbone) {
+	_, Backbone, ElementModel) {
 
-	var BoundsModel = Backbone.Model.extend({
+	var BoundsModel = ElementModel.extend({
 
 		defaults: {
 			'id': _.uniqueId(),

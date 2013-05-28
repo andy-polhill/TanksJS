@@ -16,12 +16,12 @@ define([
 		defaults : {
 			'w': 29,
 			'h': 31,
-			'tc' : 4, //turning circle
+			'tc' : 3, //turning circle
 			'fv': 3.8, //forward velocity
 			'rv': 2.2, //reverse velocity
 			'variant': 'special-tank',
-			'maxLife': 70,
-			'life': 70,
+			'maxLife': 60,
+			'life': 60,
 			'heat': 90, //heat
 			'maxHeat': 90,
 			'weapon': {

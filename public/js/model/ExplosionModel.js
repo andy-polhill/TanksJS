@@ -1,18 +1,14 @@
 define([
 	'underscore',
-	'backbone'
+	'backbone',
+	'model/ElementModel'
 ], function(
-	_, 
-	Backbone) {
+	_,  Backbone, ElementModel) {
 
 	var ANIMATION_RATE = 2;
 
-	var ExplosionModel = Backbone.Model.extend({
+	var ExplosionModel = ElementModel.extend({
 
-		initialize: function( atts, opts ) {					
-			//listen to global frame advance
-			this.collection.on('frame:advance', this.frame, this);
-		},
 		defaults : {
 			'x': 0, //horizontal
 			'y': 0, //vertical

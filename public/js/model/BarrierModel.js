@@ -1,11 +1,11 @@
 define([
 	'underscore',
-	'backbone'
+	'backbone',
+	'model/ElementModel'
 ], function(
-	_, 
-	Backbone) {
+	_, Backbone, ElementModel) {
 
-	var BarrierModel = Backbone.Model.extend({
+	var BarrierModel = ElementModel.extend({
 
 		defaults: {
 			'x': 0, //horizontal

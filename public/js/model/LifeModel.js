@@ -1,16 +1,12 @@
 define([
 	'underscore',
-	'backbone'
+	'backbone',
+	'model/ElementModel'
 ], function(
-	_, 
-	Backbone) {
+	_, Backbone, ElementModel) {
 
-	var LifeModel = Backbone.Model.extend({
+	var LifeModel = ElementModel.extend({
 
-		initialize: function( atts, opts ) {		
-			//listen to global frame advance
-			this.collection.on('frame:advance', this.frame, this);
-		},
 		defaults: {
 			'h': 16, //height
 			'w': 16, //width
@@ -27,7 +23,6 @@ define([
 			}
 		},
 		collide: function() {
-			this.collection.off('frame:advance', this.frame, this);
 			this.destroy();		
 		}
 	});

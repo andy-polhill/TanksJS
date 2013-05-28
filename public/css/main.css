@@ -37,7 +37,6 @@ body {
 	height:80px;
 	border:solid 1px;
 	position:relative;
-	
 }
 
 .tankPreview .tank {
@@ -53,6 +52,10 @@ dt {
 	width:80px;
 }
 
+
+.queued .tankOption button {
+	display:none;	
+}
 
 /* TANK ============================================== */
 

@@ -46,7 +46,8 @@ define([
 		},
 		life: function() {
 			//change to life property
-			this.lifeBar.style.cssText = "width:" + this.model.get('life') / 3 + "px;"
+			//TODO: use percentages
+			this.lifeBar.style.cssText = "width:" + this.model.get('life') / 2 + "px;"
 		},
 		heat: function() {
 			//change to life property

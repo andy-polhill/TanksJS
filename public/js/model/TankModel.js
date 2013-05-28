@@ -2,24 +2,36 @@ define([
 	'underscore',
 	'backbone',
 	'model/BulletModel',
-	'model/ExplosionModel'
+	'model/ExplosionModel',
+	'model/ElementModel'
 ], function(
 	_, 
-	Backbone, BulletModel, ExplosionModel) {
+	Backbone, BulletModel, ExplosionModel, ElementModel) {
 
 	var ANIMATION_RATE = 2,
 		HEAT_DROP = 10,
 		HEAT_PENALTY = 40;
 		
-	var TankModel = Backbone.Model.extend({
+	var TankModel = ElementModel.extend({
 
 		//TODO:width and height are duplicated in CSS.
 
-		initialize: function( atts ) {
-			this.collection.on('frame:advance', this.frame, this);
+		initialize: function( atts, opts ) {
+		
 			this.collection.on('kill:' + this.get('id'), this.registerKill, this);
+			
+			this.socket = opts.socket;
+			
+			//might not be a socket for unconnected tanks
+			if(this.socket) {
+				//set up user controls
+				this.socket.on('tank:move', _.bind(this.move, this));
+				this.socket.on('tank:rotate', _.bind(this.rotate, this));
+				this.socket.on('tank:shoot', _.bind(this.shoot, this));
+			}
 		},
 		defaults : {
+			'a': 0, //angle
 			'fv': 2.4, //forward velocity
 			'rv': 1.2, //reverse velocity
 			'x': 0, //horizontal location
@@ -40,13 +52,18 @@ define([
 				'v': 10, //velocity
 				'h': 3, //height
 				'w': 3, //width
-				'd': 8, //damage
+				'd': 6, //damage
 				'type': 'bullet',
 				'r': 350 //range
 			}
 		},
+		move: function(move) {
+			this.set('move', move);
+		},
+		rotate: function(rotate) {
+			this.set('rotate', rotate);
+		},
 		frame: function() {
-			//TODO This function needs rationalising.
 			
 			//Get all of the properties that we use more than once
 			var angle = this.get('a'),
@@ -85,17 +102,17 @@ define([
 			switch(move) {
 				case "1":
 					//forwards
-					x = parseFloat((x + (forwardVelocty * sin)).toFixed(0));
-					y = parseFloat((y - (forwardVelocty * cos)).toFixed(0));
+					x = parseFloat((x + (forwardVelocty * sin)).toFixed(1));
+					y = parseFloat((y - (forwardVelocty * cos)).toFixed(1));
 					tankFrame = (tankFrame > 0) ? 0 : 1;
 					break;
 				case "-1":
 					//backwards
-					x = parseFloat((x - (reverseVelocity * sin)).toFixed(0));
-					y = parseFloat((y + (reverseVelocity * cos)).toFixed(0));
+					x = parseFloat((x - (reverseVelocity * sin)).toFixed(1));
+					y = parseFloat((y + (reverseVelocity * cos)).toFixed(1));
 					tankFrame = (tankFrame > 0) ? 0 : 1;
 					break;
-			} 
+			} 			
 			
 			//set all the props at once to ensure previous atts is useful
 			this.set({
@@ -107,6 +124,7 @@ define([
 				'heat': heat
 			});
 		},
+		
 		shoot: function() {
 
 			var heat = this.get('heat');
@@ -127,28 +145,30 @@ define([
 					top = parseFloat(((this.get('y') + height) - ((height + 4) * cos)).toFixed(0)),
 					left = parseFloat(((this.get('x') + width) + ((width + 4) * sin)).toFixed(0));
 	
-				//set frame to start flare animation			
+				//set frame to start flare animation	
 				this.set({
 					'ff': 6,
 					'heat': heat - HEAT_DROP
 				});
+
+				var bullet = new BulletModel(
+				_.extend(this.get('weapon'), {
+					'a': angle,
+					'y': top,
+					'x': left,
+					'tank': this.get('id'),
+					'id': _.uniqueId()
+				}), {
+					'collection': this.collection
+				});
 				
-				this.collection.add(
-					new BulletModel(
-						_.extend(this.get('weapon'), {
-							'a': angle,
-							'y': top,
-							'x': left,
-							'tank': this.get('id'),
-							'id': _.uniqueId()
-					}), {
-						'collection': this.collection
-					})
-				);
+				this.collection.add([bullet]);
 			}
 		},
+		
 		collide: function(model) {
 			var type = model.get('type');
+			
 			switch(type) {
 				case "bullet":
 					//life = life - damage
@@ -165,7 +185,6 @@ define([
 								'collection': this.collection
 							})
 						);
-						this.collection.off('frame:advance', this.frame, this);
 						this.collection.trigger('kill:' + model.get('tank'));
 						this.destroy();
 					} else {

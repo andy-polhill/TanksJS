@@ -17,11 +17,10 @@ define([
 		
 	return {
 		
-		create: function(variant, attributes, options) {
-			console.log(variant);
+		create: function(variant, attributes, options, socket) {
 
 			var tank = new variants[variant](attributes, options);
-			console.log(tank.toJSON());			
+			
 			return tank;
 		}		
 	}
