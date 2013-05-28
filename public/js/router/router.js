@@ -65,7 +65,10 @@ function($, _, Backbone, ClientCollection, GameView, QueueView, RoomListView, Ta
 	    
 	    play: function(room, variant) {
 
-			//TODO: Disconnect the socket if the user re-routes - Read manual on how to do this!
+			if(typeof this.socket !== "undefined") {
+				this.socket.disconnect();
+			}
+
 			//create a connection
 			this.socket = io.connect('/', {
 				'force new connection': true
