@@ -21,16 +21,18 @@ body {
 	width:100%;
 }
 
-/* TANK SELECTION ============================================== */
-
-#tankSelection {
+section {
 	padding: 10px;
 }
 
-.tankOption {
+article {
 	width: 155px;
 	float:left;
 }
+
+/* ROOM SELECTION ============================================== */
+
+/* TANK SELECTION ============================================== */
 
 .tankPreview {
 	width: 100px;
@@ -43,8 +45,6 @@ body {
 	position:absolute;
 	left:40px;
 	top:30px;
-	-moz-transform: rotate(40deg);
-	-webkit-transform: rotate(40deg);
 }
 
 dt {

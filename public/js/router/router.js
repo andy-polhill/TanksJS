@@ -2,7 +2,6 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-	'io',
 	'collection/ClientCollection',
 	'view/GameView',
 	'view/QueueView',
@@ -10,7 +9,7 @@ define([
 	'view/TankListView'
 ], 
 
-function($, _, Backbone, io, ClientCollection, GameView, QueueView, RoomListView, TankListView ){
+function($, _, Backbone, ClientCollection, GameView, QueueView, RoomListView, TankListView ){
 
 	 var AppRouter = Backbone.Router.extend({	 
 	 		    

@@ -5,8 +5,7 @@ require.config({
 		underscore: "lib/underscore",
 		backbone: "lib/backbone",
 		text: "lib/text",
-		io : "/socket.io/socket.io",
-		template: "../../template"
+		template: "../template"
 	}
 });
 
