@@ -41,7 +41,9 @@ define([
 				"px; left: " + this.model.get('x') + 'px;';
 			
 			this.tank.style.cssText = 
-				"-moz-transform: " + rotateAttr +
+				"transform: " + rotateAttr +
+				";-ms-transform: " + rotateAttr +
+				";-moz-transform: " + rotateAttr +
 				"; -webkit-transform: " + rotateAttr;
 		},
 		life: function() {
