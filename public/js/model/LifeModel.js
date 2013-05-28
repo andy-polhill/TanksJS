@@ -7,19 +7,20 @@ define([
 
 	var LifeModel = ElementModel.extend({
 
+		initialize: function() {
+			//define internal properties
+			this._duration = 400; //shelf life
+		},
 		defaults: {
 			'h': 16, //height
 			'w': 16, //width
 			'life': 50,
-			'duration': 400, //shelf life
 			'type': 'life'
 		},
 		frame: function() {
-			var duration = this.get('duration') - 1;
-			if(duration < 0) {
+			this._duration--;
+			if(this._duration < 0) {
 				this.collide();
-			} else {
-				this.set('duration', duration);
 			}
 		},
 		collide: function() {
