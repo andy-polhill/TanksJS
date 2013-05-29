@@ -1,9 +1,8 @@
-<section>
+<section id="roomSelection">
 	<h2>Room Selection</h2>
-	ROOMS:<%= _.size(rooms) %>
 	
 	<% _.each(rooms, function(room, i) { %>
-		<article>
+		<article class="roomOption">
 			<%= room.name %>
 			Players: <%= room.playerCount %>
 			Queue: <%= room.queueCount %>

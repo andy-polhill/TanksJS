@@ -66,7 +66,7 @@ define([
 
 			//explosions don't detonate bullets
 			if(type === "explosion") {
-				return false
+				return false;
 			}
 
 			//Don't explode when bullet goes off screen or hits another explosion

@@ -71,7 +71,7 @@ define([
 
 			//look for collisions between objects
 			_.each(this.models, function(model, idx, collection) {
-				if(typeof model !== 'undefined') { 	
+				if(typeof model !== 'undefined') {
 					CollisionDetection.detect(model, collection, {
 						'callback': 'collide'
 					});

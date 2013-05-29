@@ -12,17 +12,17 @@ define([
 			this.collection.on("reset", this.render, this);
 		},
 		
- 		events: {
- 			'click article button' : 'selectRoom'
- 		},
- 		
+		events: {
+			'click article button' : 'selectRoom'
+		},
+
 		template: RoomListTemplate,		
 		
 		render: function() {
 			var tmpl = _.template(this.template);
-	        this.$el.html(tmpl({
-	        	rooms : this.collection.toJSON()
-        	}));
+			this.$el.html(tmpl({
+				rooms : this.collection.toJSON()
+			}));
 			return this.$el;
 		},
 		

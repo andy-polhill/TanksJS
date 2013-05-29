@@ -27,5 +27,5 @@ define([
 			
 			return model;
 		}
-	}
+	};
 });

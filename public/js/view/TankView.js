@@ -49,13 +49,13 @@ define([
 		life: function() {
 			//change to life property
 			//TODO: use percentages
-			this.lifeBar.style.cssText = "width:" + this.model.get('life') / 2 + "px;"
+			this.lifeBar.style.cssText = "width:" + this.model.get('life') / 2 + "px;";
 		},
 		heat: function() {
 			//change to life property
 			var heat = this.model.get('heat'),
 				width = ( heat > 0) ? heat : 0; 
-			this.heatBar.style.cssText = "width:" + width + "px;"
+			this.heatBar.style.cssText = "width:" + width + "px;";
 		},
 		kill: function() {
 			//this tank done a kill

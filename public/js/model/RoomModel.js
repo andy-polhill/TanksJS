@@ -122,7 +122,7 @@ define([
 		
 		leaveActive: function(socket) {
 		
-			var name = this.get('name')
+			var name = this.get('name');
 		
 			//remove socket from active list
 			socket.leave(name);

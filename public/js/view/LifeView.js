@@ -6,8 +6,11 @@ define([
 	$, _, Backbone){
 
 	var LifeView = Backbone.View.extend({
-  		className: "life",
+		
+		className: "life",
+		
 		initialize: function() {
+		
 			this.model.on('remove', this.remove, this);
 			this.el.style.cssText = 
 				"top: " + this.model.get('y') +

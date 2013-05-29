@@ -72,7 +72,7 @@ define([
 			//loop through and render each view
 			_.each(this.views, function(view){
 				view.render();
-			})
+			});
 		},
 		
 		control: function( evt ) {

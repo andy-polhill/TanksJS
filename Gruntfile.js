@@ -24,10 +24,14 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-		jshint: {		
-			all: ['public/js/**/*.js'],
-			options: {
-				laxbreak : true
+		jshint: {
+			default: {	
+				files: [
+			        {src: ['public/js/**/*.js', '!public/js/lib/**/*.js']},
+				],
+				options: {
+					laxcomma : true
+				}
 			}
 		},
 		clean: { 
@@ -91,5 +95,5 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-smushit');
 	
 	grunt.registerTask('test', ['jshint', 'jasmine']);
-	grunt.registerTask('build', ['clean', 'jasmine', 'copy', 'requirejs', 'smushit']);
+	grunt.registerTask('build', ['clean', 'jshint', 'jasmine', 'copy', 'requirejs', 'smushit']);
 };

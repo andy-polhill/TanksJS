@@ -11,7 +11,7 @@ define([
 	var ANIMATION_RATE = 2,
 		HEAT_DROP = 10,
 		HEAT_PENALTY = 40;
-		
+
 	var TankModel = ElementModel.extend({
 
 		//TODO:width and height are duplicated in CSS.
@@ -83,7 +83,7 @@ define([
 
 			//Increment the angle if we are rotating
 			if(_.isString(rotate)) {
-				angle += this.get('tc') * rotate
+				angle += this.get('tc') * rotate;
 				if(angle > 360) angle = 0;
 				if(angle < 0) angle = 360;
 			}
@@ -112,8 +112,8 @@ define([
 					y = parseFloat((y + (reverseVelocity * cos)).toFixed(1));
 					tankFrame = (tankFrame > 0) ? 0 : 1;
 					break;
-			} 			
-			
+			}
+
 			//set all the props at once to ensure previous atts is useful
 			this.set({
 				'x': x,
@@ -167,12 +167,13 @@ define([
 		},
 		
 		collide: function(model) {
-			var type = model.get('type');
+			var type = model.get('type'),
+			life;
 			
 			switch(type) {
 				case "bullet":
 					//life = life - damage
-					var life = this.get('life') - model.get('d');
+					life = this.get('life') - model.get('d');
 
 					if(life < 0) {
 						//trigger kill event globally
@@ -194,8 +195,7 @@ define([
 				case "explosion": //Do nothing
 				break;
 				case "life":
-					console.log('tank life collide');
-					var life = this.get('life') + model.get('life'),
+					life = this.get('life') + model.get('life'),
 						maxLife = this.get('maxLife');
 						
 					life = (life > this.get('maxLife')) ? maxLife : life;

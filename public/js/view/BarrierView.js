@@ -6,8 +6,11 @@ define([
 	$, _, Backbone, BarrierTemplate) {
 
 	var BarrierView = Backbone.View.extend({
-  		className: "barrier",
+	
+		className: "barrier",
+		
 		initialize: function() {
+	
 			this.el.style.cssText = 
 				"top: " + this.model.get('y') +
 				"px; left: " + this.model.get('x') + 'px;';

@@ -1,7 +1,7 @@
 {
-  "name": "playground",
-  "version": "0.0.0-17",
-  "description": "Just Playin",
+  "name": "Mega Tanks",
+  "version": "0.0.0",
+  "description": "Multiplayer tanks",
   "main": "main.js",
   "dependencies": {
     "amdefine": ">=0.0.2",
@@ -12,8 +12,8 @@
     "requirejs": "~2.1.5"
   },
   "scripts": {
-    "test": "grunt jasmine",
-    "start": "node public/server.js"
+    "test": "grunt test",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",

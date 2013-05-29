@@ -14,14 +14,9 @@ define([
 
 		frame: function() {
 		
-			//try {
-				this.roomCollection.each( function(room) {			
-					room.frame();				
-				}, this);
-			/*} catch(e) {
-				debugger;
-				console.error(e);
-			}*/
+			this.roomCollection.each( function(room) {			
+				room.frame();				
+			}, this);
 		},
 
 		join: function(socket, data) {
@@ -70,7 +65,7 @@ define([
 			});
 
 			this.app.get('/', function (req, res) {
-				res.sendfile(__dirname + 'index.html');
+				res.sendfile('index.html');
 			});	
 			
 			this.app.get('/rooms', _.bind(this.getRooms, this));
@@ -81,5 +76,5 @@ define([
 			//start game loop
 			frameInterval = setInterval(_.bind(this.frame, this), FRAME_RATE);
 		}
-	}
+	};
 });

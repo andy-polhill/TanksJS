@@ -12,17 +12,17 @@ define([
 			this.collection.on("reset", this.render, this);
 		},
 		
- 		events: {
- 			'click article button' : 'selectTank'
- 		},
- 		
+		events: {
+			'click article button' : 'selectTank'
+		},
+
 		template: TankListTemplate,		
 		
 		render: function() {
 			var tmpl = _.template(this.template);
-	        this.$el.html(tmpl({
-	        	tanks : this.collection.toJSON()
-        	}));
+			this.$el.html(tmpl({
+				tanks : this.collection.toJSON()
+			}));
 			return this.$el;
 		},
 		
@@ -31,7 +31,7 @@ define([
 			return false;
 		}
 	});
-  
+
   return TanksListView;
 
 });
