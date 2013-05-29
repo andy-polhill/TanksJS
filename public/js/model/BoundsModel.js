@@ -2,8 +2,7 @@ define([
 	'underscore',
 	'backbone',
 	'model/ElementModel'
-], function(
-	_, Backbone, ElementModel) {
+], function(_, Backbone, ElementModel) {
 
 	var BoundsModel = ElementModel.extend({
 

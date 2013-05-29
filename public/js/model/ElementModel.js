@@ -6,6 +6,7 @@ define(['backbone'], function(Backbone) {
 		frame: function() {
 			// No op - Implement frame animation here.
 		},
+		
 		collide: function() {
 			// No op - Implement collision logic here.
 		}

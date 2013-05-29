@@ -2,8 +2,7 @@ define([
 	'underscore',
 	'backbone',
 	'model/ElementModel'
-], function(
-	_,  Backbone, ElementModel) {
+], function(_,  Backbone, ElementModel) {
 
 	var ANIMATION_RATE = 2;
 
@@ -17,7 +16,9 @@ define([
 			'h': 26, //height
 			'type': 'explosion',
 		},
+		
 		frame: function() {
+		
 			var frameCount = this.get('f') - ANIMATION_RATE;
 			this.set('f', frameCount);
 			if(frameCount <= 0) {

@@ -21,6 +21,7 @@ define([
 				'yv': parseFloat(yv.toFixed(1)) //vertical (y) velocity
 			}); 
 		},
+		
 		defaults : {
 			'v': 10, //velocity
 			'a': 0, //angle
@@ -32,6 +33,7 @@ define([
 			'type': 'bullet',
 			'r': 300 //range
 		},
+		
 		frame: function() {
 			//calculate the new location
 			var left = this.get('x') + this.get('xv'),
@@ -51,6 +53,7 @@ define([
 				this.collide();
 			}
 		},
+		
 		collide: function(model) {
 			
 			//TODO: Try and clean up the relationships between elements

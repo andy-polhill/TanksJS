@@ -2,10 +2,10 @@ define([
 	'underscore',
 	'backbone',
 	'model/TankModel'
-], function(
-	_, Backbone, TankModel) {
+], function(_, Backbone, TankModel) {
 
 	var MediumTankModel = TankModel.extend({
+	
 		defaults : {
 			'w': 23,
 			'h': 30,

@@ -4,7 +4,7 @@ define([
 	'model/TankModel',
 	'model/BulletModel'
 	
-], function( _, Backbone, TankModel, BulletModel) {
+], function(_, Backbone, TankModel, BulletModel) {
 
 	//TODO A lot of work to clean this up!!!!!!
 

@@ -3,9 +3,7 @@ define([
 	'backbone',
 	'model/BulletModel',
 	'model/ElementModel'
-], function(
-	_, 
-	Backbone, BulletModel, ElementModel) {
+], function(_, Backbone, BulletModel, ElementModel) {
 
 	var ANIMATION_RATE = 2,
 		HEAT_DROP = 10,
@@ -29,6 +27,7 @@ define([
 				this.socket.on('tank:shoot', _.bind(this.shoot, this));
 			}
 		},
+		
 		defaults : {
 			'a': 0, //angle
 			'fv': 2.4, //forward velocity
@@ -56,12 +55,17 @@ define([
 				'r': 350 //range
 			}
 		},
+		
 		move: function(move) {
+		
 			this.set('move', move);
 		},
+		
 		rotate: function(rotate) {
+		
 			this.set('rotate', rotate);
 		},
+		
 		frame: function() {
 			
 			//Get all of the properties that we use more than once
@@ -199,6 +203,7 @@ define([
 				break;		
 			}
 		},
+		
 		registerKill: function() {
 			//you done a kill
 			this.set('kill', this.get('kill') + 1);

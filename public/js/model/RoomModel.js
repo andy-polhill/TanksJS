@@ -3,8 +3,7 @@ define([
 	'backbone',
 	'utils/ElementFactory',
 	'collection/ElementCollection'
-], function(
-	_, Backbone, ElementFactory, ElementCollection) {
+], function(_, Backbone, ElementFactory, ElementCollection) {
 
 	var RoomModel = Backbone.Model.extend({
 
