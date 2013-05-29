@@ -1,14 +1,15 @@
 define([
-	'jquery',
 	'underscore',
 	'backbone',
 	'text!template/TankTemplate.html'
-], function(
-	$, _, Backbone, TankTemplate) {
+], function(_, Backbone, TankTemplate) {
 
 	var TankView = Backbone.View.extend({
+	
 		className: "tank",
+
 		initialize: function( opts ) {
+		
 			var tmpl = _.template( this.template );
 			this.$el.html( tmpl( this.model.toJSON() ) );
 			this.$el.addClass( this.model.get('variant') );
@@ -27,8 +28,11 @@ define([
 			this.life(); //set life bar
 			this.kill(); //set kill count
 		},
+		
 		template: TankTemplate,
+		
 		render: function() {
+		
 			var rotateAttr = 'rotate(' + this.model.get('a') + 'deg)';
 
 			this.$el.attr({
@@ -46,17 +50,21 @@ define([
 				";-moz-transform: " + rotateAttr +
 				"; -webkit-transform: " + rotateAttr;
 		},
+		
 		life: function() {
 			//change to life property
 			//TODO: use percentages
 			this.lifeBar.style.cssText = "width:" + this.model.get('life') / 2 + "px;";
 		},
+		
 		heat: function() {
+		
 			//change to life property
 			var heat = this.model.get('heat'),
 				width = ( heat > 0) ? heat : 0; 
 			this.heatBar.style.cssText = "width:" + width + "px;";
 		},
+		
 		kill: function() {
 			//this tank done a kill
 			this.$kills.html(this.model.get('kill'));

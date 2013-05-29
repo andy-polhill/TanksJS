@@ -1,5 +1,4 @@
 define([
-	'jquery',
 	'underscore',
 	'backbone',
 	'view/TankView',
@@ -8,8 +7,7 @@ define([
 	'view/ExplosionView',
 	'view/LifeView',
 	'text!template/GameTemplate.html'
-], function(
-	$, _, Backbone, TankView, BarrierView, BulletView, ExplosionView, LifeView, GameTemplate){
+], function(_, Backbone, TankView, BarrierView, BulletView, ExplosionView, LifeView, GameTemplate){
 
 	//type => constructor lookup
 	var ELEMENTS = {

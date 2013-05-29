@@ -3,12 +3,12 @@ define([
 	'underscore',
 	'backbone',
 	'text!template/TankListTemplate.html'
-], function(
-	$, _, Backbone, TankListTemplate){
+], function($, _, Backbone, TankListTemplate){
 
 	var TanksListView = Backbone.View.extend({
 	
 		initialize: function(opts) {
+		
 			this.collection.on("reset", this.render, this);
 		},
 		
@@ -19,6 +19,7 @@ define([
 		template: TankListTemplate,		
 		
 		render: function() {
+		
 			var tmpl = _.template(this.template);
 			this.$el.html(tmpl({
 				tanks : this.collection.toJSON()
@@ -27,6 +28,7 @@ define([
 		},
 		
 		selectTank: function(evt) {
+		
 			Vents.trigger("select:tank", {'variant' : $(evt.target).data('variant')});
 			return false;
 		}

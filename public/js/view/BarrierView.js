@@ -1,8 +1,7 @@
 define([
-	'jquery',
 	'underscore',
 	'backbone'
-], function( $, _, Backbone, BarrierTemplate) {
+], function(_, Backbone, BarrierTemplate) {
 
 	var BarrierView = Backbone.View.extend({
 	

@@ -1,9 +1,7 @@
 define([
-	'jquery',
 	'underscore',
 	'backbone'
-], function(
-	$, _, Backbone){
+], function(_, Backbone){
 
 	var LifeView = Backbone.View.extend({
 		
