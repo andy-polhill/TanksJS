@@ -2,9 +2,7 @@ define([
 	'underscore',
 	'backbone', 
 	'model/RoomModel'
-	],
-
-	function( _, Backbone, RoomModel ) {
+], function( _, Backbone, RoomModel ) {
 
 	var RoomCollection = Backbone.Collection.extend({
 
@@ -23,6 +21,7 @@ define([
 		},
 
 		model: RoomModel
+		
 	});
 	
 	return RoomCollection;
