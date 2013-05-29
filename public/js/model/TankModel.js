@@ -2,11 +2,10 @@ define([
 	'underscore',
 	'backbone',
 	'model/BulletModel',
-	'model/ExplosionModel',
 	'model/ElementModel'
 ], function(
 	_, 
-	Backbone, BulletModel, ExplosionModel, ElementModel) {
+	Backbone, BulletModel, ElementModel) {
 
 	var ANIMATION_RATE = 2,
 		HEAT_DROP = 10,
@@ -176,16 +175,6 @@ define([
 					life = this.get('life') - model.get('d');
 
 					if(life < 0) {
-						//trigger kill event globally
-						this.collection.add(
-							new ExplosionModel({
-								'y': this.get('y'),
-								'x': this.get('x'),
-								'id': _.uniqueId()
-							}, {
-								'collection': this.collection
-							})
-						);
 						this.collection.trigger('kill:' + model.get('tank'));
 						this.destroy();
 					} else {

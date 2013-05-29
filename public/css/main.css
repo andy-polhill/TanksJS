@@ -19,6 +19,7 @@ body {
 	display:block;
 	height:100%;
 	width:100%;
+	background-color:#eee;
 }
 
 section {
@@ -51,7 +52,7 @@ dt {
 	float:left;
 	width:80px;
 }
-
+ 
 
 .queued .tankOption button {
 	display:none;	
@@ -66,6 +67,7 @@ dt {
 	display:block;
 	font-family: courier;
 	font-size: 10px;
+	z-index:2;
 }
 
 .flare {
@@ -250,11 +252,16 @@ dt {
 /* BARRIER ============================================== */
 
 .barrier {
+	background-image:url(/images/barrier-sprite.png);
 	position:absolute;
-	width:50px;
-	height:50px;
+	width:40px;
+	height:40px;
 	border:solid 1px #777;	
 	background-color:#ccc;
 	display:block;
 }
+
+.barrier[data-frame='0'] { background-position:-135px 0;}
+.barrier[data-frame='1'] { background-position:-90px 0;}
+.barrier[data-frame='2'] { background-position:-45px 0;}
 

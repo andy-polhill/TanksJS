@@ -49,6 +49,32 @@ define([
 			Backbone.Collection.prototype.add.call(this, models, opts);
 		},
 		
+		remove: function(model) {
+
+			var type = model.get('type');
+
+			//Every element that is removed, is followed by an explosion BLAMMO!
+			//(except for bullets and explosions)
+			if(!type.match(/bullet|explosion/g)) {
+				this.add([
+					ElementFactory.create('explosion', {
+						'y': model.get('y') + (model.get('w') / 2),
+						'x': model.get('x') + (model.get('h') / 2),
+						'id': _.uniqueId()
+					})
+				]);
+			}
+
+			//if it was a Barrier add a new one
+			if(type === 'barrier') {
+				this.add([
+					ElementFactory.create('barrier', {'id': _.uniqueId()} )
+				], {'detect': true});			
+			}
+
+			Backbone.Collection.prototype.remove.apply(this, arguments);		
+		},
+		
 		frame: function() {
 			
 			//TODO: Dirtbags clean up!

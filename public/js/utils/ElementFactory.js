@@ -5,10 +5,11 @@ define([
 	'model/MediumTankModel',
 	'model/SpecialTankModel',
 	'model/BarrierModel',
+	'model/ExplosionModel',
 	'model/LifeModel'
 	],
 
-	function( _, TankModel, SmallTankModel, MediumTankModel, SpecialTankModel, BarrierModel, LifeModel ) {
+	function(_, TankModel, SmallTankModel, MediumTankModel, SpecialTankModel, BarrierModel, ExplosionModel, LifeModel) {
 
 	var elements = {
 		'large-tank': TankModel,
@@ -16,13 +17,14 @@ define([
 		'medium-tank': MediumTankModel,
 		'special-tank': SpecialTankModel,
 		'barrier': BarrierModel,
-		'life': LifeModel
+		'life': LifeModel,
+		'explosion': ExplosionModel
 	};
 		
 	return {
 		
 		create: function(element, attributes, options, socket) {
-
+			//TODO: error handling
 			var model = new elements[element](attributes, options);
 			
 			return model;

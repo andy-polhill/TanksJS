@@ -9,6 +9,8 @@ define([
 	'view/TankListView'
 ], 
 
+//TODO: hook into navigate/route to remove duplication of disconnect
+
 function($, _, Backbone, ClientCollection, GameView, QueueView, RoomListView, TankListView ){
 
 	var AppRouter = Backbone.Router.extend({	 
@@ -65,7 +67,10 @@ function($, _, Backbone, ClientCollection, GameView, QueueView, RoomListView, Ta
 		
 		play: function(room, variant) {
 
-			//TODO: Disconnect the socket if the user re-routes - Read manual on how to do this!
+			if(typeof this.socket !== "undefined") {
+				this.socket.disconnect();
+			}
+
 			//create a connection
 			this.socket = io.connect('/', {
 				'force new connection': true

@@ -1,11 +1,8 @@
 define([
 	'underscore',
 	'backbone',
-	'model/ExplosionModel',
 	'model/ElementModel'
-], function(
-	_, 
-	Backbone, ExplosionModel, ElementModel) {
+], function(_, Backbone, ElementModel) {
 
 	var BulletModel = ElementModel.extend({
 
@@ -69,20 +66,6 @@ define([
 				return false;
 			}
 
-			//Don't explode when bullet goes off screen or hits another explosion
-			if(!type.match(/bounds|explosion/g)) {
-
-				//TODO: Make explosions more performant!
-				/*this.collection.add([
-					new ExplosionModel({
-						'y': this.get('y'),
-						'x': this.get('x'),
-						'id': _.uniqueId()
-					}, {
-						'collection': this.collection
-					})
-				]);*/
-			}
 			this.destroy();
 		}
 	});
