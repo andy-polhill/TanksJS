@@ -111,7 +111,6 @@ define([
 				break;
 				case 32: //spacebar
 					if(!isKeydown) {
-						console.log('shoot');
 						this.socket.emit('tank:shoot', true);
 					}
 					evt.preventDefault();
