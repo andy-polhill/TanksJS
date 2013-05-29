@@ -21,7 +21,7 @@ define([
 		},
 	
 		model : function(atts, opts) {
-			return ElementFactory.create(opts.type, atts, opts)
+			return ElementFactory.create(opts.type, atts, opts);
 		},
 		
 		add: function(models, opts) {
