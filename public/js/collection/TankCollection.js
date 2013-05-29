@@ -1,26 +1,19 @@
 define([
 	'underscore',
 	'backbone',
-	'model/TankModel',
-	'model/SmallTankModel',
-	'model/MediumTankModel',
-	'model/SpecialTankModel'
-], function(_, Backbone, TankModel, SmallTankModel, MediumTankModel, SpecialTankModel){
+	'utils/ElementFactory'
+], function(_, Backbone, ElementFactory){
 
 	var TankCollection = Backbone.Collection.extend({
+	
 		initialize : function() {
-			this.add(new TankModel({}, {
-				collection : this 
-			}));
-			this.add(new SmallTankModel({}, {
-				collection : this 
-			}));
-			this.add(new MediumTankModel({}, {
-				collection : this 
-			}));
-			this.add(new SpecialTankModel({}, {
-				collection : this 
-			}));
+		
+			this.add([
+				ElementFactory.create('large-tank', {}, {collection: this}),
+				ElementFactory.create('medium-tank', {}, {collection: this}),
+				ElementFactory.create('small-tank', {}, {collection: this}),
+				ElementFactory.create('special-tank', {}, {collection: this})
+			]);
 		}
 	});
 

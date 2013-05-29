@@ -2,12 +2,8 @@ define([
 	'underscore',
 	'backbone',
 	'utils/CollisionDetection',
-	'utils/ElementFactory',
-	'model/BulletModel',
-	'model/TankModel',
-	'model/BarrierModel',
-	'model/LifeModel'
-], function( _, Backbone, CollisionDetection, ElementFactory, BulletModel, TankModel, BarrierModel, ExplosionModel, LifeModel) {
+	'utils/ElementFactory'
+], function( _, Backbone, CollisionDetection, ElementFactory) {
 	
 	var LIFE_TOKEN = 500;
 	
@@ -25,18 +21,7 @@ define([
 		},
 	
 		model : function(atts, opts) {
-			switch(opts.type) {
-				case 'bullet':
-					return new BulletModel(atts, opts);
-				case 'tank':
-					return new TankModel(atts, opts);
-				case 'barrier':
-					return new BarrierModel(atts, opts);
-				case 'explosion':
-					return new ExplosionModel(atts, opts);
-				case 'life':
-					return new LifeModel(atts, opts);
-			}
+			return ElementFactory.create(opts.type, atts, opts)
 		},
 		
 		add: function(models, opts) {
