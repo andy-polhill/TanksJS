@@ -36,20 +36,12 @@ define(['underscore'], function( _ ) {
 				var cTop = candidate.get('y'),
 					cLeft = candidate.get('x'),
 					cBottom = cTop + candidate.get('h'),
-					cRight = cLeft + candidate.get('w');
-				
-				/*console.log("--start--")
-				console.log((left > cRight))
-				console.log((cLeft > right))
-				console.log((top > cBottom))
-				console.log((cTop > bottom))*/
-				
+					cRight = cLeft + candidate.get('w');				
+								
 				if(
-					(opts.invert === true && (left > cLeft || cRight > right || top > cTop || cBottom > bottom)) || 
-					(opts.invert !== true && !(left > cRight || cLeft > right || top > cBottom || cTop > bottom))
+					(opts.invert && (left > cLeft || cRight > right || top > cTop || cBottom > bottom)) || 
+					(!opts.invert && !(left > cRight || cLeft > right || top > cBottom || cTop > bottom))
 				) {
-
-					//console.log("intersect");
 
 					/*	I have an outstanding issue here, if the candidate is destroyed in the first callback,
 						it may cause issues in the second. The way round it is probably to defer the deletion
@@ -58,11 +50,11 @@ define(['underscore'], function( _ ) {
 
 					if(!hasIntersect) {
 						hasIntersect = true;
-					}				
-					if(_.isFunction(candidate[opts.callback])) {
+					}	
+					if(_.isFunction(candidate[opts.callback])) {	
 						candidate[opts.callback].call(candidate, model);
 					}
-					if(_.isFunction(model[opts.callback])) {
+					if(_.isFunction(model[opts.callback])) {	
 						model[opts.callback].call(model, candidate);
 					}
 				}
@@ -75,37 +67,71 @@ define(['underscore'], function( _ ) {
 
 /*
 		//TODO: Optimise Optimise!!
-		detect2 : function(model, collection, opts) {
+		detect2 : function(model, collection, options) {
 		
-			var opts = (typeof opts === "undefined") ? {} : opts
+			var opts = (typeof options === "undefined") ? {} : options
 			,	hasIntersect = false
 			,	top = model.get('y')
 			,	left = model.get('x')
 			,	bottom = top + model.get('h')
 			,	right = left + model.get('w')
-			,	id = model.get('id');
+			,	id = model.get('id')
+			,	invert = opts.invert;
 
 			_.each(collection, function(candidate) {
 				
 				if(id === candidate.get('id')) return; //don't compare the same object with itself
-				
-				var cLeft = candidate.get('x');
-				if(!(left > cLeft)) {
-					if(!(cLeft + candidate.get('w') > right)) {
-						var cTop = candidate.get('h');
-						if(!(top > cTop)) {
-							if(!(cTop + candidate.get('h') > bottom)) {
-								candidate.collide.call(candidate, model);
-								model.collide.call(model, candidate);
-								if(!hasIntersect) {
-									hasIntersect = true;
-								}
-							}						
-						}				
+
+				var cLeft, cRight, cTop, cBottom;
+
+				if(opts.invert) {
+
+					cLeft = candidate.get('x');
+					if(left < cLeft) {
+						candidate.collide.call(candidate, model);
+						model.collide.call(model, candidate);
+						return true;
 					}
-				}						
+					cRight = cLeft + candidate.get('w');					
+					if(cRight > right) {
+						candidate.collide.call(candidate, model);
+						model.collide.call(model, candidate);
+						return true;
+					}
+					cTop = candidate.get('y');
+					if(top > cTop) {
+						candidate.collide.call(candidate, model);
+						model.collide.call(model, candidate);
+						return true;
+					} 
+					cBottom = cTop + candidate.get('h');
+					if( cBottom > bottom) {
+						candidate.collide.call(candidate, model);
+						model.collide.call(model, candidate);
+						return true;
+					}
+
+				} else {
+					cLeft = candidate.get('x');
+					cRight = cLeft + candidate.get('w');
+					if(left < cRight) {
+						if(cLeft < right) {
+							cTop = candidate.get('y');
+							cBottom = cTop + candidate.get('h');
+							if(top < cBottom) {
+								if(cTop < bottom) {
+									if(!hasIntersect) {
+										hasIntersect = true;
+									}
+									candidate.collide.call(candidate, model);
+									model.collide.call(model, candidate);								
+								}
+							}		
+						}												
+					}
+				}
+
 			});
 
-			return hasIntersect
-		},
-		*/
+			return hasIntersect;
+		},*/
