@@ -1,17 +1,24 @@
 <section id="tankSelection">
-	<h2>Select your tank</h2>
 	<% _.each(tanks, function(tank, i) { %>
 		<article class="tankOption">
-			<h4><%= tank.variant %></h4>
-			<div class="tankPreview">
-			
+
+			<div class="tankPreview">			
 				<div class="<%= tank.variant %> tank" data-track-frame="0">
 					<div class="tankBody">
 						<div class="flare"></div>
 					</div>
-				</div>
-			
+				</div>			
 			</div>
+
+			<h3><%= tank.variant %></h3>
+
+			<button data-variant="<%= tank.variant %>" class="select">
+				Select Tank
+			</button>
+
+			<hr />
+
+			<h4>Chassis</h4>
 			<dl>
 				<dt>Speed:</dt>
 					<dd><%= tank.fv %></dd>
@@ -21,9 +28,12 @@
 					<dd><%= tank.maxHeat %></dd>
 				<dt>Size:</dt>
 					<dd><%= tank.w %> x <%= tank.h %></dd>
-	
-				<h5>Weaponry</h5>
-	
+			</dl>
+
+			<hr />
+
+			<h4>Weaponry</h4>
+			<dl>
 				<dt>Range:</dt>
 					<dd><%= tank.weapon.r %></dd>
 				<dt>Damage:</dt>
@@ -31,7 +41,6 @@
 				<dt>Speed:</dt>
 					<dd><%= tank.weapon.v %></dd>
 			</dl>
-			<button data-variant="<%= tank.variant %>" class="select">Play</button>
 		</article>
 	<% }) %>
 

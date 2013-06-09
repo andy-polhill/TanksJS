@@ -1,58 +1,66 @@
 define([
 	'underscore',
 	'backbone',
-	'model/TankModel',
-	'model/BoundsModel',
-	'utils/CollisionDetection'
+	'collection/ElementCollection',
+	'utils/ElementFactory',
+	'model/BoundsModel'
 ], function(
-	_, 
-	Backbone,
-	TankModel,
-	BoundsModel,
-	CollisionDetection) {
+	_, Backbone, ElementCollection, ElementFactory, BoundsModel) {
 
 	describe("Collision Detection Performance", function() {	
 	    	
-	    it('performance test', function() {
+	    it('performance test of frame', function() {
 
-			//1st run 264 milliseconds
+			//some Backbone overrides to make it fit a bit nicer
+			Backbone.Model.prototype.isNew = function() {
+				if(typeof this._isNew === "undefined") {
+					this._isNew = true;
+				}
+				return this._isNew;
+			};
 
-			var count = 1;
+			//some Backbone overrides to make it fit a bit nicer
+			Backbone.Model.prototype.sync = function() { /*no op*/ };
+	    
+	    	var collection = new ElementCollection(null, {
+	    		'boundsModel' : new BoundsModel()
+	    	});
 
-			//create a tank
-			var tank1 = new TankModel({
-				'id':1,
-				'x':0,
-				'y':0,
-				'w':10,
-				'h':10
-			}, {
-				collection: {on:function(){}}
-			});
+			var tank1 = ElementFactory.create(
+				'large-tank', { 'id': 100 }, { 'collection': collection }
+			);
 
-			//create another tank that overlaps it
-			var tank2 = new TankModel({
-				'id':2,
-				'x':5,
-				'y':5,
-				'w':10,
-				'h':10
-			}, {
-				collection: {on:function(){}}
-			});
+			tank1.move(true);
+			tank1.rotate(true);
 
-			var start = new Date();
+			var tank2 = ElementFactory.create(
+				'small-tank', { 'id': 100 }, { 'collection': collection }
+			);
+
+			tank2.move(true);
+			tank2.shoot();
+
+			var tank3 = ElementFactory.create(
+				'medium-tank', { 'id': 100 }, { 'collection': collection }
+			)
+
+			tank3.move(true);
+			tank3.shoot();
+	    
+	    	collection.add([tank1, tank2, tank3]);
+	    	
+	    	var count = 100000;
+
+			start = new Date();
 
 			for(var i=0; i < count; i++) {
-				CollisionDetection.detect(tank2, [tank1], {
-					'callback': 'collide'
-				});
+				collection.frame();
 			}
 
-			var end = new Date();
-
-			console.log(end - start);
-
-		});
+			end = new Date();
+			
+			console.log("TIME TO RUN:" + (end - start));
+	    
+	    });
 	});
 });

@@ -25,7 +25,7 @@ define([
 			'heat': 90, //heat
 			'maxHeat': 90,
 			'weapon': {
-				'v': 13, //velocity
+				'v': 14, //velocity
 				'h': 2, //height
 				'w': 1, //width
 				'd': 2, //damage

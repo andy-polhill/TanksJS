@@ -73,7 +73,8 @@ function($, _, Backbone, ClientCollection, GameView, QueueView, RoomListView, Ta
 
 			//create a connection
 			this.socket = io.connect('/', {
-				'force new connection': true
+				'force new connection': true,
+				'sync disconnect on unload' : true
 			});
 
 			//join the game

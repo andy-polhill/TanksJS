@@ -1,25 +1,90 @@
 /* GENERAL ============================================== */
 
+html { 
+  background: url(/images/bg.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
 body {
-	font-family: arial, helvetica;
+	color:#fff;
+	font-family: "courier new";
 	font-size: 12px;
+}
+
+h1 {
+	width:230px;
+	margin: 40px auto -60px;
+	font-family:"dimitri";
+	font-size:40px;
+	text-shadow:
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    2px 2px 0 #000;  
+}
+
+h3 {
+	font-family:"dimitri";
+	font-size:20px;
+	text-shadow:
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    2px 2px 0 #000;  
+}
+
+h4 {
+	font-weight:bold;
+	font-size:12px;
+	text-transform:uppercase;
+	color:#f0ff00;
+	font-style: italic;	
+	margin:6px;
+}
+
+hr {
+	background-color:#130e08;	
+	border-color:#524335;
+	border-style: solid none none;
+    border-width: 1px medium medium;
+    margin:10px 0;
+}
+
+button {
+	font-family: impact;
+	color: #000;
+	background-color:#f0ff00;
+	border:solid 1px #faffa3;
+	padding:5px 30px;
+	border-radius:12px;
+	background:url(/images/button_bg.jpg);
+}
+
+button:hover {
+	background:url(/images/button_hover_bg.jpg);
 }
 
 #wrapper {
 	width:640px;
 	height:480px;
-	position:relative;
 	margin-left:auto;
 	margin-right:auto;
 	margin-top:50px;
-	border: solid 1px #666;	
+	padding:20px;
+	background: url(/images/frame.png) no-repeat;
 }
 
 #game {
+	color:#000;
 	display:block;
-	height:100%;
-	width:100%;
+	height:480px;
+	width:640px;
 	background-color:#eee;
+	position:relative;
+	background: url(/images/game_bg.jpg) no-repeat;
 }
 
 section {
@@ -27,8 +92,24 @@ section {
 }
 
 article {
-	width: 155px;
+	width: 140px;
 	float:left;
+	background-color:#392f24;
+	border:#100b06 solid 1px;
+	padding:10px 5px 5px;
+	margin-left:3px;
+	text-align:center;
+}
+
+dl {
+	text-align:right;
+	line-height:1.5em;
+}
+
+dt {
+	float:left;
+	width:80px;
+	text-align:left;
 }
 
 /* ROOM SELECTION ============================================== */
@@ -36,22 +117,24 @@ article {
 /* TANK SELECTION ============================================== */
 
 .tankPreview {
-	width: 100px;
-	height:80px;
-	border:solid 1px;
+	width: 130px;
+	height:113px;
 	position:relative;
+	background:url(/images/tank_bg.jpg);
+	margin: 0 auto;
 }
 
 .tankPreview .tank {
 	position:absolute;
-	left:40px;
-	top:30px;
+	left:50px;
+	top:40px;
+	transform:rotate(40deg);
+	-ms-transform:rotate(40deg);
+	-moz-transform:rotate(40deg);
+	-webkit-transform:rotate(40deg);
 }
 
-dt {
-	float:left;
-	width:80px;
-}
+
  
 
 .queued .tankOption button {
@@ -236,6 +319,7 @@ dt {
 	margin-left:-13px;
 	width:26px;
 	height:26px;
+	z-index:3;
 }
 
 .explosion[data-frame='20'] { background-position:20px 0;}

@@ -9,13 +9,13 @@ define([
 		initialize : function(atts, opts) {
 
 			this.add([{
-				name: 'desert',
+				name: 'El Alamein',
 				id: _.uniqueId()
 			}, {
-				name: 'jungle',
+				name: 'Normandy',
 				id: _.uniqueId()
 			}, {
-				name: 'urban',
+				name: 'Arracourt',
 				id: _.uniqueId()
 			}], opts);
 		},

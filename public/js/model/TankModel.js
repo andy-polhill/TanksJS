@@ -11,6 +11,7 @@ define([
 
 	var TankModel = ElementModel.extend({
 
+		//TODO: move and rotate dont need to be atts
 		//TODO:width and height are duplicated in CSS.
 
 		initialize: function( atts, opts ) {
@@ -47,7 +48,7 @@ define([
 			'type': 'tank',
 			'variant': 'large-tank',
 			'weapon': {
-				'v': 10, //velocity
+				'v': 12, //velocity
 				'h': 3, //height
 				'w': 3, //width
 				'd': 6, //damage
@@ -185,13 +186,20 @@ define([
 						this.set('life', life);
 					}
 				break;
-				case "explosion": //Do nothing
-				break;
 				case "life":
-					life = this.get('life') + model.get('life'),
-						maxLife = this.get('maxLife');
+				
+					console.log("tank life collision");
+				
+					life = this.get('life') + model.get('life')
+					,	maxLife = this.get('maxLife');
+					
+					console.log("life: %d", life);
+					console.log("maxLife: %d", maxLife);
 						
 					life = (life > this.get('maxLife')) ? maxLife : life;
+
+					console.log("setLife: %d", life);
+
 					this.set('life', life);					
 				break;
 				default:

@@ -5,7 +5,7 @@ define([
 	'utils/ElementFactory'
 ], function( _, Backbone, CollisionDetection, ElementFactory) {
 	
-	var LIFE_TOKEN = 500;
+	var LIFE_TOKEN = 700;
 	
 	var ElementCollection = Backbone.Collection.extend({
 	
@@ -40,7 +40,7 @@ define([
 
 			//Every element that is removed, is followed by an explosion BLAMMO!
 			//(except for bullets and explosions)
-			if(!type.match(/bullet|explosion/g)) {
+			if(!type.match(/bullet|explosion|life/g)) {
 				this.add([
 					ElementFactory.create('explosion', {
 						'y': model.get('y') + (model.get('w') / 2),
@@ -62,9 +62,8 @@ define([
 		
 		frame: function() {
 			
-			//TODO: Dirtbags clean up!
-			//FIXME: Quicker Quicker Quicker Quicker!!!
-
+			//TODO: Look for optimisation possibilities
+			
 			//determine wether to randomly drop a health power up
 			if(_.random(0, LIFE_TOKEN) == LIFE_TOKEN) {
 				this.add([
@@ -72,27 +71,22 @@ define([
 				], {'detect': true});
 			}
 
-			//trigger frame davance, all elements will respond to this.
-			//TODO: The event might be a bit pointless, just calling the relevant method might be simpler
+			//call frame method on each element
 			_.each(this.models, function(model) {
 				model.frame();
 			});
 
-			//TODO: There are definitely some efficiency changes to do in CollisionDetection
-
 			//look for collisions between objects
 			_.each(this.models, function(model, idx, collection) {
-				if(typeof model !== 'undefined') {
-					CollisionDetection.detect(model, collection, {
-						'callback': 'collide'
-					});
-				}
+				CollisionDetection.detect(model, collection, {
+					'callback' : 'collide'
+				});
 			});
 
 			//look for collision with bounds
 			CollisionDetection.detect(this.boundsModel, this.models, {
 				'invert': true,
-				'callback': 'collide'
+				'callback' : 'collide'
 			});
 
 			var JSON = [];
@@ -111,9 +105,6 @@ define([
 					JSON.push(obj);
 				}
 			});
-			
-
-			//console.log(JSON);
 			
 			return JSON;
 		}
