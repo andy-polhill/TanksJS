@@ -1,5 +1,10 @@
 /* GENERAL ============================================== */
 
+@font-face {
+  font-family: 'Major Shift';
+  src: url('major_shift.ttf');
+}
+
 html { 
   background: url(/images/bg.jpg) no-repeat center center fixed; 
   -webkit-background-size: cover;
@@ -15,9 +20,9 @@ body {
 }
 
 h1 {
-	width:230px;
-	margin: 40px auto -60px;
-	font-family:"dimitri";
+	width:240px;
+	margin: 40px auto -70px;
+	font-family:"Major Shift";
 	font-size:40px;
 	text-shadow:
     -2px -2px 0 #000,
@@ -27,7 +32,7 @@ h1 {
 }
 
 h3 {
-	font-family:"dimitri";
+	font-family:"Major Shift";
 	font-size:20px;
 	text-shadow:
     -2px -2px 0 #000,
@@ -40,6 +45,7 @@ h4 {
 	font-weight:bold;
 	font-size:12px;
 	text-transform:uppercase;
+	letter-spacing:2px;
 	color:#f0ff00;
 	font-style: italic;	
 	margin:6px;
@@ -78,7 +84,6 @@ button:hover {
 }
 
 #game {
-	color:#000;
 	display:block;
 	height:480px;
 	width:640px;
@@ -108,11 +113,30 @@ dl {
 
 dt {
 	float:left;
-	width:80px;
+	width:100px;
 	text-align:left;
 }
 
+dd {
+	padding:0;	
+}
+
 /* ROOM SELECTION ============================================== */
+
+.controls {
+	width:605px;	
+
+}
+
+.controls .tankPreview {
+	float:left;
+	margin:5px;	
+}
+
+.controls .keys {
+	float:left;
+	margin:5px;	
+}
 
 /* TANK SELECTION ============================================== */
 
@@ -128,14 +152,14 @@ dt {
 	position:absolute;
 	left:50px;
 	top:40px;
+}
+	
+.tankPreview .tankBody {
 	transform:rotate(40deg);
 	-ms-transform:rotate(40deg);
 	-moz-transform:rotate(40deg);
 	-webkit-transform:rotate(40deg);
 }
-
-
- 
 
 .queued .tankOption button {
 	display:none;	
@@ -144,6 +168,7 @@ dt {
 /* TANK ============================================== */
 
 .tank {
+	color:#000;
 	position:absolute;
 	width:34px;
 	height:34px;
