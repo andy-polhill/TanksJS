@@ -5,15 +5,16 @@ define([
 	'utils/ElementFactory'
 ], function( _, Backbone, CollisionDetection, ElementFactory) {
 	
-	var LIFE_TOKEN = 700;
-	
 	var ElementCollection = Backbone.Collection.extend({
 	
-		initialize: function(atts, opts) {
-			this.boundsModel = opts.boundsModel;
+		initialize: function(models, atts, opts) {
+			this.boundsModel = atts.boundsModel;
+			
+			this.lifeFreq = (typeof opts !== "undefined") ? opts.lifeFreq : 700;
+			this.barriers = (typeof opts !== "undefined") ? opts.barriers : 10;
 
 			//Add barriers
-			for(var i=0; i < 10; i++) {
+			for(var i=0; i < this.barriers; i++) {
 				this.add([
 					ElementFactory.create('barrier', {'id': _.uniqueId()} )
 				], {'detect': true});
@@ -65,7 +66,7 @@ define([
 			//TODO: Look for optimisation possibilities
 			
 			//determine wether to randomly drop a health power up
-			if(_.random(0, LIFE_TOKEN) == LIFE_TOKEN) {
+			if(_.random(0, this.lifeFreq) == this.lifeFreq) {
 				this.add([
 					ElementFactory.create('life', {'id': _.uniqueId()} )
 				], {'detect': true});

@@ -27,7 +27,6 @@ define([
 		},
 		
 		collide: function() {
-		
 			this.destroy();		
 		}
 	});

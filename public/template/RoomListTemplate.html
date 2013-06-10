@@ -1,18 +1,32 @@
 <section id="roomSelection">
 	<% _.each(rooms, function(room, i) { %>
 		<article class="roomOption">
-			<h4><%= room.name %></h4>
+			<h3><%= room.name %></h3>
+
+			<button data-room="<%= room.name %>">
+				Select Room
+			</button>
+
+			<hr />
 
 			<dl>
 				<dt>Players:</dt>
 					<dd><%= room.playerCount %></dd>
 				<dt>Queue:</dt>
 					<dd><%= room.queueCount %></dd>
-			</dl>					
+				<dt>Max Players:</dt>
+					<dd><%= room.maxPlayers%></dd>
+			</dl>
 
-			<button data-room="<%= room.name %>">
-				Play
-			</button>
+			<hr />
+
+			<dl>
+				<dt>Barriers:</dt>
+					<dd><%= room.barriers %></dd>
+				<dt>Power up frequency:</dt>
+					<dd><%= room.lifeFreq%></dd>
+			</dl>
+
 		</article>
 	<% }) %>
 </section>

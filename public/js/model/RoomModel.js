@@ -11,7 +11,7 @@ define([
 		
 			this.io = opts.io;
 
-			this.elements = new ElementCollection(null, opts);
+			this.elements = new ElementCollection(null, opts, this.toJSON());
 
 			//emit remove event when an item is removed from the collection
 			this.elements.on('remove', this.removeElement, this);
@@ -25,7 +25,9 @@ define([
 			'id': _.uniqueId(),
 			'playerCount': 0,
 			'queueCount': 0,
-			'maxPlayers': 4
+			'maxPlayers': 4,
+			'barriers': 10,
+			'lifeFreq': 700
 		},	
 
 		join: function(socket, data) {
