@@ -27,8 +27,8 @@ function($, _, Backbone, ClientCollection, GameView, QueueView, RoomListView, Ta
 				this.socket.disconnect();
 			}
 		
-			if(typeof this.tankListView !== "undefined") {
-				this.roomsListView.remove();
+			if(typeof this.tanksListView !== "undefined") {
+				this.tanksListView.remove();
 			}
 		
 			this.rooms = new Backbone.Collection([], {
@@ -92,7 +92,9 @@ function($, _, Backbone, ClientCollection, GameView, QueueView, RoomListView, Ta
 			this.socket.on('queue:change', $.proxy(this.queueModel.set, this.queueModel));
 
 			this.socket.on('game:over', function(data) {
-				Vents.trigger('game:over');
+				setTimeout(function() {
+					Vents.trigger('game:over');				
+				}, 3000);
 			});
 
 			this.gameView = new GameView({
