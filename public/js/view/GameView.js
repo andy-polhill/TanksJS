@@ -1,24 +1,12 @@
 define([
 	'underscore',
 	'backbone',
-	'view/TankView',
-	'view/BarrierView',
-	'view/BulletView',
-	'view/ExplosionView',
-	'view/LifeView',
+	'collection/ClientCollection',
+	'view/BattleView',
 	'view/GameOverView',
 	'view/QueueView',
 	'text!template/GameTemplate.html'
-], function(_, Backbone, TankView, BarrierView, BulletView, ExplosionView, LifeView, GameOverView, QueueView, GameTemplate){
-
-	//type => constructor lookup
-	var ELEMENTS = {
-		'bullet' : BulletView,
-		'tank' : TankView,
-		'barrier' : BarrierView,
-		'explosion' : ExplosionView,
-		'life' : LifeView
-	};
+], function(_, Backbone, ClientCollection, BattleView, GameOverView, QueueView, GameTemplate){
 
 	var GameView = Backbone.View.extend({
   
@@ -30,23 +18,22 @@ define([
 		template: GameTemplate,
 		
 		initialize: function(opts) {
-			//array of all the sub viewa
-			this.views = [];
-			
-			//render the game template
-			this.render();
-
-			//when a new element is added to the game collection, create a corresponding view
-			this.collection.on('add', this.addView, this);
-						
-			this.collection.on('change', this.renderViews, this);
 
 			//this view needs a socket reference as it handles keypresses
 			this.socket = opts.socket;
 
+			this.collection = new ClientCollection();
+			
+			//render the game template
+			this.render();
+
 			this.queueModel = new Backbone.Model();
 
-			this.socket.on('queue:change', $.proxy(this.queueModel.set, this.queueModel));
+			this.battleView = new BattleView({
+				'el': '#game',
+				'socket': this.socket,
+				'collection': this.collection
+			});
 			
 			this.queueView = new QueueView({
 				'el': '#game-queue',
@@ -57,24 +44,17 @@ define([
 				'el': '#game-over',
 			});
 
+			this.socket.on('queue:change', $.proxy(this.queueModel.set, this.queueModel));
+			
+			this.socket.on('game:start', $.proxy(this.collection._set, this.collection));			
+			this.socket.on('game:frame', $.proxy(this.collection._set, this.collection));
+			this.socket.on('game:remove', $.proxy(this.collection.remove, this.collection));
+
+			this.socket.on('game:over', $.proxy(this.battleView.remove, this.battleView));
 			this.socket.on('game:over', $.proxy(this.gameOverView.render, this.gameOverView));
 			this.socket.on('game:start', $.proxy(this.queueView.remove, this.queueView));
 		},	
-				
-		addView: function(model) {	
-
-			//create the relevant view, passing the model data
-			var view = new ELEMENTS[model.get('type')]({
-				'model': model
-			});
-			
-			//append the new element to the game
-			this.$game.append(view.$el);
-			
-			//and drop it in the array for rendering
-			this.views.push(view);
-		},
-		
+						
 		render: function() {
 		
 			this.$el.find('#wrapper').html(_.template(this.template));
@@ -82,14 +62,7 @@ define([
 			//hold a reference to game bounds element
 			this.$game = this.$el.find("#game");
 		},
-		
-		renderViews: function() {
-			//loop through and render each view
-			_.each(this.views, function(view){
-				view.render();
-			});
-		},
-		
+				
 		control: function( evt ) {
 			//keyboard hijacking for controls	
 			var isKeydown = (evt.type === 'keydown') ? true : false;		
