@@ -1,6 +1,37 @@
-<section>
-	<h2>Queue</h2>
-	Players:<%= playerCount %>
-	Queue:<%= queueCount %>
-	Position in Queue:<%= position %>
-</section>
+<article class="span4 offset2">
+<h2>Queue</h2>
+
+<hr />
+
+<% if(position == 1) { %>	
+<p class="lead">Only one sucker left, then its your turn!</p>
+<% } else { %>
+<p class="lead">Not long left, get ready to kick ass!</p>
+<% } %>
+
+<hr />
+
+<dl>
+	<dt>Position in Queue</dt>
+	
+	<dd>
+		<span class="badge badge-warning">
+			<%= position %>
+		</span>
+	</dd>
+
+	<dt>Players</dt>
+	<dd>
+		<span class="no-badge">
+			<%= playerCount %>
+		</span>
+	</dd>
+
+	<dt>Queue</dt>
+	<dd>
+		<span class="no-badge">
+			<%= queueCount %>
+		</span>
+	</dd>
+</dl>
+</article>

@@ -1,6 +1,8 @@
-<section id="tankSelection">
+<section id="tankSelection" class="row">
 	<% _.each(tanks, function(tank, i) { %>
-		<article class="tankOption">
+		<article class="tankOption span2">
+
+			<h2><%= tank.variant %></h2>
 
 			<div class="tankPreview">			
 				<div class="<%= tank.variant %> tank" data-track-frame="0">
@@ -10,36 +12,34 @@
 				</div>			
 			</div>
 
-			<h3><%= tank.variant %></h3>
-
-			<button data-variant="<%= tank.variant %>" class="select">
+			<button data-variant="<%= tank.variant %>" class="btn btn-warning">
 				Select Tank
 			</button>
 
 			<hr />
 
 			<h4>Chassis</h4>
-			<dl>
+			<dl class="dl-horizontal">
 				<dt>Speed:</dt>
-					<dd><%= tank.fv %></dd>
+				<dd><%= tank.fv %></dd>
 				<dt>Armour:</dt>
-					<dd><%= tank.maxLife %></dd>
+				<dd><%= tank.maxLife %></dd>
 				<dt>Fire Rate:</dt>
-					<dd><%= tank.maxHeat %></dd>
+				<dd><%= tank.maxHeat %></dd>
 				<dt>Size:</dt>
-					<dd><%= tank.w %> x <%= tank.h %></dd>
+				<dd><%= tank.w %>x<%= tank.h %></dd>
 			</dl>
 
 			<hr />
 
 			<h4>Weaponry</h4>
-			<dl>
+			<dl class="dl-horizontal">
 				<dt>Range:</dt>
-					<dd><%= tank.weapon.r %></dd>
+				<dd><%= tank.weapon.r %></dd>
 				<dt>Damage:</dt>
-					<dd><%= tank.weapon.d %></dd>
+				<dd><%= tank.weapon.d %></dd>
 				<dt>Speed:</dt>
-					<dd><%= tank.weapon.v %></dd>
+				<dd><%= tank.weapon.v %></dd>
 			</dl>
 		</article>
 	<% }) %>

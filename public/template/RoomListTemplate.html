@@ -1,32 +1,101 @@
-<section id="roomSelection">
+<section id="roomSelection" class="row">
 	<% _.each(rooms, function(room, i) { %>
-		<article class="roomOption">
-			<h3><%= room.name %></h3>
+		<article class="roomOption span2" >
+			<h2><%= room.name %></h2>
 
-			<button data-room="<%= room.name %>">
+			<button class="btn btn-warning" data-room="<%= room.name %>">
 				Select Room
 			</button>
 
 			<hr />
 
-			<dl>
-				<dt>Players:</dt>
-					<dd><%= room.playerCount %></dd>
+			<h4>Players</h4>
+
+			<dl class="dl-horizontal">
+				<dt>Live Players:</dt>
+				<dd>
+					<% if(room.playerCount > 0) { %>
+						<span class="badge badge-warning">
+							<%= room.playerCount %>							
+						</span>
+					<% } else { %>
+						<span class="no-badge">
+							<%= room.playerCount %>
+						</span>
+					<% } %>
+				</dd>
 				<dt>Queue:</dt>
-					<dd><%= room.queueCount %></dd>
+				<dd>
+					<% if(room.queueCount > 0) { %>
+						<span class="badge badge-important">
+							<%= room.queueCount %>
+						</span>
+					<% } else { %>
+						<span class="no-badge">
+							<%= room.queueCount %>
+						</span>
+					<% } %>
+				</dd>
 				<dt>Max Players:</dt>
-					<dd><%= room.maxPlayers%></dd>
+				<dd>
+					<span class="no-badge">
+						<%= room.maxPlayers%>
+					</span>
+				</dd>
 			</dl>
 
 			<hr />
 
-			<dl>
+			<h4>Room</h4>
+
+			<dl class="dl-horizontal">
 				<dt>Barriers:</dt>
-					<dd><%= room.barriers %></dd>
-				<dt>Power up frequency:</dt>
-					<dd><%= room.lifeFreq%></dd>
+				<dd>
+					<span class="no-badge">
+						<%= room.barriers %>
+					</span>
+				</dd>
 			</dl>
 
 		</article>
 	<% }) %>
+</section>
+
+<section class="row">
+	<article class="controls span8">
+
+		<h2>Controls</h2>
+		
+		<div class="keys">
+
+			<ul class="unstyled">
+				<li>
+					<ul class="inline">
+						<li><i class="icon-arrow-left"></i> Rotate left</li>
+						<li><i class="icon-arrow-right"></i> Rotate right</li>
+						<li><i class="icon-arrow-up"></i> Forward</li>
+						<li><i class="icon-arrow-down"></i> Reverse</li>
+						<li><i class="icon-screenshot"></i><small> Space</small> Fire</li>			
+					</ul>				
+				</li>
+				<li class="text-center">
+					<div class="progress progress-success lifeBar" style="width:50px;">
+						<div class="bar" style="width:70%;"></div>
+					</div>
+					<strong>Life:</strong>
+					<small>When this bar runs out, you dead.</small>
+				</li>
+				<li>
+					<div class="progress progress-warning heatBar" style="width:60px;">
+						<div class="bar" style="width:80%;"></div>
+					</div>
+					<strong>Heat:</strong>
+					<small>Don't shoot too much, or you'll over-heat.</small>
+				</li>
+			</ul>
+
+
+		</div>
+
+	</article>
 </section>
