@@ -130,44 +130,47 @@ define([
 		},
 		
 		shoot: function() {
-
-			var heat = this.get('heat');
 			
-			if(heat < 0) {
-				//you have overheated
-				this.set({
-					'heat': heat - HEAT_DROP
-				});
-				
-			} else {
-		
-				var angle = this.get('a'),
-					cos = Math.cos(angle * Math.PI / 180),
-					sin = Math.sin(angle * Math.PI / 180),				
-					width = this.get('w') / 2,
-					height = this.get('h') / 2,				
-					top = parseFloat(((this.get('y') + height) - ((height + 4) * cos)).toFixed(0)),
-					left = parseFloat(((this.get('x') + width) + ((width + 4) * sin)).toFixed(0));
-	
-				//set frame to start flare animation	
-				this.set({
-					'ff': 6,
-					'heat': heat - HEAT_DROP
-				});
+			try {
 
-				var bullet = new BulletModel(
-				_.extend(this.get('weapon'), {
-					'a': angle,
-					'y': top,
-					'x': left,
-					'tank': this.get('id'),
-					'id': _.uniqueId()
-				}), {
-					'collection': this.collection
-				});
+				var heat = this.get('heat');
 				
-				this.collection.add([bullet]);
-			}
+				if(heat < 0) {
+					//you have overheated
+					this.set({
+						'heat': heat - HEAT_DROP
+					});
+					
+				} else {
+			
+					var angle = this.get('a'),
+						cos = Math.cos(angle * Math.PI / 180),
+						sin = Math.sin(angle * Math.PI / 180),				
+						width = this.get('w') / 2,
+						height = this.get('h') / 2,				
+						top = parseFloat(((this.get('y') + height) - ((height + 4) * cos)).toFixed(0)),
+						left = parseFloat(((this.get('x') + width) + ((width + 4) * sin)).toFixed(0));
+		
+					//set frame to start flare animation	
+					this.set({
+						'ff': 6,
+						'heat': heat - HEAT_DROP
+					});
+	
+					var bullet = new BulletModel(
+					_.extend(this.get('weapon'), {
+						'a': angle,
+						'y': top,
+						'x': left,
+						'tank': this.get('id'),
+						'id': _.uniqueId()
+					}), {
+						'collection': this.collection
+					});
+					
+					this.collection.add([bullet]);
+				}
+			} catch(e){} 
 		},
 		
 		collide: function(model) {
@@ -188,17 +191,10 @@ define([
 				break;
 				case "life":
 				
-					console.log("tank life collision");
-				
 					life = this.get('life') + model.get('life')
 					,	maxLife = this.get('maxLife');
-					
-					console.log("life: %d", life);
-					console.log("maxLife: %d", maxLife);
-						
+											
 					life = (life > this.get('maxLife')) ? maxLife : life;
-
-					console.log("setLife: %d", life);
 
 					this.set('life', life);					
 				break;
