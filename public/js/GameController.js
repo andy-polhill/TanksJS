@@ -14,14 +14,22 @@ define([
 
 		frame: function() {
 		
-			this.roomCollection.each( function(room) {			
-				room.frame();				
-			}, this);
+			try {
+				this.roomCollection.each( function(room) {			
+					room.frame();				
+				}, this);
+			} catch(e) {
+				console.error(e);
+			}
 		},
 
 		join: function(socket, data) {
 		
-			this.roomCollection.findWhere({'name': data.room}).join(socket, data);
+			var room = this.roomCollection.findWhere({'name': data.room});
+			
+			if(room) {
+				room.join(socket, data);
+			}
 		},
 
 		connect: function(socket) {
