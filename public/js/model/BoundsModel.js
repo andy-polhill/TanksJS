@@ -10,7 +10,7 @@ define([
 			'id': _.uniqueId(),
 			'x': 0, //horizontal center
 			'y': 0, //vertical center
-			'w': 640, //width
+			'w': 770, //width
 			'h': 480, //height
 			'type': 'bounds'
 		}		

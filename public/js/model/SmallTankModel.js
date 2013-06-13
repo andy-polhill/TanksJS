@@ -9,7 +9,7 @@ define([
 		defaults : {
 			'w': 25,
 			'h': 24,
-			'tc' : 4, //turning circle
+			'tc' : 6, //turning circle
 			'fv': 3.8, //forward velocity
 			'rv': 1.9, //reverse velocity
 			'variant': 'small-tank',

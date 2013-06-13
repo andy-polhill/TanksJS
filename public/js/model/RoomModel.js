@@ -80,6 +80,7 @@ define([
 				//emit the current game screen
 				socket.emit('game:start', this.elements.toJSON());
 
+
 			}, this));
 		},
 

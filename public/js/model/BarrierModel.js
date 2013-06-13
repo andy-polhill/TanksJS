@@ -13,7 +13,7 @@ define([
 			'h': 40, //height
 			'w': 40, //width
 			'type': 'barrier',
-			'life': 80
+			'life': 60
 		},
 		
 		collide: function(model) {

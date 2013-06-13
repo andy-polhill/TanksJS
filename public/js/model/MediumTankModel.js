@@ -11,6 +11,7 @@ define([
 			'h': 30,
 			'fv': 2.8, //forward velocity
 			'rv': 1.6, //reverse velocity
+			'tc' : 5, //turning circle
 			'variant': 'medium-tank',
 			'maxLife': 90,
 			'life': 90,
