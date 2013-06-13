@@ -24,10 +24,12 @@ define([
 	return {
 		
 		create: function(element, attributes, options, socket) {
-			//TODO: error handling
-			var model = new elements[element](attributes, options);
-			
-			return model;
+
+			if(_.isFunction(elements[element])) {
+				return model = new elements[element](attributes, options);				
+			} else {
+				console.error("No Element called %s", element);
+			}
 		}
 	};
 });
