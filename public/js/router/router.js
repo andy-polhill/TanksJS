@@ -4,14 +4,13 @@ define([
 	'backbone',
 	'collection/ClientCollection',
 	'view/GameView',
-	'view/QueueView',
 	'view/RoomListView',
 	'view/TankListView'
 ], 
 
 //TODO: hook into navigate/route to remove duplication of disconnect
 
-function($, _, Backbone, ClientCollection, GameView, QueueView, RoomListView, TankListView ){
+function($, _, Backbone, ClientCollection, GameView, RoomListView, TankListView ){
 
 	var AppRouter = Backbone.Router.extend({	 
 
@@ -84,31 +83,16 @@ function($, _, Backbone, ClientCollection, GameView, QueueView, RoomListView, Ta
 			});
 
 			this.elements = new ClientCollection();
-			this.queueModel = new Backbone.Model();
 
 			this.socket.on('game:start', $.proxy(this.elements._set, this.elements));			
 			this.socket.on('game:frame', $.proxy(this.elements._set, this.elements));
 			this.socket.on('game:remove', $.proxy(this.elements.remove, this.elements));
-			this.socket.on('queue:change', $.proxy(this.queueModel.set, this.queueModel));
-
-			this.socket.on('game:over', function(data) {
-				setTimeout(function() {
-					Vents.trigger('game:over');				
-				}, 3000);
-			});
 
 			this.gameView = new GameView({
 				'el': 'body',
 				'collection': this.elements,
 				'socket': this.socket
 			});
-
-			this.queueView = new QueueView({
-				'el': '#queue',
-				'model': this.queueModel
-			});
-
-			this.socket.on('game:start', $.proxy(this.queueView.remove, this.queueView));			
 		}		
 	});
 
