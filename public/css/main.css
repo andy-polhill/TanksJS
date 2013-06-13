@@ -1,180 +1,118 @@
-/* GENERAL ============================================== */
-
 @font-face {
   font-family: 'Major Shift';
   src: url('major_shift.ttf');
 }
 
-html { 
-  background: url(/images/bg.jpg) no-repeat center center fixed; 
+h2, h3, h4 {
+	text-align:center;
+}
+
+h1, h2 {
+	font-family:"Major Shift";
+	color:#fff;
+}
+
+h1 {
+	position: absolute;
+	top: 40px;
+	left: 250px;
+	font-size:40px;
+	text-shadow:
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    2px 2px 0 #000; 
+}
+
+h2 {
+	font-size:22px;
+	text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;  	
+}
+
+body { 
+	background:#c0aa96;
+  background: url(/img/bg.jpg) no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
 }
 
-body {
-	color:#fff;
-	font-family: "courier new";
-	font-size: 12px;
+.dl-horizontal dt {
+	width:90px;
 }
 
-h1 {
-	width:240px;
-	margin: 40px auto -70px;
-	font-family:"Major Shift";
-	font-size:40px;
-	text-shadow:
-    -2px -2px 0 #000,
-    2px -2px 0 #000,
-    -2px 2px 0 #000,
-    2px 2px 0 #000;  
+.dl-horizontal dd {
+	margin-left:110px;
 }
 
-h3 {
-	font-family:"Major Shift";
-	font-size:20px;
-	text-shadow:
-    -2px -2px 0 #000,
-    2px -2px 0 #000,
-    -2px 2px 0 #000,
-    2px 2px 0 #000;  
-}
-
-h4 {
-	font-weight:bold;
-	font-size:12px;
-	text-transform:uppercase;
-	letter-spacing:2px;
-	color:#f0ff00;
-	font-style: italic;	
-	margin:6px;
-}
-
-hr {
-	background-color:#130e08;	
-	border-color:#524335;
-	border-style: solid none none;
-    border-width: 1px medium medium;
-    margin:10px 0;
-}
-
-button {
-	font-family: impact;
-	color: #000;
-	background-color:#f0ff00;
-	border:solid 1px #faffa3;
-	padding:5px 30px;
-	border-radius:12px;
-	background:url(/images/button_bg.jpg);
-}
-
-button:hover {
-	background:url(/images/button_hover_bg.jpg);
-}
-
-#wrapper {
-	width:640px;
-	height:480px;
-	margin-left:auto;
-	margin-right:auto;
-	margin-top:50px;
-	padding:20px;
-	background: url(/images/frame.png) no-repeat;
-}
-
-#game {
-	display:block;
-	height:480px;
-	width:640px;
-	background-color:#eee;
-	position:relative;
-	background: url(/images/game_bg.jpg) no-repeat;
-}
-
-section {
-	padding: 10px;
-}
 
 article {
-	width: 140px;
-	float:left;
-	background-color:#392f24;
-	border:#100b06 solid 1px;
-	padding:10px 5px 5px;
-	margin-left:3px;
 	text-align:center;
 }
 
-dl {
-	text-align:right;
-	line-height:1.5em;
+hr {
+	border-color:#786451;
+	border-style: solid none none;
+    border-width: 1px medium medium;
+    margin:10px 0;
+    background-color:#fff;
 }
 
-dt {
-	float:left;
-	width:100px;
-	text-align:left;
+header {
+	background-color:#fff;
+	height:80px;
+	
 }
 
-dd {
-	padding:0;	
+#wrapper {
+	padding-top:20px;
+	border-top: solid 1px #AC8E73;
 }
 
-/* ROOM SELECTION ============================================== */
-
-.controls {
-	width:605px;	
-
+#game-wrapper {
+	position:relative;
+	background-color:#c0aa96;
+	height:480px;
+	width:770px;
+	border: solid 1px #786451;
 }
 
-.controls .tankPreview {
-	float:left;
-	margin:5px;	
+#game-wrapper article {
+	background-color:#c0aa96;		
 }
 
-.controls .keys {
-	float:left;
-	margin:5px;	
+.no-badge {
+	padding-left: 9px;
+	padding-right: 9px;	
 }
+
+
 
 /* TANK SELECTION ============================================== */
 
-.tankPreview {
-	width: 130px;
-	height:113px;
-	position:relative;
-	background:url(/images/tank_bg.jpg);
-	margin: 0 auto;
-}
-
-.tankPreview .tank {
-	position:absolute;
-	left:50px;
-	top:40px;
-}
+.progress {
+	margin-bottom:0;
+	display:inline-block;
 	
-.tankPreview .tankBody {
-	transform:rotate(40deg);
-	-ms-transform:rotate(40deg);
-	-moz-transform:rotate(40deg);
-	-webkit-transform:rotate(40deg);
 }
 
-.queued .tankOption button {
-	display:none;	
+.tankOption button {
+	margin-left:30px;
 }
 
 /* TANK ============================================== */
 
 .tank {
-	color:#000;
 	position:absolute;
 	width:34px;
 	height:34px;
 	display:block;
-	font-family: courier;
-	font-size: 10px;
+	font-size: 8px;
 	z-index:2;
 }
 
@@ -183,7 +121,7 @@ dd {
 }
 	
 .flare {
-	background-image:url(/images/flare.png);
+	background-image:url(/img/flare.png);
 	display:block;
     width: 6px;
 	height: 7px;
@@ -206,44 +144,33 @@ dd {
     height: 3px;
     left: -20px;
     position: absolute;
-    top: -26px;
+    top: -30px;
 }
 
-.lifeBar {
+.progress {
     border: 1px solid #888;
-    display: block;
-    height: 3px;
+	height:3px;
+}
+
+#game .lifeBar {
     left: -20px;
     position: absolute;
     top: -10px;
-    /*width: 30px;*/
+}
+.lifeBar .bar {
+	background-image: linear-gradient(to bottom, lightgreen, #57a957)
 }
 
-.lifeBar div {
-    background-color: lightgreen;
-    display: block;
-    height: 100%;
-    position: absolute;
-    width: 100%;
+.heatBar .bar {
+	background-image: linear-gradient(to bottom, orange, #f89406)
 }
 
-.heatBar {
-    border: 1px solid #888;
-    display: block;
-    height: 3px;
+#game .heatBar {
     left: -20px;
     position: absolute;
     top: -16px;
-    /*width: 30px;*/
 }
 
-.heatBar div {
-    background-color: orange;
-    display: block;
-    height: 100%;
-    position: absolute;
-    width: 100%;
-}
 
 /* == LARGE TANK ============================================== */
 
@@ -253,11 +180,11 @@ dd {
 }
 
 .large-tank[data-track-frame='0'] .tankBody {
-	background-image:url(/images/large_tank_01.png);
+	background-image:url(/img/large_tank_01.png);
 }
 
 .large-tank[data-track-frame='1'] .tankBody {
-	background-image:url(/images/large_tank_02.png);
+	background-image:url(/img/large_tank_02.png);
 }
 
 /* == MEDIUM TANK ============================================== */
@@ -272,11 +199,11 @@ dd {
 }
 
 .medium-tank[data-track-frame='0'] .tankBody {
-	background-image:url(/images/medium_tank_01.png);
+	background-image:url(/img/medium_tank_01.png);
 }
 
 .medium-tank[data-track-frame='1'] .tankBody {
-	background-image:url(/images/medium_tank_02.png);
+	background-image:url(/img/medium_tank_02.png);
 }
 
 /* == SMALL TANK ============================================== */
@@ -291,11 +218,11 @@ dd {
 }
 
 .small-tank[data-track-frame='0'] .tankBody {
-	background-image:url(/images/small_tank_01.png);
+	background-image:url(/img/small_tank_01.png);
 }
 
 .small-tank[data-track-frame='1'] .tankBody {
-	background-image:url(/images/small_tank_02.png);
+	background-image:url(/img/small_tank_02.png);
 }
 
 /* == SPECIAL TANK ============================================== */
@@ -310,11 +237,11 @@ dd {
 }
 
 .special-tank[data-track-frame='0'] .tankBody {
-	background-image:url(/images/special_tank_01.png);
+	background-image:url(/img/special_tank_01.png);
 }
 
 .special-tank[data-track-frame='1'] .tankBody {
-	background-image:url(/images/special_tank_02.png);
+	background-image:url(/img/special_tank_02.png);
 }
 
 /* BULLET ============================================== */
@@ -328,7 +255,7 @@ dd {
 /* LIFE ============================================== */
 	
 .life {
-	background-image:url(/images/heart.png);
+	background-image:url(/img/heart.png);
 	position:absolute;
 	width:16px;
 	height:16px;
@@ -339,7 +266,7 @@ dd {
 
 .explosion {
 	position:absolute;
-	background-image:url(/images/explosions.png);
+	background-image:url(/img/explosions.png);
 	margin-top:-13px;
 	margin-left:-13px;
 	width:26px;
@@ -361,11 +288,10 @@ dd {
 /* BARRIER ============================================== */
 
 .barrier {
-	background-image:url(/images/barrier-sprite.png);
+	background-image:url(/img/barrier-sprite.png);
 	position:absolute;
 	width:40px;
 	height:40px;
-	border:solid 1px #777;	
 	background-color:#ccc;
 	display:block;
 }

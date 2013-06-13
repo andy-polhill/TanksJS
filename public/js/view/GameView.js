@@ -6,8 +6,10 @@ define([
 	'view/BulletView',
 	'view/ExplosionView',
 	'view/LifeView',
+	'view/GameOverView',
+	'view/QueueView',
 	'text!template/GameTemplate.html'
-], function(_, Backbone, TankView, BarrierView, BulletView, ExplosionView, LifeView, GameTemplate){
+], function(_, Backbone, TankView, BarrierView, BulletView, ExplosionView, LifeView, GameOverView, QueueView, GameTemplate){
 
 	//type => constructor lookup
 	var ELEMENTS = {
@@ -42,6 +44,21 @@ define([
 			//this view needs a socket reference as it handles keypresses
 			this.socket = opts.socket;
 
+			this.queueModel = new Backbone.Model();
+
+			this.socket.on('queue:change', $.proxy(this.queueModel.set, this.queueModel));
+			
+			this.queueView = new QueueView({
+				'el': '#game-queue',
+				'model': this.queueModel
+			});
+
+			this.gameOverView = new GameOverView({
+				'el': '#game-over',
+			});
+
+			this.socket.on('game:over', $.proxy(this.gameOverView.render, this.gameOverView));
+			this.socket.on('game:start', $.proxy(this.queueView.remove, this.queueView));
 		},	
 				
 		addView: function(model) {	
