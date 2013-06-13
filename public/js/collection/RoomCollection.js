@@ -9,22 +9,22 @@ define([
 		initialize : function(atts, opts) {
 
 			this.add([{
-				name: 'Arena 1',
+				name: 'arena-1',
 				id: _.uniqueId(),
 				barriers: 10,
 				lifeFreq: 700,
 			}, {
-				name: 'Arena 2',
+				name: 'arena-2',
 				id: _.uniqueId(),
 				barriers: 14,
 				lifeFreq: 900,
 			}, {
-				name: 'Arena 3',
+				name: 'arena-3',
 				id: _.uniqueId(),
 				barriers: 8,
 				lifeFreq: 500,
 			}, {
-				name: 'Arena 4',
+				name: 'arena-4',
 				id: _.uniqueId(),
 				barriers: 16,
 				lifeFreq: 1300,
