@@ -1,16 +1,12 @@
 require.config({
 	baseUrl: "/js",
 	paths: {
-        'bootstrap': ['//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min', 'libs/bootstrap-min'],
 		jquery: "lib/jquery",
 		underscore: "lib/underscore",
 		backbone: "lib/backbone",
 		text: "lib/text",
 		template: "../template"
-	},
-	shim: {
-        "bootstrap": ["jquery"]
-    }
+	}
 });
 
 require(['router/router', 'jquery', 'bootstrap'], function(AppRouter, $){
