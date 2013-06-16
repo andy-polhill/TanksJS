@@ -43,6 +43,6 @@
     "scriptsBase": "js",
     "scriptsLib": "js/lib",
     "templateBase": "template",
-    "imagesBase": "images"
+    "imagesBase": "img"
   }
 }

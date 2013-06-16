@@ -9,8 +9,11 @@ Currently hosted on appfog, however sockets reverts to short polling. I have tri
 TODO
 ====
 * Register domain name
-* Ghost Tanks again!!
-* Add controls view to design
+
+-- Release Here! --
+
+* Bug not updating kill count on users screen
+* Put something useful in this ReadMe file
 * Element Collection could be tidier
 * Explosions really slow things down (smaller ones for bullets)
 * Collision Detection performance
@@ -21,10 +24,10 @@ TODO
 * Bullet location on special tank
 * Co-ordinates decimal place, performance issue
 * Load Testing and Performance Improvements
-* Styling
 * Configurable Levels
 * More Unit Tests!
 * Mobile(?) / Tablet support
+* Customise twitter bootstrap build
 * Element widths in both css and model data
 
 

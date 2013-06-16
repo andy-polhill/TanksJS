@@ -71,7 +71,7 @@ module.exports = function(grunt) {
 		},
 		smushit: {
 			default: {
-				src: ['target/images/**/*.png', 'target/images/**/*.jpg']
+				src: ['target/img/**/*.png', 'target/img/**/*.jpg']
 			}
 		},
 		requirejs: {
