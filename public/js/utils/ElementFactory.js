@@ -26,9 +26,10 @@ define([
 		create: function(element, attributes, options, socket) {
 
 			if(_.isFunction(elements[element])) {
-				return model = new elements[element](attributes, options);				
+				var model = new elements[element](attributes, options);				
+				return model;
 			} else {
-				console.error("No Element called %s", element);
+				throw "No Element called %s", element;
 			}
 		}
 	};
