@@ -82,12 +82,6 @@ function($, _, Backbone, ClientCollection, GameView, RoomListView, TankListView 
 				'variant': variant
 			});
 
-			this.elements = new ClientCollection();
-
-			this.socket.on('game:start', $.proxy(this.elements._set, this.elements));			
-			this.socket.on('game:frame', $.proxy(this.elements._set, this.elements));
-			this.socket.on('game:remove', $.proxy(this.elements.remove, this.elements));
-
 			this.gameView = new GameView({
 				'el': 'body',
 				'collection': this.elements,
