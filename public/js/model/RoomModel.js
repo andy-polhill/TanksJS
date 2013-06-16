@@ -48,40 +48,45 @@ define([
 		
 		joinActive: function(socket, data) {
 
-			var name = this.get('name')
-			,	variant = (typeof data !== "undefined") ? data.variant : "large-tank";
+			try {
 
-			//socket get is async, hence the bound callback						
-			socket.get('variant', _.bind(function(err, variant){
-
-				//join socket queue
-				socket.join(name);
+				var name = this.get('name')
+				,	variant = (typeof data !== "undefined") ? data.variant : "large-tank";
 	
-				this.set('playerCount', _.size(this.io.sockets.clients(name)));
-				
-				//create and add a tank for them
-				var tank = ElementFactory.create(
-					variant, 
-					{
-						'id': socket.id,
-						'a': _.random(0, 360)
-					}, {
-						'collection': this.elements,
-						'socket': socket
-					}
-				);
+				//socket get is async, hence the bound callback						
+				socket.get('variant', _.bind(function(err, variant){
 	
-				//if the tank gets destroyed, leave the queue
-				tank.on('destroy', _.bind(this.leaveActive, this, socket));
+					//join socket queue
+					socket.join(name);
+		
+					this.set('playerCount', _.size(this.io.sockets.clients(name)));
+					
+					//create and add a tank for them
+					var tank = ElementFactory.create(
+						variant, 
+						{
+							'id': socket.id,
+							'a': _.random(0, 360)
+						}, {
+							'collection': this.elements,
+							'socket': socket
+						}
+					);
+		
+					//if the tank gets destroyed, leave the queue
+					tank.on('destroy', _.bind(this.leaveActive, this, socket));
+		
+					//add players tank
+					this.elements.add([tank], {'detect': true});
+					
+					//emit the current game screen
+					socket.emit('game:start', this.elements.toJSON());
 	
-				//add players tank
-				this.elements.add([tank], {'detect': true});
-				
-				//emit the current game screen
-				socket.emit('game:start', this.elements.toJSON());
-
-
-			}, this));
+				}, this));
+			} catch(e) {
+				console.error(e);
+				socket.disconnect();
+			}
 		},
 
 		joinQueue: function(socket, data) {
@@ -101,7 +106,9 @@ define([
 		disconnect: function(socket) {
 			if(_.contains(this.io.sockets.clients(this.get('name')), socket)) {
 				//destroy the tank, this will in turn exit the queue
-				this.elements.get(socket.id).destroy();
+				if(_.isObject(this.elements.get(socket.id))) {
+					this.elements.get(socket.id).destroy();
+				}
 			} else {
 				//they must have been in the queue
 				this.leaveQueue(socket);
