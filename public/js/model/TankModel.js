@@ -170,7 +170,9 @@ define([
 					
 					this.collection.add([bullet]);
 				}
-			} catch(e){} 
+			} catch(e){
+				console.error(e)
+			} 
 		},
 		
 		collide: function(model) {
