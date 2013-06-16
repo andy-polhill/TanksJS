@@ -73,7 +73,7 @@ define([
 			});
 
 			this.app.get('/', function (req, res) {
-				res.sendfile('index.html');
+				res.render('index', opts.package);
 			});	
 			
 			this.app.get('/rooms', _.bind(this.getRooms, this));

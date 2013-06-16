@@ -1,0 +1,40 @@
+doctype 5
+html(lang="en")
+	head		
+		title Mega-Tanks : online multiplayer tanks game
+		meta(name="description",content="Mega Tanks, online multiplayer tanks game, select your tank, battlefield and challenge other players to become the ultimate Tank Commander")
+		meta(http-equiv="content-type",content="text/html;charset=UTF-8")
+		
+		include ../css/bootstrap.css
+		include ../css/main.css
+
+		//if lt IE 10
+			include ../css/main-ie.css
+	body
+		#main
+			header.row
+				.span12
+					h1 Mega-Tanks
+			.container
+				.row
+					#wrapper.span8.offset2
+				.push
+		footer.container
+			.row
+				small
+					em.text-left.span2.offset2 &#169; Andrew Polhill 2013
+				small.text-right.span2.offset4 #{name} #{version}
+
+		script(src="/socket.io/socket.io.js").
+		script(data-main="js/client", src="../js/lib/require.js").
+
+		script
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-40260605-1']);
+			_gaq.push(['_trackPageview']);
+			
+			(function() {
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();

@@ -9,7 +9,7 @@ require.config({
 	}
 });
 
-require(['router/router'], function(AppRouter, $){
+require(['router/router'], function(AppRouter){
 
 	//globally scoped event aggregator
 	Vents = _.extend({}, Backbone.Events);

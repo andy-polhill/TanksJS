@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Major Shift';
-  src: url('major_shift.ttf');
+  src: url('/css/major_shift.ttf');
 }
 
 h2, h3, h4 {
@@ -14,7 +14,7 @@ h1, h2 {
 
 h1 {
 	position: absolute;
-	top: 40px;
+	top: 20px;
 	left: 250px;
 	font-size:40px;
 	text-shadow:
@@ -42,6 +42,10 @@ body {
   background-size: cover;
 }
 
+html, body {
+	height:100%;
+}
+
 .dl-horizontal dt {
 	width:90px;
 }
@@ -65,8 +69,22 @@ hr {
 
 header {
 	background-color:#fff;
-	height:80px;
-	
+	height:60px;
+}
+
+#main {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -40px;
+}
+
+footer, .push {
+	height:40px;	
+}
+
+footer {
+	color:#fff;
 }
 
 #wrapper {

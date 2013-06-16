@@ -1,6 +1,6 @@
 {
   "name": "Mega-Tanks",
-  "version": "0.0.0",
+  "version": "v0.0.0-beta",
   "description": "Multiplayer tanks",
   "main": "main.js",
   "dependencies": {
@@ -9,7 +9,8 @@
     "express": "~3.1.1",
     "underscore": "~1.4.4",
     "backbone": "~1.0.0",
-    "requirejs": "~2.1.5"
+    "requirejs": "~2.1.5",
+    "jade": "0.31.2"    
   },
   "scripts": {
     "test": "grunt test",
@@ -41,6 +42,7 @@
   "paths": {
     "cssBase": "css",
     "scriptsBase": "js",
+    "viewsBase": "views",
     "scriptsLib": "js/lib",
     "templateBase": "template",
     "imagesBase": "img"

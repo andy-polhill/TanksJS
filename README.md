@@ -8,12 +8,13 @@ Currently hosted on appfog, however sockets reverts to short polling. I have tri
 
 TODO
 ====
-* Register domain name
 
 -- Release Here! --
 
+* IE styling/testing :-(
 * Bug not updating kill count on users screen
 * Put something useful in this ReadMe file
+* More options on Game Over screen
 * Element Collection could be tidier
 * Explosions really slow things down (smaller ones for bullets)
 * Collision Detection performance

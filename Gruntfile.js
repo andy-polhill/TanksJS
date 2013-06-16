@@ -43,9 +43,9 @@ module.exports = function(grunt) {
 			default: {
 				files: [{
 						expand: true, 
-						cwd: 'public/', 
-						src: ['**/index.html'], 
-						dest: 'target/'
+						cwd: 'public/<%= pkg.paths.viewsBase %>', 
+						src: ['**/*'], 
+						dest: 'target/<%= pkg.paths.viewsBase %>'
 					}, {
 						expand: true, 
 						cwd: 'public/', 

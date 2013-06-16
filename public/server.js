@@ -1,10 +1,16 @@
 var requirejs = require('requirejs')
 ,	express = require('express')
 ,	http = require('http')
+,	package = require('../package.json')
+,	jade = require('jade')
 ,	app = express()
 ,	server = http.createServer(app)
 ,	io = require('socket.io').listen(server, {'flash policy port': -1 })
 ,	static;
+
+app.set('views', __dirname + '/views');
+app.set('view engine', 'jade');
+//app.set('view options', { basedir: __dirname});
 
 //AppFog Environment
 io.configure('production', function(){
@@ -22,6 +28,8 @@ io.configure('development', function(){
 	io.set('log level', 2);
 });
 
+console.log("==== %s %s ====", package.name, package.version);
+
 requirejs.config({
     baseUrl: __dirname + '/js',
     nodeRequire: require
@@ -33,6 +41,7 @@ server.listen(80);
 
 requirejs(["GameController"], function(GameController) {
 	GameController.start({
+		'package': package,
 		'app': app,
 		'io': io
 	});
