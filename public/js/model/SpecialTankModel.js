@@ -35,62 +35,66 @@ define([
 		},
 		shoot: function() {
 
-			var heat = this.get('heat');
-			
-			if(heat < 0) {
-				//you have overheated
-				this.set({
-					'heat': heat - HEAT_DROP
-				});
+			try {
+				var heat = this.get('heat');
 				
-			} else {
-		
-				//TODO: shoot from the correct position (nightmare to work out!!)
-		
-				var angle = this.get('a'),
-					cos = Math.cos(angle * Math.PI / 180),
-					sin = Math.sin(angle * Math.PI / 180),				
-					width = this.get('w') / 2,
-					height = this.get('h') / 2,
-					y = this.get('y'),
-					x = this.get('x'),
-					topFirst = parseFloat(((y + height) - ((height + 4) * cos) + 4).toFixed(0)),
-					leftFirst = parseFloat(((x + width) + ((width + 4) * sin) + 4).toFixed(0)),
-					topSecond = parseFloat(((y + height) - ((height + 4) * cos) - 4).toFixed(0)),
-					leftSecond = parseFloat(((x + width) + ((width + 4) * sin) - 4).toFixed(0));
-	
-				//set frame to start flare animation			
-				this.set({
-					'ff': 6,
-					'heat': heat - HEAT_DROP
-				});
-				
-				this.collection.add(
-					new BulletModel(
-						_.extend(this.get('weapon'), {
-							'a': angle,
-							'y': topFirst,
-							'x': leftFirst,
-							'tank': this.get('id'),
-							'id': _.uniqueId()
-					}), {
-						'collection': this.collection
-					})
-				);
+				if(heat < 0) {
+					//you have overheated
+					this.set({
+						'heat': heat - HEAT_DROP
+					});
 					
-				this.collection.add(
-					new BulletModel(
-						_.extend(this.get('weapon'), {
-							'a': angle,
-							'y': topSecond,
-							'x': leftSecond,
-							'tank': this.get('id'),
-							'id': _.uniqueId()
-					}), {
-						'collection': this.collection
-					})					
-				);
-			}
+				} else {
+			
+					//TODO: shoot from the correct position (nightmare to work out!!)
+			
+					var angle = this.get('a'),
+						cos = Math.cos(angle * Math.PI / 180),
+						sin = Math.sin(angle * Math.PI / 180),				
+						width = this.get('w') / 2,
+						height = this.get('h') / 2,
+						y = this.get('y'),
+						x = this.get('x'),
+						topFirst = parseFloat(((y + height) - ((height + 4) * cos) + 4).toFixed(0)),
+						leftFirst = parseFloat(((x + width) + ((width + 4) * sin) + 4).toFixed(0)),
+						topSecond = parseFloat(((y + height) - ((height + 4) * cos) - 4).toFixed(0)),
+						leftSecond = parseFloat(((x + width) + ((width + 4) * sin) - 4).toFixed(0));
+		
+					//set frame to start flare animation			
+					this.set({
+						'ff': 6,
+						'heat': heat - HEAT_DROP
+					});
+					
+					this.collection.add(
+						new BulletModel(
+							_.extend(this.get('weapon'), {
+								'a': angle,
+								'y': topFirst,
+								'x': leftFirst,
+								'tank': this.get('id'),
+								'id': _.uniqueId()
+						}), {
+							'collection': this.collection
+						})
+					);
+						
+					this.collection.add(
+						new BulletModel(
+							_.extend(this.get('weapon'), {
+								'a': angle,
+								'y': topSecond,
+								'x': leftSecond,
+								'tank': this.get('id'),
+								'id': _.uniqueId()
+						}), {
+							'collection': this.collection
+						})					
+					);
+				}
+			} catch(e){
+				console.error(e)
+			} 
 		},
 	});
 
