@@ -171,7 +171,7 @@ define([
 					this.collection.add([bullet]);
 				}
 			} catch(e){
-				console.error(e)
+				console.error(e);
 			} 
 		},
 		
