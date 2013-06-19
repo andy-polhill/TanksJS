@@ -31,8 +31,8 @@ define([
 		
 		defaults : {
 			'a': 0, //angle
-			'fv': 2.4, //forward velocity
-			'rv': 1.2, //reverse velocity
+			'fv': 1.2, //forward velocity
+			'rv': 0.6, //reverse velocity
 			'x': 0, //horizontal location
 			'y': 0, //vertical location
 			'tc' : 3, //turning circle
@@ -48,7 +48,7 @@ define([
 			'type': 'tank',
 			'variant': 'large-tank',
 			'weapon': {
-				'v': 12, //velocity
+				'v': 6, //velocity
 				'h': 3, //height
 				'w': 3, //width
 				'd': 6, //damage

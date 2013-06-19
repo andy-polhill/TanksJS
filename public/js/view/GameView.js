@@ -58,9 +58,6 @@ define([
 		render: function() {
 		
 			this.$el.find('#wrapper').html(_.template(this.template));
-
-			//hold a reference to game bounds element
-			this.$game = this.$el.find("#game");
 		},
 				
 		control: function( evt ) {

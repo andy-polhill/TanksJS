@@ -9,46 +9,22 @@ define([
 		className: "tank",
 
 		initialize: function( opts ) {
-		
-			var tmpl = _.template( this.template );
-			this.$el.html( tmpl( this.model.toJSON() ) );
-			this.$el.addClass( this.model.get('variant') );
 
-			this.tank = this.$el.find('.tankBody').get(0);
-			this.lifeBar = this.$el.find('.lifeBar div').get(0);
-			this.heatBar = this.$el.find('.heatBar div').get(0);
-			this.$kills = this.$el.find('.kills span');
-			
-			this.model.on('change:life', this.life, this);
-			this.model.on('change:kill', this.kill, this);
-			this.model.on('change:heat', this.heat, this);
-			this.model.on('remove', this.remove, this);
-
-			this.render(); //correctly position
-			this.life(); //set life bar
-			this.kill(); //set kill count
+			this.setElement();
+			this.ctx = opts.ctx;
 		},
 		
 		template: TankTemplate,
 		
 		render: function() {
-		
-			var rotateAttr = 'rotate(' + this.model.get('a') + 'deg)';
 
-			this.$el.attr({
-				'data-flare-frame': this.model.get('ff'),
-				'data-track-frame': this.model.get('tf')
-			});
-
-			this.el.style.cssText = 
-				"top: " + this.model.get('y') +
-				"px; left: " + this.model.get('x') + 'px;';
-			
-			this.tank.style.cssText = 
-				"transform: " + rotateAttr +
-				";-ms-transform: " + rotateAttr +
-				";-moz-transform: " + rotateAttr +
-				"; -webkit-transform: " + rotateAttr;
+			this.ctx.fillStyle="green";		
+			this.ctx.fillRect(
+				this.model.get('x'), 
+				this.model.get('y'), 
+				this.model.get('w'), 
+				this.model.get('h')
+			);
 		},
 		
 		life: function() {

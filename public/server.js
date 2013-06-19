@@ -25,6 +25,7 @@ io.configure('production', function(){
 
 io.configure('development', function(){
 	console.log("development sockets config");
+	io.set('transports', ['flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
 	io.set('log level', 2);
 });
 

@@ -7,14 +7,23 @@ define([
 	
 		className: "barrier",
 		
-		initialize: function() {
+		initialize: function(opts) {
 
 			this.model.on('change:life', this.life, this);
 			this.model.on('remove', this.remove, this);
-	
-			this.el.style.cssText = 
-				"top: " + this.model.get('y') +
-				"px; left: " + this.model.get('x') + 'px;';
+			this.setElement();
+			this.ctx = opts.ctx;
+		},
+
+		render: function() {
+
+			this.ctx.fillStyle="blue";		
+			this.ctx.fillRect(
+				this.model.get('x'), 
+				this.model.get('y'), 
+				this.model.get('w'), 
+				this.model.get('h')
+			);
 		},
 		
 		life: function() {

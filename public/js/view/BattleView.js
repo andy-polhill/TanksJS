@@ -23,6 +23,9 @@ define([
 			//array of all the sub viewa
 			this.views = [];
 			
+			this.canvas = this.$el[0];
+			this.ctx = this.canvas.getContext("2d");
+			
 			//when a new element is added to the game collection, create a corresponding view
 			this.collection.on('add', this.addView, this);
 						
@@ -37,7 +40,8 @@ define([
 
 			//create the relevant view, passing the model data
 			var view = new ELEMENTS[model.get('type')]({
-				'model': model
+				'model': model,
+				'ctx': this.ctx
 			});
 			
 			//append the new element to the game
@@ -48,10 +52,14 @@ define([
 		},
 		
 		render: function() {
+			this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+			this.ctx.beginPath();
 			//loop through and render each view
 			_.each(this.views, function(view){
 				view.render();
 			});
+			this.ctx.closePath();
+			this.ctx.stroke();			
 		},
 
 	});
