@@ -27,7 +27,7 @@ define([
 			'queueCount': 0,
 			'maxPlayers': 4,
 			'barriers': 10,
-			'lifeFreq': 700
+			'lifeFreq': 1400
 		},	
 
 		join: function(socket, data) {

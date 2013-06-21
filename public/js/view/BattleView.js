@@ -8,6 +8,16 @@ define([
 	'view/LifeView'
 ], function(_, Backbone, TankView, BarrierView, BulletView, ExplosionView, LifeView){
 
+	// shim layer with setTimeout fallback
+	window.requestAnimFrame = (function(){
+	  return  window.requestAnimationFrame       ||
+	          window.webkitRequestAnimationFrame ||
+	          window.mozRequestAnimationFrame    ||
+	          function( callback ){
+	            window.setTimeout(callback, 1000 / 30);
+	          };
+	})();
+
 	//type => constructor lookup
 	var ELEMENTS = {
 		'bullet' : BulletView,
@@ -15,7 +25,7 @@ define([
 		'barrier' : BarrierView,
 		'explosion' : ExplosionView,
 		'life' : LifeView
-	};
+	}
 
 	var BattleView = Backbone.View.extend({
 		
@@ -26,7 +36,13 @@ define([
 			//when a new element is added to the game collection, create a corresponding view
 			this.collection.on('add', this.addView, this);
 						
-			this.collection.on('change', this.render, this);
+			//this.collection.on('change', this.render, this);
+
+			var that = this;
+			(function animloop(){
+				requestAnimFrame(animloop);
+				that.render();
+			})();
 
 			//this view needs a socket reference as it handles keypresses
 			this.socket = opts.socket;

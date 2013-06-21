@@ -2,7 +2,7 @@
   "name": "Mega-Tanks",
   "version": "v0.0.0-beta",
   "description": "Multiplayer tanks",
-  "main": "main.js",
+  "main": "client.js",
   "dependencies": {
     "amdefine": ">=0.0.2",
     "socket.io": "~0.9.14",

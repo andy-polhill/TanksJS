@@ -23,7 +23,7 @@ define([
 		},
 		
 		defaults : {
-			'v': 10, //velocity
+			'v': 5, //velocity
 			'a': 0, //angle
 			'x': 0, //horizontal
 			'y': 0, //vertical

@@ -6,7 +6,8 @@ require.config({
 		backbone: "lib/backbone",
 		text: "lib/text",
 		template: "../template"
-	}
+	},
+	urlArgs: "bust=" +  (new Date()).getTime()
 });
 
 require(['router/router'], function(AppRouter){

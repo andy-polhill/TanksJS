@@ -9,8 +9,8 @@ define([
 		defaults : {
 			'w': 23,
 			'h': 30,
-			'fv': 2.8, //forward velocity
-			'rv': 1.6, //reverse velocity
+			'fv': 1.4, //forward velocity
+			'rv': 0.8, //reverse velocity
 			'tc' : 5, //turning circle
 			'variant': 'medium-tank',
 			'maxLife': 90,
@@ -18,7 +18,7 @@ define([
 			'heat': 40, //heat
 			'maxHeat': 40,
 			'weapon': {
-				'v': 12, //velocity
+				'v': 6, //velocity
 				'h': 3, //height
 				'w': 3, //width
 				'd': 5, //damage
