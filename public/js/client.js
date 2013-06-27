@@ -5,11 +5,12 @@ require.config({
 		underscore: "lib/underscore",
 		backbone: "lib/backbone",
 		text: "lib/text",
-		template: "../template"
+		template: "../template",
+		polyfill: 'lib/polyfill'
 	}
 });
 
-require(['router/router'], function(AppRouter){
+require(['router/router', 'polyfill'], function(AppRouter, polyfill){
 
 	//globally scoped event aggregator
 	Vents = _.extend({}, Backbone.Events);
