@@ -9,7 +9,7 @@ define([
 		initialize: function( opts ) {
 
 			this.img = new Image();
-			this.img.src = '/img/'+ this.model.get('variant') + '_01.png';
+			this.img.src = '/img/'+ this.model.get('variant') + '.png';
 
 			this.setElement();
 			this.ctx = opts.ctx;
