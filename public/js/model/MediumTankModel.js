@@ -9,21 +9,21 @@ define([
 		defaults : {
 			'w': 23,
 			'h': 30,
-			'fv': 2.8, //forward velocity
-			'rv': 1.6, //reverse velocity
-			'tc' : 5, //turning circle
+			'fv': 1.6, //forward velocity
+			'rv': 0.8, //reverse velocity
+			'tc' : 2, //turning circle
 			'variant': 'medium-tank',
 			'maxLife': 90,
 			'life': 90,
 			'heat': 40, //heat
 			'maxHeat': 40,
 			'weapon': {
-				'v': 12, //velocity
+				'v': 8, //velocity
 				'h': 3, //height
 				'w': 3, //width
 				'd': 5, //damage
 				'type': 'bullet',
-				'r': 300 //range
+				'r': 280 //range
 			}
 		}
 	});

@@ -12,7 +12,6 @@ define([
 	var TankModel = ElementModel.extend({
 
 		//TODO: move and rotate dont need to be atts
-		//TODO:width and height are duplicated in CSS.
 
 		initialize: function( atts, opts ) {
 		
@@ -35,11 +34,9 @@ define([
 			'rv': 0.6, //reverse velocity
 			'x': 0, //horizontal location
 			'y': 0, //vertical location
-			'tc' : 3, //turning circle
+			'tc' : 2, //turning circle
 			'w': 34, //width
 			'h': 33, //height
-			'ff': 0, //flare frame
-			'tf': 0, //tank frame
 			'kill': 0,
 			'maxLife': 100,
 			'life': 100,
@@ -48,7 +45,7 @@ define([
 			'type': 'tank',
 			'variant': 'large-tank',
 			'weapon': {
-				'v': 6, //velocity
+				'v': 8, //velocity
 				'h': 3, //height
 				'w': 3, //width
 				'd': 6, //damage
@@ -76,8 +73,7 @@ define([
 				rotate = this.get('rotate'),
 				heat = this.get('heat'),
 				maxHeat = this.get('maxHeat'),
-				flareFrame = this.get('ff'),
-				tankFrame = this.get('tf'),
+				life = this.get('life'),
 				x = this.get('x'),
 				y = this.get('y'),
 				forwardVelocty = this.get('fv'),
@@ -92,11 +88,6 @@ define([
 				if(angle < 0) angle = 360;
 			}
 
-			//set the flare frame, used for rendering flare
-			if(flareFrame > 0) {
-				flareFrame = flareFrame - 1;
-			}
-
 			//Lower the heat sink after each shot
 			if(heat < maxHeat) { //Where 30 is max heat
 				heat++;
@@ -108,13 +99,11 @@ define([
 					//forwards
 					x = parseFloat((x + (forwardVelocty * sin)).toFixed(1));
 					y = parseFloat((y - (forwardVelocty * cos)).toFixed(1));
-					tankFrame = (tankFrame > 0) ? 0 : 1;
 					break;
 				case "-1":
 					//backwards
 					x = parseFloat((x - (reverseVelocity * sin)).toFixed(1));
 					y = parseFloat((y + (reverseVelocity * cos)).toFixed(1));
-					tankFrame = (tankFrame > 0) ? 0 : 1;
 					break;
 			}
 
@@ -123,9 +112,8 @@ define([
 				'x': x,
 				'y': y,
 				'a': angle,
-				'ff': flareFrame,
-				'tf': tankFrame,
-				'heat': heat
+				'heat': heat,
+				'life': life
 			});
 		},
 		
@@ -137,23 +125,19 @@ define([
 				
 				if(heat < 0) {
 					//you have overheated
-					this.set({
-						'heat': heat - HEAT_DROP
-					});
+					this.set({ 'heat': heat - HEAT_DROP });
 					
 				} else {
 			
 					var angle = this.get('a'),
 						cos = Math.cos(angle * Math.PI / 180),
 						sin = Math.sin(angle * Math.PI / 180),				
-						width = this.get('w') / 2,
-						height = this.get('h') / 2,				
-						top = parseFloat(((this.get('y') + height) - ((height + 4) * cos)).toFixed(0)),
-						left = parseFloat(((this.get('x') + width) + ((width + 4) * sin)).toFixed(0));
+						width = this.get('w'),
+						height = this.get('h'),				
+						top = parseFloat(((this.get('y') + (height/2)) - ((height) * cos)).toFixed(0)),
+						left = parseFloat(((this.get('x') + (width/2)) + ((width) * sin)).toFixed(0));
 		
-					//set frame to start flare animation	
 					this.set({
-						'ff': 6,
 						'heat': heat - HEAT_DROP
 					});
 	
@@ -181,14 +165,16 @@ define([
 			
 			switch(type) {
 				case "bullet":
+
 					//life = life - damage
 					life = this.get('life') - model.get('d');
-
+					
 					if(life < 0) {
 						this.collection.trigger('kill:' + model.get('tank'));
 						this.destroy();
 					} else {
 						this.set('life', life);
+						console.log("collide with tank %s life = %s", type, life);
 					}
 				break;
 				case "life":

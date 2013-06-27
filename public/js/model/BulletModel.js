@@ -1,15 +1,16 @@
 define([
 	'underscore',
 	'backbone',
-	'model/ElementModel'
-], function(_, Backbone, ElementModel) {
+	'model/ElementModel',
+	'utils/ElementFactory'
+], function(_, Backbone, ElementModel, ElementFactory) {
 
 	var BulletModel = ElementModel.extend({
 
 		initialize: function( atts, opts ) {	
 			
 			//calculate horizontal and vertical velocity
-			//these will remane the same for the Bullet.
+			//these will remain the same for the Bullet.
 			var radians = this.get('a') * (Math.PI / 180),
 				xv = this.get('v') * Math.sin(radians),
 				yv = this.get('v') * Math.cos(radians);
@@ -68,7 +69,7 @@ define([
 			if(type === "explosion") {
 				return false;
 			}
-
+			
 			this.destroy();
 		}
 	});

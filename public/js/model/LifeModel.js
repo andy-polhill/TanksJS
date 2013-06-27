@@ -19,7 +19,7 @@ define([
 		},
 		
 		frame: function() {
-		
+			
 			this._duration--;
 			if(this._duration < 0) {
 				this.collide();
