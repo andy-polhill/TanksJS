@@ -1,29 +1,27 @@
 define([
 	'underscore',
-	'backbone'
-], function(_, Backbone){
+	'backbone',
+	'view/ExplosionView'
+], function(_, Backbone, ExplosionView){
 
 	var BulletView = Backbone.View.extend({
 
-		className: 'bullet',
-
 		initialize: function( opts ) {
 
-			this.model.on("change", this.render, this);
-			this.model.on('remove', this.remove, this);
-			
-			this.cssText = "width: " + this.model.get('w') +
-				"px; height: " + this.model.get('h') + 'px;';
-			
+			this.ctx = opts.ctx;
+			this.model.on('remove', this.remove, this);		
+			this.setElement();
 			this.render();
 		},
 
 		render: function() {
-
-			//set all props at same time.
-			this.el.style.cssText = this.cssText +
-				"top: " + this.model.get('y') +
-				"px; left: " + this.model.get('x') + 'px;';
+			this.ctx.fillStyle="black";
+			this.ctx.fillRect(
+				this.model.get('x'), 
+				this.model.get('y'), 
+				this.model.get('w'), 
+				this.model.get('h')
+			);
 		}
 	});
   

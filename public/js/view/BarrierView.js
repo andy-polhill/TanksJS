@@ -3,34 +3,33 @@ define([
 	'backbone'
 ], function(_, Backbone, BarrierTemplate) {
 
-	var BarrierView = Backbone.View.extend({
+	var FRAMES = [0,45,90,135],
+		FRAMES_LENGTH = FRAMES.length - 1;
 	
-		className: "barrier",
-		
+	var BarrierView = Backbone.View.extend({
+			
 		initialize: function(opts) {
 
-			this.model.on('change:life', this.life, this);
+			this.img = new Image();
+			this.img.src = '/img/barrier-sprite.png';
+
 			this.model.on('remove', this.remove, this);
+			
 			this.setElement();
 			this.ctx = opts.ctx;
 		},
 
 		render: function() {
 
-			this.ctx.fillStyle="blue";		
-			this.ctx.fillRect(
-				this.model.get('x'), 
-				this.model.get('y'), 
-				this.model.get('w'), 
-				this.model.get('h')
-			);
-		},
-		
-		life: function() {
-		
-			this.$el.attr({
-				'data-frame': Math.round(this.model.get('life')/20)
-			});
+			var w = this.model.get('w')
+			,	h = this.model.get('h')
+			,	x = this.model.get('x')
+			,	y = this.model.get('y')
+			,	l = this.model.get('life')
+			,	ox = FRAMES_LENGTH - Math.floor(( l / this.model.get('maxLife')) * FRAMES_LENGTH);
+			
+	        this.ctx.drawImage(this.img, FRAMES[ox], 0, w, h, x, y, w, h);
+			
 		}
 	});
   

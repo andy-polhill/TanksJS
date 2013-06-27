@@ -5,45 +5,39 @@ define([
 ], function(_, Backbone, TankTemplate) {
 
 	var TankView = Backbone.View.extend({
-	
-		className: "tank",
 
 		initialize: function( opts ) {
+
+			this.img = new Image();
+			this.img.src = '/img/'+ this.model.get('variant') + '_01.png';
 
 			this.setElement();
 			this.ctx = opts.ctx;
 		},
 		
-		template: TankTemplate,
-		
 		render: function() {
 
-			this.ctx.fillStyle="green";		
-			this.ctx.fillRect(
-				this.model.get('x'), 
-				this.model.get('y'), 
-				this.model.get('w'), 
-				this.model.get('h')
-			);
-		},
-		
-		life: function() {
-			//change to life property
-			//TODO: use percentages
-			this.lifeBar.style.cssText = "width:" + this.model.get('life') / 2 + "px;";
-		},
-		
-		heat: function() {
-		
-			//change to life property
-			var heat = this.model.get('heat'),
-				width = ( heat > 0) ? heat : 0; 
-			this.heatBar.style.cssText = "width:" + width + "px;";
-		},
-		
-		kill: function() {
-			//this tank done a kill
-			this.$kills.html(this.model.get('kill'));
+			var x = this.model.get('x')
+			, y = this.model.get('y')
+			, w = this.model.get('w') / 2
+			, h = this.model.get('h') / 2
+			, heat = this.model.get('heat');
+			
+			this.ctx.save();
+
+			this.ctx.translate(x, y);
+
+			this.ctx.translate(w, h);
+			this.ctx.rotate(this.model.get('a') * Math.PI/180);
+			this.ctx.drawImage(this.img, -w, -h);
+			this.ctx.restore();
+
+			//TODO: put kill count back in.
+			
+			this.ctx.fillStyle = "lightgreen";
+			this.ctx.fillRect(x, y - 10, this.model.get('life') / 2, 3);
+			this.ctx.fillStyle = (heat > 0 ) ? "#f89406" : "red";
+			this.ctx.fillRect(x, y - 4, heat, 3);
 		}
 	});
   

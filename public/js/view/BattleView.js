@@ -21,19 +21,19 @@ define([
 		
 		initialize: function(opts) {
 			//array of all the sub viewa
-			this.views = [];
+			this.views = {};
 			
 			this.canvas = this.$el[0];
 			this.ctx = this.canvas.getContext("2d");
 			
 			//when a new element is added to the game collection, create a corresponding view
 			this.collection.on('add', this.addView, this);
-						
-			this.collection.on('change', this.render, this);
+			this.collection.on('remove', this.removeView, this);
+
+			_.bind(this.render, this)
 
 			//this view needs a socket reference as it handles keypresses
 			this.socket = opts.socket;
-
 		},	
 				
 		addView: function(model) {	
@@ -43,24 +43,25 @@ define([
 				'model': model,
 				'ctx': this.ctx
 			});
-			
-			//append the new element to the game
-			this.$el.append(view.$el);
-			
+						
 			//and drop it in the array for rendering
-			this.views.push(view);
+			this.views[model.get('id')] = view;
 		},
 		
-		render: function() {
-			this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-			this.ctx.beginPath();
-			//loop through and render each view
-			_.each(this.views, function(view){
-				view.render();
-			});
-			this.ctx.closePath();
-			this.ctx.stroke();			
+		removeView: function(model) {
+						
+			delete this.views[model.get('id')];
 		},
+				
+		render: function() {
+	        requestAnimationFrame(_.bind(this.render, this));
+	        // Drawing code goes here
+			this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+			//loop through and render each view
+			_.each(_.keys(this.views), function(key){
+				this.views[key].render();
+			}, this);		
+		}
 
 	});
   
