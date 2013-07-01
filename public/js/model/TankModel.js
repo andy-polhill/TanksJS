@@ -74,6 +74,7 @@ define([
 				heat = this.get('heat'),
 				maxHeat = this.get('maxHeat'),
 				life = this.get('life'),
+				kill = this.get('kill'),
 				x = this.get('x'),
 				y = this.get('y'),
 				forwardVelocty = this.get('fv'),
@@ -113,7 +114,8 @@ define([
 				'y': y,
 				'a': angle,
 				'heat': heat,
-				'life': life
+				'life': life,
+				'kill': kill
 			});
 		},
 		
