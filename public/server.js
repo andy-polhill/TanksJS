@@ -10,7 +10,6 @@ var requirejs = require('requirejs')
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
-//app.set('view options', { basedir: __dirname});
 
 //AppFog Environment
 io.configure('production', function(){
@@ -25,7 +24,6 @@ io.configure('production', function(){
 
 io.configure('development', function(){
 	console.log("development sockets config");
-	io.set('transports', ['flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
 	io.set('log level', 2);
 });
 
