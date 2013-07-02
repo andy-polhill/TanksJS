@@ -5,69 +5,41 @@ define([
 ], function(_, Backbone, TankTemplate) {
 
 	var TankView = Backbone.View.extend({
-	
-		className: "tank",
 
 		initialize: function( opts ) {
-		
-			var tmpl = _.template( this.template );
-			this.$el.html( tmpl( this.model.toJSON() ) );
-			this.$el.addClass( this.model.get('variant') );
 
-			this.tank = this.$el.find('.tankBody').get(0);
-			this.lifeBar = this.$el.find('.lifeBar div').get(0);
-			this.heatBar = this.$el.find('.heatBar div').get(0);
-			this.$kills = this.$el.find('.kills span');
-			
-			this.model.on('change:life', this.life, this);
-			this.model.on('change:kill', this.kill, this);
-			this.model.on('change:heat', this.heat, this);
-			this.model.on('remove', this.remove, this);
+			this.img = new Image();
+			this.img.src = '/img/'+ this.model.get('variant') + '.png';
 
-			this.render(); //correctly position
-			this.life(); //set life bar
-			this.kill(); //set kill count
+			this.setElement();
+			this.ctx = opts.ctx;
 		},
-		
-		template: TankTemplate,
 		
 		render: function() {
-		
-			var rotateAttr = 'rotate(' + this.model.get('a') + 'deg)';
 
-			this.$el.attr({
-				'data-flare-frame': this.model.get('ff'),
-				'data-track-frame': this.model.get('tf')
-			});
-
-			this.el.style.cssText = 
-				"top: " + this.model.get('y') +
-				"px; left: " + this.model.get('x') + 'px;';
+			var x = this.model.get('x')
+			, y = this.model.get('y')
+			, w = this.model.get('w') / 2
+			, h = this.model.get('h') / 2
+			, heat = this.model.get('heat')
+			, kill = this.model.get('kill');
 			
-			this.tank.style.cssText = 
-				"transform: " + rotateAttr +
-				";-ms-transform: " + rotateAttr +
-				";-moz-transform: " + rotateAttr +
-				"; -webkit-transform: " + rotateAttr;
-		},
-		
-		life: function() {
-			//change to life property
-			//TODO: use percentages
-			this.lifeBar.style.cssText = "width:" + this.model.get('life') / 2 + "px;";
-		},
-		
-		heat: function() {
-		
-			//change to life property
-			var heat = this.model.get('heat'),
-				width = ( heat > 0) ? heat : 0; 
-			this.heatBar.style.cssText = "width:" + width + "px;";
-		},
-		
-		kill: function() {
-			//this tank done a kill
-			this.$kills.html(this.model.get('kill'));
+			this.ctx.save();
+
+			this.ctx.translate(x, y);
+
+			this.ctx.translate(w, h);
+			this.ctx.rotate(this.model.get('a') * Math.PI/180);
+			this.ctx.drawImage(this.img, -w, -h);
+			this.ctx.restore();
+
+			this.ctx.fillStyle = "black";
+			this.ctx.font="8px arial";
+			this.ctx.fillText("K:"+ kill, x, y - 12);			
+			this.ctx.fillStyle = "lightgreen";
+			this.ctx.fillRect(x, y - 10, this.model.get('life') / 2, 3);
+			this.ctx.fillStyle = (heat > 0 ) ? "#f89406" : "red";
+			this.ctx.fillRect(x, y - 4, heat, 3);
 		}
 	});
   

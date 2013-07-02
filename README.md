@@ -10,9 +10,14 @@ TODO
 ====
 
 -- Release Here! --
+* Frame Buffer 100ms
+* Interpolation
+* Client side prediction
+* Remove Explosions from server?
+* Delta speed for model velocity
+* Co-ordinates decimal place, performance issue
 
 * IE styling/testing :-(
-* Bug not updating kill count on users screen
 * Put something useful in this ReadMe file
 * More options on Game Over screen
 * Element Collection could be tidier
@@ -23,24 +28,10 @@ TODO
 * Router tidy up (before and after navigate)
 * Limit sessions to one per IP address
 * Bullet location on special tank
-* Co-ordinates decimal place, performance issue
 * Load Testing and Performance Improvements
 * Configurable Levels
 * More Unit Tests!
 * Mobile(?) / Tablet support
 * Customise twitter bootstrap build
-* Element widths in both css and model data
+* Add social links
 
-
-Performance Test Results - looped 100000 times
-----------------------------------------------
-CollisionDetection v1: 13339
-CollisionDetection v2: 13080
-CollisionDetection v1 without changes loop: 9803
-CollisionDetection v2 without changes loop: 10493
-CollisionDetection v1 moving tanks: 10439
-CollisionDetection v2 moving tanks: 12110
-
-Detect (old) 13532, 13794, 13570
-Detect 2 (new) 12084, 11711, 11993
-Detect 2 (new) 

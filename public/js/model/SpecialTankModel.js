@@ -17,15 +17,15 @@ define([
 			'w': 29,
 			'h': 31,
 			'tc' : 3, //turning circle
-			'fv': 1.9, //forward velocity
-			'rv': 1.1, //reverse velocity
+			'fv': 2.2, //forward velocity
+			'rv': 1.6, //reverse velocity
 			'variant': 'special-tank',
 			'maxLife': 60,
 			'life': 60,
 			'heat': 90, //heat
 			'maxHeat': 90,
 			'weapon': {
-				'v': 7, //velocity
+				'v': 9, //velocity
 				'h': 2, //height
 				'w': 1, //width
 				'd': 2, //damage

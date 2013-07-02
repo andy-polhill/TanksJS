@@ -46,7 +46,8 @@ define([
 
 			this.socket.on('queue:change', $.proxy(this.queueModel.set, this.queueModel));
 			
-			this.socket.on('game:start', $.proxy(this.collection._set, this.collection));			
+			this.socket.on('game:start', $.proxy(this.collection._set, this.collection));
+			this.socket.on('game:start', $.proxy(this.battleView.render, this.battleView));
 			this.socket.on('game:frame', $.proxy(this.collection._set, this.collection));
 			this.socket.on('game:remove', $.proxy(this.collection.remove, this.collection));
 
@@ -58,9 +59,6 @@ define([
 		render: function() {
 		
 			this.$el.find('#wrapper').html(_.template(this.template));
-
-			//hold a reference to game bounds element
-			this.$game = this.$el.find("#game");
 		},
 				
 		control: function( evt ) {

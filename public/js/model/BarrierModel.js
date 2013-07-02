@@ -13,11 +13,12 @@ define([
 			'h': 40, //height
 			'w': 40, //width
 			'type': 'barrier',
-			'life': 60
+			'life': 70,
+			'maxLife': 70
 		},
-		
-		collide: function(model) {
-		
+				
+		 collide: function(model) {
+			
 			var type = model.get('type');
 
 			switch(type) {

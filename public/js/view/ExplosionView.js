@@ -1,28 +1,34 @@
 define([
-	'underscore',
-	'backbone'
+	'underscore', 'backbone'
+	
 ], function(_, Backbone){
+
+	var X_POS = [0,28,56,84,116,152,156,184,216,240]
+	,	RATE = 4;
 
 	var ExplosionView = Backbone.View.extend({
 		
-		className: 'explosion',
-		
 		initialize: function( opts ) {
-		
-			this.model.on("change", this.render, this);
+
+			this.img = new Image();
+			this.img.src = '/img/explosions.png';
+
 			this.model.on('remove', this.remove, this);
-
-			this.el.style.cssText = 
-				"top: " + this.model.get('y') +
-				"px; left: " + this.model.get('x') + 'px;';
-
-			this.render();
+			this.frame = 0;
+			
+			this.setElement();
+			this.ctx = opts.ctx;
 		},
 		
 		render: function() {
 		
-			//set all props at same time.
-			this.$el.attr('data-frame', this.model.get('f'));
+			var w = this.model.get('w')
+			,	h = this.model.get('h')
+			,	x = this.model.get('x')
+			,	y = this.model.get('y');
+	
+	        this.ctx.drawImage(this.img, X_POS[Math.round(this.frame/RATE)], 0, w, h, x, y, w, h);
+	        this.frame++;
 		}
 	});
   

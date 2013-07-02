@@ -5,14 +5,24 @@ define([
 
 	var LifeView = Backbone.View.extend({
 		
-		className: "life",
-		
-		initialize: function() {
-		
+		initialize: function(opts) {
+
+			this.img = new Image();
+			this.img.src = '/img/heart.png';
+
 			this.model.on('remove', this.remove, this);
-			this.el.style.cssText = 
-				"top: " + this.model.get('y') +
-				"px; left: " + this.model.get('x') + 'px;';
+			
+			this.setElement();
+			this.ctx = opts.ctx;
+		},
+
+		render: function() {
+
+			this.ctx.drawImage(
+				this.img, 
+				this.model.get('x'),
+				this.model.get('y')
+			);
 		}
 	});
   

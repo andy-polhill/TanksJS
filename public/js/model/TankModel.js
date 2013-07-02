@@ -48,7 +48,7 @@ define([
 			'type': 'tank',
 			'variant': 'large-tank',
 			'weapon': {
-				'v': 6, //velocity
+				'v': 8, //velocity
 				'h': 3, //height
 				'w': 3, //width
 				'd': 6, //damage

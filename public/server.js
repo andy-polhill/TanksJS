@@ -10,7 +10,6 @@ var requirejs = require('requirejs')
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
-//app.set('view options', { basedir: __dirname});
 
 //AppFog Environment
 io.configure('production', function(){

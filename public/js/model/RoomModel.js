@@ -22,6 +22,7 @@ define([
 
 		defaults: {
 		
+			'frame': 0,
 			'id': _.uniqueId(),
 			'playerCount': 0,
 			'queueCount': 0,

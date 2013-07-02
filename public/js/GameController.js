@@ -8,7 +8,7 @@ define([
 ], function(
 	_, Backbone, BoundsModel, TankCollection, RoomCollection, RoomModel) {
 
-	var FRAME_RATE = 1000 / 30;
+	var FRAME_RATE = 1000 / 30; //frame rate in milliseconds
 		
 	return {
 

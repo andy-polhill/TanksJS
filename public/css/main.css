@@ -54,7 +54,6 @@ html, body {
 	margin-left:110px;
 }
 
-
 article {
 	text-align:center;
 }
@@ -100,6 +99,10 @@ footer {
 	border: solid 1px #786451;
 }
 
+#game-wrapper .row {
+	margin-left:0;
+}
+
 #game-wrapper article {
 	background-color:#c0aa96;		
 }
@@ -108,8 +111,6 @@ footer {
 	padding-left: 9px;
 	padding-right: 9px;	
 }
-
-
 
 /* TANK SELECTION ============================================== */
 
@@ -132,37 +133,6 @@ footer {
 	display:block;
 	font-size: 8px;
 	z-index:2;
-}
-
-.flare {
-	display:none;
-}
-	
-.flare {
-	background-image:url(/img/flare.png);
-	display:block;
-    width: 6px;
-	height: 7px;
-    position: absolute;
-    top: -8px;
-    left: 14px;
-    background-position:0 0;
-    display:block;
-}
-
-.tank[data-flare-frame='5'] .flare { background-position:-64px 0; }
-.tank[data-flare-frame='4'] .flare { background-position:-46px 0; }
-.tank[data-flare-frame='3'] .flare { background-position:-30px 0; }
-.tank[data-flare-frame='2'] .flare { background-position:-15px 0; }
-.tank[data-flare-frame='1'] .flare { background-position:-1px 0; }
-.tank[data-flare-frame='0'] .flare { display:none; }
-
-.kills {	
-    display: block;
-    height: 3px;
-    left: -20px;
-    position: absolute;
-    top: -30px;
 }
 
 .progress {
@@ -195,14 +165,7 @@ footer {
 .large-tank .tankBody {	
 	width:34px;
 	height:33px;
-}
-
-.large-tank[data-track-frame='0'] .tankBody {
-	background-image:url(/img/large_tank_01.png);
-}
-
-.large-tank[data-track-frame='1'] .tankBody {
-	background-image:url(/img/large_tank_02.png);
+	background-image:url(/img/large-tank.png);
 }
 
 /* == MEDIUM TANK ============================================== */
@@ -210,18 +173,7 @@ footer {
 .medium-tank .tankBody {	
 	width:23px;
 	height:30px;
-}
-
-.medium-tank .flare {
-    left: 7px;
-}
-
-.medium-tank[data-track-frame='0'] .tankBody {
-	background-image:url(/img/medium_tank_01.png);
-}
-
-.medium-tank[data-track-frame='1'] .tankBody {
-	background-image:url(/img/medium_tank_02.png);
+	background-image:url(/img/medium-tank.png);
 }
 
 /* == SMALL TANK ============================================== */
@@ -229,18 +181,7 @@ footer {
 .small-tank .tankBody {	
 	width:25px;
 	height:24px;
-}
-
-.small-tank .flare {
-    left: 9px;
-}
-
-.small-tank[data-track-frame='0'] .tankBody {
-	background-image:url(/img/small_tank_01.png);
-}
-
-.small-tank[data-track-frame='1'] .tankBody {
-	background-image:url(/img/small_tank_02.png);
+	background-image:url(/img/small-tank.png);
 }
 
 /* == SPECIAL TANK ============================================== */
@@ -248,73 +189,5 @@ footer {
 .special-tank .tankBody {	
 	width:29px;
 	height:31px;
+	background-image:url(/img/special-tank.png);
 }
-
-.special-tank .flare {
-	display:none
-}
-
-.special-tank[data-track-frame='0'] .tankBody {
-	background-image:url(/img/special_tank_01.png);
-}
-
-.special-tank[data-track-frame='1'] .tankBody {
-	background-image:url(/img/special_tank_02.png);
-}
-
-/* BULLET ============================================== */
-	
-.bullet {
-	position:absolute;
-	background-color:black;
-	display:block;
-}
-
-/* LIFE ============================================== */
-	
-.life {
-	background-image:url(/img/heart.png);
-	position:absolute;
-	width:16px;
-	height:16px;
-	display:block;
-}
-
-/* EXPLOSION ============================================== */
-
-.explosion {
-	position:absolute;
-	background-image:url(/img/explosions.png);
-	margin-top:-13px;
-	margin-left:-13px;
-	width:26px;
-	height:26px;
-	z-index:3;
-}
-
-.explosion[data-frame='20'] { background-position:20px 0;}
-.explosion[data-frame='18'] { background-position:-29px 0;}
-.explosion[data-frame='16'] { background-position:-57px 0;}
-.explosion[data-frame='14'] { background-position:-83px 0;}
-.explosion[data-frame='12'] { background-position:-117px 0;}
-.explosion[data-frame='10'] { background-position:-151px 0;}
-.explosion[data-frame='8'] { background-position:-185px 0;}
-.explosion[data-frame='6'] { background-position:-218px 0;}
-.explosion[data-frame='4'] { background-position:-214px 0;}
-.explosion[data-frame='2'] { background-position:-236px 0;}
-
-/* BARRIER ============================================== */
-
-.barrier {
-	background-image:url(/img/barrier-sprite.png);
-	position:absolute;
-	width:40px;
-	height:40px;
-	background-color:#ccc;
-	display:block;
-}
-
-.barrier[data-frame='0'] { background-position:-135px 0;}
-.barrier[data-frame='1'] { background-position:-90px 0;}
-.barrier[data-frame='2'] { background-position:-45px 0;}
-
