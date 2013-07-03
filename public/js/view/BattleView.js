@@ -30,7 +30,7 @@ define([
 			this.collection.on('add', this.addView, this);
 			this.collection.on('remove', this.removeView, this);
 
-			_.bind(this.render, this)
+			_.bind(this.render, this);
 
 			//this view needs a socket reference as it handles keypresses
 			this.socket = opts.socket;
@@ -54,8 +54,8 @@ define([
 		},
 				
 		render: function() {
-	        requestAnimationFrame(_.bind(this.render, this));
-	        // Drawing code goes here
+			requestAnimationFrame(_.bind(this.render, this));
+			// Drawing code goes here
 			this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 			//loop through and render each view
 			_.each(_.keys(this.views), function(key){

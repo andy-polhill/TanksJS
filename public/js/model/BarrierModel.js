@@ -17,7 +17,7 @@ define([
 			'maxLife': 70
 		},
 				
-		 collide: function(model) {
+		collide: function(model) {
 			
 			var type = model.get('type');
 

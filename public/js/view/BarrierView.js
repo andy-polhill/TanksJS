@@ -28,7 +28,7 @@ define([
 			,	l = this.model.get('life')
 			,	ox = FRAMES_LENGTH - Math.floor(( l / this.model.get('maxLife')) * FRAMES_LENGTH);
 			
-	        this.ctx.drawImage(this.img, FRAMES[ox], 0, w, h, x, y, w, h);
+			this.ctx.drawImage(this.img, FRAMES[ox], 0, w, h, x, y, w, h);
 			
 		}
 	});

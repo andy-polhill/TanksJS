@@ -27,8 +27,8 @@ define([
 			,	x = this.model.get('x')
 			,	y = this.model.get('y');
 	
-	        this.ctx.drawImage(this.img, X_POS[Math.round(this.frame/RATE)], 0, w, h, x, y, w, h);
-	        this.frame++;
+			this.ctx.drawImage(this.img, X_POS[Math.round(this.frame/RATE)], 0, w, h, x, y, w, h);
+			this.frame++;
 		}
 	});
   
