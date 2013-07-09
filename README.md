@@ -1,8 +1,9 @@
-https://thatguynamedandy.eu01.aws.af.cm/
+http://mega-tanks.com
 
 This is still very much in the alpha development phase, so expect downtime and lots of change.
 
-Currently hosted on appfog, however sockets reverts to short polling. I have tried other hosts but the polling on Appfog is quicker than the sockets elsewhere.
+Currently hosted on appfog, however sockets reverts to short polling. 
+I have tried other hosts but the polling on Appfog is quicker than the sockets elsewhere.
 
 [![Build Status](https://travis-ci.org/thatguynamedandy/playground.png)](https://travis-ci.org/thatguynamedandy/playground)
 
