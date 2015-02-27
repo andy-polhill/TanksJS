@@ -37,7 +37,7 @@ requirejs.config({
 
 app.use(express.static(__dirname));
 
-server.listen(80);
+server.listen(8010);
 
 requirejs(["GameController"], function(GameController) {
 	GameController.start({

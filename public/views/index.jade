@@ -1,15 +1,16 @@
-doctype 5
+doctype html
 html(lang="en")
-	head		
+	head
 		title Mega-Tanks : online multiplayer tanks game
 		meta(name="description",content="Mega Tanks, online multiplayer tanks game, select your tank, battlefield and challenge other players to become the ultimate Tank Commander")
 		meta(http-equiv="content-type",content="text/html;charset=UTF-8")
-		
-		include ../css/bootstrap.css
-		include ../css/main.css
 
-		//if lt IE 10
-			include ../css/main-ie.css
+		style
+			include ../css/bootstrap.css
+			include ../css/main.css
+
+			//if lt IE 10
+				include ../css/main-ie.css
 	body
 		#main
 			header.row
@@ -28,11 +29,11 @@ html(lang="en")
 		script(src="/socket.io/socket.io.js").
 		script(data-main="js/client", src="../js/lib/require.js").
 
-		script
+		script.
 			var _gaq = _gaq || [];
 			_gaq.push(['_setAccount', 'UA-40260605-1']);
 			_gaq.push(['_trackPageview']);
-			
+
 			(function() {
 				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
 				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
