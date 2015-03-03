@@ -9,21 +9,21 @@ define([
 ], function(_, Backbone, ClientCollection, BattleView, GameOverView, QueueView, GameTemplate){
 
 	var GameView = Backbone.View.extend({
-  
+
 		events: {
 			"keyup": "control",
 			"keydown": "control"
 		},
-		
+
 		template: GameTemplate,
-		
+
 		initialize: function(opts) {
 
 			//this view needs a socket reference as it handles keypresses
 			this.socket = opts.socket;
 
 			this.collection = new ClientCollection();
-			
+
 			//render the game template
 			this.render();
 
@@ -34,7 +34,7 @@ define([
 				'socket': this.socket,
 				'collection': this.collection
 			});
-			
+
 			this.queueView = new QueueView({
 				'el': '#game-queue',
 				'model': this.queueModel
@@ -45,7 +45,7 @@ define([
 			});
 
 			this.socket.on('queue:change', $.proxy(this.queueModel.set, this.queueModel));
-			
+
 			this.socket.on('game:start', $.proxy(this.collection._set, this.collection));
 			this.socket.on('game:start', $.proxy(this.battleView.render, this.battleView));
 			this.socket.on('game:frame', $.proxy(this.collection._set, this.collection));
@@ -54,21 +54,20 @@ define([
 			this.socket.on('game:over', $.proxy(this.battleView.remove, this.battleView));
 			this.socket.on('game:over', $.proxy(this.gameOverView.render, this.gameOverView));
 			this.socket.on('game:start', $.proxy(this.queueView.remove, this.queueView));
-		},	
-						
+		},
+
 		render: function() {
-		
 			this.$el.find('#wrapper').html(_.template(this.template));
 		},
-				
+
 		control: function( evt ) {
-			//keyboard hijacking for controls	
-			var isKeydown = (evt.type === 'keydown') ? true : false;		
+			//keyboard hijacking for controls
+			var isKeydown = (evt.type === 'keydown') ? true : false;
 			switch(evt.which) {
 				case 38: //up
 					if(isKeydown) {
 						this.socket.emit('tank:move', '1');
-					} else { 
+					} else {
 						this.socket.emit('tank:move', null);
 					}
 					evt.preventDefault();
@@ -107,7 +106,7 @@ define([
 		}
 
 	});
-  
+
 	return GameView;
 
 });

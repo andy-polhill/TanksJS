@@ -17,7 +17,7 @@ module.exports = function(grunt) {
 								backbone: "lib/backbone",
 								text: "lib/text",
 								io : "/socket.io/socket.io",
-								template: "../template"
+								template: "../template",
 							}
 						}
 					}
@@ -25,7 +25,7 @@ module.exports = function(grunt) {
 			}
 		},
 		jshint: {
-			default: {	
+			default: {
 				files: [
 			        {src: ['public/js/**/*.js', '!public/js/lib/**/*.js']},
 				],
@@ -34,7 +34,7 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-		clean: { 
+		clean: {
 			default: {
 				src : ['target/*']
 			}
@@ -42,32 +42,51 @@ module.exports = function(grunt) {
 		copy: {
 			default: {
 				files: [{
-						expand: true, 
-						cwd: 'public/<%= pkg.paths.viewsBase %>', 
-						src: ['**/*'], 
-						dest: 'target/<%= pkg.paths.viewsBase %>'
+						expand: true,
+						cwd: 'public/<%= pkg.paths.viewsBase %>',
+						src: ['**/*'],
+						dest: 'target/public/<%= pkg.paths.viewsBase %>'
 					}, {
-						expand: true, 
-						cwd: 'public/', 
-						src: ['**/server.js'], 
+						expand: true,
+						cwd: 'public/',
+						src: ['**/server.js'],
+						dest: 'target/public'
+					}, {
+						src: ['package.json'],
 						dest: 'target/'
 					}, {
-						expand: true, 
-						cwd: 'public/<%= pkg.paths.scriptsBase %>', 
-						src: ['**/*'], 
-						dest: 'target/<%= pkg.paths.scriptsBase %>'
+						expand: true,
+						cwd: 'public/<%= pkg.paths.scriptsBase %>',
+						src: ['**/*'],
+						dest: 'target/public/<%= pkg.paths.scriptsBase %>'
 					}, {
-						expand: true, 
-						cwd: 'public/<%= pkg.paths.cssBase %>', 
-						src: ['**/*'], 
-						dest: 'target/<%= pkg.paths.cssBase %>'
+						expand: true,
+						cwd: 'public/<%= pkg.paths.template %>',
+						src: ['**/*'],
+						dest: 'target/public/<%= pkg.paths.template %>'
 					}, {
-						expand: true, 
-						cwd: 'public/<%= pkg.paths.imagesBase %>', 
-						src: ['**/*'], 
-						dest: 'target/<%= pkg.paths.imagesBase %>'
+						expand: true,
+						cwd: 'public/<%= pkg.paths.cssBase %>',
+						src: ['**/*'],
+						dest: 'target/public/<%= pkg.paths.cssBase %>'
+					}, {
+						expand: true,
+						cwd: 'public/<%= pkg.paths.imagesBase %>',
+						src: ['**/*'],
+						dest: 'target/public/<%= pkg.paths.imagesBase %>'
 				}]
 			}
+		},
+		compress: {
+		  default: {
+		    options: {
+					mode: 'tgz',
+		      archive: 'tanks.tar.gz'
+		    },
+		    files: [
+		      {expand: true, cwd: 'target/', src: ['**']}
+		    ]
+		  }
 		},
 		smushit: {
 			default: {
@@ -86,14 +105,15 @@ module.exports = function(grunt) {
 		},
 	});
 
-	grunt.loadNpmTasks('grunt-contrib-clean');	
+	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-jasmine');
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-compress');
 	grunt.loadNpmTasks('grunt-smushit');
-	
+
 	grunt.registerTask('test', ['jshint', 'jasmine']);
-	grunt.registerTask('build', ['clean', 'jshint', 'jasmine', 'copy', 'requirejs', 'smushit']);
+	grunt.registerTask('build', ['clean', 'jshint', /*'jasmine',*/ 'copy', 'requirejs', 'smushit', 'compress']);
+	grunt.registerTask('default', ['build']);
 };

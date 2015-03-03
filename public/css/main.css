@@ -21,7 +21,7 @@ h1 {
     -2px -2px 0 #000,
     2px -2px 0 #000,
     -2px 2px 0 #000,
-    2px 2px 0 #000; 
+    2px 2px 0 #000;
 }
 
 h2 {
@@ -30,12 +30,12 @@ h2 {
     -1px -1px 0 #000,
     1px -1px 0 #000,
     -1px 1px 0 #000,
-    1px 1px 0 #000;  	
+    1px 1px 0 #000;
 }
 
-body { 
+body {
 	background:#c0aa96;
-  background: url(/img/bg.jpg) no-repeat center center fixed; 
+  background: url(/img/bg.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -79,7 +79,7 @@ header {
 }
 
 footer, .push {
-	height:40px;	
+	height:40px;
 }
 
 footer {
@@ -100,16 +100,19 @@ footer {
 }
 
 #game-wrapper .row {
-	margin-left:0;
+  position:absolute;
+  margin: 0 auto;
+  top:0;
+	/*margin-left:0;*/
 }
 
 #game-wrapper article {
-	background-color:#c0aa96;		
+	background-color:#c0aa96;
 }
 
 .no-badge {
 	padding-left: 9px;
-	padding-right: 9px;	
+	padding-right: 9px;
 }
 
 /* TANK SELECTION ============================================== */
@@ -117,7 +120,7 @@ footer {
 .progress {
 	margin-bottom:0;
 	display:inline-block;
-	
+
 }
 
 .tankOption button {
@@ -162,7 +165,7 @@ footer {
 
 /* == LARGE TANK ============================================== */
 
-.large-tank .tankBody {	
+.large-tank .tankBody {
 	width:34px;
 	height:33px;
 	background-image:url(/img/large-tank.png);
@@ -170,7 +173,7 @@ footer {
 
 /* == MEDIUM TANK ============================================== */
 
-.medium-tank .tankBody {	
+.medium-tank .tankBody {
 	width:23px;
 	height:30px;
 	background-image:url(/img/medium-tank.png);
@@ -178,7 +181,7 @@ footer {
 
 /* == SMALL TANK ============================================== */
 
-.small-tank .tankBody {	
+.small-tank .tankBody {
 	width:25px;
 	height:24px;
 	background-image:url(/img/small-tank.png);
@@ -186,7 +189,7 @@ footer {
 
 /* == SPECIAL TANK ============================================== */
 
-.special-tank .tankBody {	
+.special-tank .tankBody {
 	width:29px;
 	height:31px;
 	background-image:url(/img/special-tank.png);

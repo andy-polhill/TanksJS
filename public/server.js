@@ -1,18 +1,20 @@
 var requirejs = require('requirejs')
 ,	express = require('express')
-,	http = require('http')
+, app = express()
+,	http = require('http').Server(app)
 ,	package = require('../package.json')
 ,	jade = require('jade')
-,	app = express()
-,	server = http.createServer(app)
-,	io = require('socket.io').listen(server, {'flash policy port': -1 })
-,	static;
+,	io = require('socket.io')(http);
 
+app.locals.basedir = __dirname;
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 
-//AppFog Environment
-io.configure('production', function(){
+var config = {
+	port: '8081'
+};
+
+/*io.configure('production', function(){
 	console.log("production sockets config");
 	io.set('transports', ['flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
 	io.enable('browser client minification');  // send minified client
@@ -20,24 +22,26 @@ io.configure('production', function(){
 	io.enable('browser client gzip');          // gzip the file
 	io.disable('flash policy server');          // no websockets, so try flashsocket
 	io.set('log level', 1);                    // reduce logging
-});
+});*/
 
-io.configure('development', function(){
-	console.log("development sockets config");
-	io.set('transports', ['flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
-	io.set('log level', 2);
-});
+//io.configure('development', function(){
+//	console.log("development sockets config");
+//	io.set('transports', ['flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
+//	io.set('log level', 3);
+//});
 
 console.log("==== %s %s ====", package.name, package.version);
 
 requirejs.config({
-    baseUrl: __dirname + '/js',
-    nodeRequire: require
+  baseUrl: __dirname + '/js',
+  nodeRequire: require
 });
 
 app.use(express.static(__dirname));
 
-server.listen(8010);
+http.listen(config.port, function () {
+  console.log('Express server listening on port %d in %s mode', config.port, app.get('env'));
+});
 
 requirejs(["GameController"], function(GameController) {
 	GameController.start({

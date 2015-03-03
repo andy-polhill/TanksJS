@@ -15,7 +15,7 @@ require(['router/router', 'polyfill'], function(AppRouter, polyfill){
 	//globally scoped event aggregator
 	Vents = _.extend({}, Backbone.Events);
 
-    var router = new AppRouter();
+  var router = new AppRouter();
 
 	Vents.bind("select:room", function( args ){
 		router.navigate("rooms/" + args.room + "/tanks", {trigger: true});
@@ -28,6 +28,6 @@ require(['router/router', 'polyfill'], function(AppRouter, polyfill){
 	Vents.bind("game:over", function( args ){
 		router.navigate("/", {trigger: true});
 	});
-    
+
     Backbone.history.start();
 });
