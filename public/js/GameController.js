@@ -3,8 +3,7 @@ define([
 	'backbone',
 	'model/BoundsModel',
 	'collection/TankCollection',
-	'collection/RoomCollection',
-	'model/RoomModel'
+	'collection/RoomCollection'
 ], function(
 	_, Backbone, BoundsModel, TankCollection, RoomCollection, RoomModel) {
 

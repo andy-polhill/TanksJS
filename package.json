@@ -1,6 +1,6 @@
 {
   "name": "Mega-Tanks",
-  "version": "v0.0.1-beta",
+  "version": "v0.0.2",
   "description": "Multiplayer tanks",
   "main": "client.js",
   "dependencies": {
@@ -10,7 +10,9 @@
     "underscore": "~1.4.4",
     "backbone": "~1.0.0",
     "requirejs": "^2.1.16",
-    "jade": "0.31.2"
+    "jade": "0.31.2",
+    "twitter": "1.2.1",
+    "moment": "^2.9.0"
   },
   "scripts": {
     "test": "grunt test",
@@ -33,7 +35,7 @@
     "grunt-contrib-jasmine": "^0.4.2",
     "grunt-template-jasmine-requirejs": "^0.2.0",
     "grunt-cli": "~0.1.7",
-    "grunt-contrib-requirejs": "~0.4.1",
+    "grunt-contrib-requirejs": "^0.4.4",
     "grunt-contrib-clean": "~0.4.1",
     "grunt-contrib-copy": "~0.4.1",
     "grunt-contrib-jshint": "~0.5.4",

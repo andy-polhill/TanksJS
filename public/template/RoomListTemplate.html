@@ -1,3 +1,9 @@
+<div class="alert alert-info" role="alert">
+	<img src="img/twitter.svg" class="icon" />
+	To be notified real time when a player enters the arena follow:
+		<a href="https://twitter.com/megatanksbot" target="twitter">@megatanksbot</a>
+</div>
+
 <section id="roomSelection" class="row">
 	<% _.each(rooms, function(room, i) { %>
 		<article class="roomOption span2" >
@@ -16,7 +22,7 @@
 				<dd>
 					<% if(room.playerCount > 0) { %>
 						<span class="badge badge-warning">
-							<%= room.playerCount %>							
+							<%= room.playerCount %>
 						</span>
 					<% } else { %>
 						<span class="no-badge">
@@ -65,7 +71,7 @@
 	<article class="controls span8">
 
 		<h2>Controls</h2>
-		
+
 		<div class="keys">
 
 			<ul class="unstyled">
@@ -75,8 +81,8 @@
 						<li><i class="icon-arrow-right"></i> Rotate right</li>
 						<li><i class="icon-arrow-up"></i> Forward</li>
 						<li><i class="icon-arrow-down"></i> Reverse</li>
-						<li><i class="icon-screenshot"></i><small> Space</small> Fire</li>			
-					</ul>				
+						<li><i class="icon-screenshot"></i><small> Space</small> Fire</li>
+					</ul>
 				</li>
 				<li class="text-center">
 					<div class="progress progress-success lifeBar" style="width:50px;">

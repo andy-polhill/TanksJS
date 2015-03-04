@@ -71,6 +71,15 @@ header {
 	height:60px;
 }
 
+.alert {
+  margin-top:20px;
+}
+
+.icon {
+  width:20px;
+  height:20px;
+}
+
 #main {
 	min-height: 100%;
 	height: auto !important;

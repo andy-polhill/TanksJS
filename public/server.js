@@ -10,9 +10,6 @@ app.locals.basedir = __dirname;
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 
-var config = {
-	port: '8081'
-};
 
 /*io.configure('production', function(){
 	console.log("production sockets config");
@@ -30,20 +27,21 @@ var config = {
 //	io.set('log level', 3);
 //});
 
-console.log("==== %s %s ====", package.name, package.version);
-
 requirejs.config({
-  baseUrl: __dirname + '/js',
-  nodeRequire: require
+	baseUrl: __dirname + '/js',
+	nodeRequire: require
 });
 
-app.use(express.static(__dirname));
+requirejs(['config', 'GameController'], function(config, GameController) {
 
-http.listen(config.port, function () {
-  console.log('Express server listening on port %d in %s mode', config.port, app.get('env'));
-});
+	console.log("==== %s %s ====", package.name, package.version);
 
-requirejs(["GameController"], function(GameController) {
+	app.use(express.static(__dirname));
+
+	http.listen(config.port, function () {
+		console.log('Express server listening on port %d in %s mode', config.port, app.get('env'));
+	});
+
 	GameController.start({
 		'package': package,
 		'app': app,

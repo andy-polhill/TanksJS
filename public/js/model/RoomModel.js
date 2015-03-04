@@ -1,9 +1,10 @@
 define([
 	'underscore',
 	'backbone',
+	'utils/TwitterUtils',
 	'utils/ElementFactory',
 	'collection/ElementCollection'
-], function(_, Backbone, ElementFactory, ElementCollection) {
+], function(_, Backbone, TwitterUtils, ElementFactory, ElementCollection) {
 
 	var RoomModel = Backbone.Model.extend({
 
@@ -19,7 +20,7 @@ define([
 			'id': _.uniqueId(),
 			'playerCount': 0,
 			'queueCount': 0,
-			'maxPlayers': 2,
+			'maxPlayers': 4,
 			'barriers': 10,
 			'lifeFreq': 1400
 		},
@@ -38,11 +39,11 @@ define([
 		},
 
 		joinActive: function(socket, data) {
-			var name = this.get('name')
+			var roomName = this.get('name')
 			,	variant = (typeof data !== "undefined") ? socket.variant : "large-tank";
-
-			socket.join(name);
-			this.set('playerCount', _.size(this.io.nsps['/'].adapter.rooms[name]));
+			TwitterUtils.newPlayer(roomName);
+			socket.join(roomName);
+			this.set('playerCount', _.size(this.io.nsps['/'].adapter.rooms[roomName]));
 
 			//create and add a tank for them
 			var tank = ElementFactory.create(
@@ -61,7 +62,7 @@ define([
 		},
 
 		joinQueue: function(socket, data) {
-			var queueName = this.get('queueName')
+			var queueName = this.get('queueName');
 			socket.join(queueName);
 			var clients = this.io.nsps['/'].adapter.rooms[queueName];
 			this.set('queueCount', Object.keys(clients).length);
@@ -88,7 +89,7 @@ define([
 		leaveActive: function(socket) {
 			var name = this.get('name'),
 					queueName = this.get('queueName'),
-					clients = this.io.nsps['/'].adapter.rooms[name]
+					clients = this.io.nsps['/'].adapter.rooms[name],
 					queueClients = this.io.nsps['/'].adapter.rooms[queueName];
 
 			socket.leave(name);

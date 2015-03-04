@@ -98,7 +98,7 @@ module.exports = function(grunt) {
 				options: {
 					baseUrl: "public/js",
 					name: "client",
-					out: "target/js/client.js",
+					out: "target/public/js/client.js",
 					mainConfigFile: "public/js/client.js"
 				}
 			}
